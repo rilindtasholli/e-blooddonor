@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <router-view></router-view>
+    <Header></Header>
+    <main>
+      <router-view></router-view>
+    </main>
     <Navbar></Navbar>
   </div>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar'
+import Header from '@/components/Header'
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
+    Header
   }
 }
 </script>
@@ -30,5 +34,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+main{
+  margin: 80px 0;
+  padding: 25px 0;
+  min-height: 100vh;
 }
 </style>

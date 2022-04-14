@@ -5,11 +5,13 @@ import router from './router'
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
+  faBars,
   faHome,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 const importedIcons = {
+  faBars,
   faHome,
   faUser,
 };

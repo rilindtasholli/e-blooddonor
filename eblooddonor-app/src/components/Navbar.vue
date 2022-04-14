@@ -21,15 +21,12 @@ export default {}
     bottom: 0;
     width: 100%;
     padding-top: 20px;
-    /* padding: 30px; */
-    /* border: dashed 2px red; */
-background: linear-gradient(0deg, rgba(255,255,255,1) 59%, rgba(255,255,255,0.8379552504595589) 74%, rgba(255,255,255,0.6782913849133403) 83%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 59%, rgba(255,255,255,0.8379552504595589) 74%, rgba(255,255,255,0.6782913849133403) 83%, rgba(255,255,255,0) 100%);
 }
 
 #nav a {
   font-weight: bold;
   color: #1e2933;
-  /* border: dashed 1px green; */
   width: 100%;
   height: 100%;
   background-color: rgb(196, 196, 196);
