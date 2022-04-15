@@ -1,9 +1,9 @@
 <template>
     <div>
         <div id="nav">
-            <router-link to="/"><font-awesome-icon :icon="['fas', 'home']" /><span>Home</span></router-link>
+            <router-link to="/" exact><font-awesome-icon :icon="['fas', 'home']" /><span>Home</span></router-link>
             <img src="../assets/logo.png" class="nav-logo">
-            <router-link to="/profile"><font-awesome-icon :icon="['fas', 'user']" /><span>Profile</span></router-link>
+            <router-link to="/user"><font-awesome-icon :icon="['fas', 'user']" /><span>Profile</span></router-link>
         </div>
     </div>
 </template>
@@ -47,7 +47,7 @@ export default {}
   border-radius: 35px 0 0 0;
 }
 
-#nav a.router-link-exact-active {
+#nav a.router-link-active {
   background-color: rgba(185, 35, 48, 0.932);
   color: white;
 }

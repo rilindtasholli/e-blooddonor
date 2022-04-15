@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
+    <Sidebar></Sidebar>
     <main>
       <router-view></router-view>
     </main>
@@ -11,12 +12,14 @@
 <script>
 import Navbar from '@/components/Navbar'
 import Header from '@/components/Header'
+import Sidebar from '@/components/Sidebar'
 
 export default {
   name: 'App',
   components: {
     Navbar,
-    Header
+    Header,
+    Sidebar
   }
 }
 </script>
@@ -38,6 +41,5 @@ export default {
 main{
   margin: 80px 0;
   padding: 25px 0;
-  min-height: 100vh;
 }
 </style>

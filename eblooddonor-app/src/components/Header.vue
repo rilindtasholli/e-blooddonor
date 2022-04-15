@@ -2,13 +2,13 @@
     <div>
         <div id="header">
             <div>
-                <button class="sideBarButton" >
+                <button @click="toggleSideBar" class="sideBarButton" >
                     <font-awesome-icon :icon="['fas', 'bars']" />
                 </button>
             </div>
            
             <div class="header-brand">
-                <router-link :to="{ name: 'Home' }">
+                <router-link to="/" exact>
                     <div class="header-logo">
                         <img src="../assets/logo.png">
                         <span>E-BloodDonor</span>
@@ -18,8 +18,8 @@
            
             <div>
                 <div class="register-login">
-                    <router-link to="/register"><button class="register-btn">Register</button></router-link>
-                    <router-link to="/login"><button class="login-btn">Login</button></router-link>
+                    <router-link to="/user/register"><button class="register-btn">Register</button></router-link>
+                    <router-link to="/user/login"><button class="login-btn">Login</button></router-link>
                 </div>
             </div>
         </div>
@@ -28,7 +28,13 @@
 
 <script>
 
-export default {}
+export default {
+    methods:{
+        toggleSideBar(){
+            this.$store.dispatch('toggleSideBar')
+        },
+    }
+}
 </script>
 
 <style scoped>
@@ -37,7 +43,7 @@ export default {}
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(185, 35, 48, 0.932);
+    background: linear-gradient(90deg, rgba(193,79,89,1) 0%, rgba(189,49,61,1) 50%, rgba(193,79,89,1) 100%);
     padding: 15px 0;
     box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.35);
     position: fixed;
