@@ -9,24 +9,32 @@ import {
   faBars,
   faHome,
   faUser,
+  faUsers,
   faCircleInfo,
+  faAddressBook,
+  faBullhorn,
+  faMapMarkerAlt,
+  faDroplet,
   faMessage,
   faPen,
   faEnvelope,
   faPaperPlane,
-  faAddressBook
 } from "@fortawesome/free-solid-svg-icons"
 
 const importedIcons = {
   faBars,
   faHome,
   faUser,
+  faUsers,
   faCircleInfo,
+  faAddressBook,
+  faBullhorn,
+  faMapMarkerAlt,
+  faDroplet,
   faMessage,
   faPen,
   faEnvelope,
-  faPaperPlane,
-  faAddressBook
+  faPaperPlane
 };
 
 Vue.config.productionTip = false

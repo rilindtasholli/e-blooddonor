@@ -75,7 +75,7 @@ var responsiveSlider = function () {
       count = count - 2;
       slideList.style.left = "-" + count * sliderWidth + "px";
       count++;
-    } else if ((count = 1)) {
+    } else if ((count == 1)) {
       count = items - 1;
       slideList.style.left = "-" + count * sliderWidth + "px";
       count++;

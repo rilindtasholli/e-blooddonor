@@ -8,7 +8,7 @@
             </div>
            
             <div class="header-brand">
-                <router-link to="/" exact>
+                <router-link to="/home">
                     <div class="header-logo">
                         <img src="../assets/logo.png">
                         <span>E-BloodDonor</span>
