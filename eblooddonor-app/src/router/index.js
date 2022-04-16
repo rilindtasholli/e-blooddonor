@@ -17,6 +17,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
+    path: "/Contact",
+    name: "ContactUs",
+    component: () =>
+      import(/* webpackChunkName: "contactUs" */ "../views/ContactUs.vue"),
+  },
+  {
     path: '/user',
     redirect: '/user/profile',
     children: [
@@ -28,6 +34,7 @@ const routes = [
         path: 'register',
         // component: () => import(/* webpackChunkName: "user" */ "../views/Register.vue"),
       },
+  
       {
         path: 'login',
         // component: () => import(/* webpackChunkName: "user" */ "../views/Login.vue"),

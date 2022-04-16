@@ -10,6 +10,10 @@ import {
   faHome,
   faUser,
   faCircleInfo,
+  faMessage,
+  faPen,
+  faEnvelope,
+  faPaperPlane,
   faAddressBook
 } from "@fortawesome/free-solid-svg-icons"
 
@@ -18,6 +22,10 @@ const importedIcons = {
   faHome,
   faUser,
   faCircleInfo,
+  faMessage,
+  faPen,
+  faEnvelope,
+  faPaperPlane,
   faAddressBook
 };
 
