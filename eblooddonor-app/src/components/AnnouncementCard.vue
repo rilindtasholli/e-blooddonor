@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-link to="/">
+      <router-link to="/home/announcement">
         <div class="card">
           <div class="card-header">
             <h2 class="title">{{announcement.title}}</h2>

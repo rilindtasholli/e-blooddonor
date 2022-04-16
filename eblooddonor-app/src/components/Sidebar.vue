@@ -4,7 +4,7 @@
     <div class="main-links">
       <ul>
         <li>
-            <router-link to="/" exact>
+            <router-link to="/home">
                 <font-awesome-icon :icon="['fas', 'home']" />
                 Home
             </router-link>
