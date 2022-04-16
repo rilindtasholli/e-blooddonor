@@ -9,16 +9,22 @@ import {
   faBars,
   faHome,
   faUser,
+  faUsers,
   faCircleInfo,
-  faAddressBook
+  faAddressBook,
+  faBullhorn,
+  faMapMarkerAlt
 } from "@fortawesome/free-solid-svg-icons"
 
 const importedIcons = {
   faBars,
   faHome,
   faUser,
+  faUsers,
   faCircleInfo,
-  faAddressBook
+  faAddressBook,
+  faBullhorn,
+  faMapMarkerAlt
 };
 
 Vue.config.productionTip = false
