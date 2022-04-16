@@ -14,7 +14,11 @@ import {
   faAddressBook,
   faBullhorn,
   faMapMarkerAlt,
-  faDroplet
+  faDroplet,
+  faMessage,
+  faPen,
+  faEnvelope,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons"
 
 const importedIcons = {
@@ -26,7 +30,11 @@ const importedIcons = {
   faAddressBook,
   faBullhorn,
   faMapMarkerAlt,
-  faDroplet
+  faDroplet,
+  faMessage,
+  faPen,
+  faEnvelope,
+  faPaperPlane
 };
 
 Vue.config.productionTip = false
