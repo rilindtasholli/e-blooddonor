@@ -1,5 +1,7 @@
 <template>
   <div class="main">
+    <BackButton></BackButton>
+
     <div class="announcement">
       <h1>{{ announcement.title }}</h1>
       <p>{{ announcement.text }}</p>
@@ -37,12 +39,14 @@
 </template>
 
 <script>
+import BackButton from '@/components/BackButton.vue'
 import { VueDatePicker } from "@mathieustan/vue-datepicker";
 import "@mathieustan/vue-datepicker/dist/vue-datepicker.min.css";
 
 export default {
   components: {
     VueDatePicker,
+    BackButton
   },
   data() {
     return {
@@ -63,6 +67,7 @@ export default {
 <style scoped>
 .main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   

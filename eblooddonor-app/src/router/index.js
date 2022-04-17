@@ -38,7 +38,7 @@ const routes = [
     children: [
       {
         path: 'profile',
-        // component: () => import(/* webpackChunkName: "user" */ "../views/Profile.vue"),
+        component: () => import(/* webpackChunkName: "user" */ "../views/UserPages/Profile.vue"),
       },
       {
         path: 'register',

@@ -19,6 +19,10 @@ import {
   faPen,
   faEnvelope,
   faPaperPlane,
+  faCalendarCheck,
+  faClockRotateLeft,
+  faUserPen,
+  faArrowLeft
 } from "@fortawesome/free-solid-svg-icons"
 
 const importedIcons = {
@@ -34,7 +38,11 @@ const importedIcons = {
   faMessage,
   faPen,
   faEnvelope,
-  faPaperPlane
+  faPaperPlane,
+  faCalendarCheck,
+  faClockRotateLeft,
+  faUserPen,
+  faArrowLeft
 };
 
 Vue.config.productionTip = false

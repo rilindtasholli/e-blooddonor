@@ -42,4 +42,11 @@ main{
   margin: 80px 0;
   padding: 25px 0;
 }
+
+
+@media only screen and (max-width: 600px) {
+  main{
+  margin: 105px 0;
+}
+}
 </style>
