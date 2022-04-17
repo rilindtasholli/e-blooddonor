@@ -1,47 +1,47 @@
 <template>
   <div>
- <div class="main">
-    <h1><font-awesome-icon :icon="['fas', 'info-circle']" /> About</h1>
-    <div class="main-content">
-      <div id="slider" class="slidesS">
-        <ul id="slideWrap">
-          <li><img src="../assets/1.png" alt="" /></li>
-          <li><img src="../assets/2.png" alt="" /></li>
-          <li><img src="../assets/3.png" alt="" /></li>
-          <li><img src="../assets/4.png" alt="" /></li>
-          <li><img src="../assets/5.png" alt="" /></li>
-        </ul>
-        <a id="prev" href="#"></a>
-        <a id="next" href="#"></a>
+    <div class="main">
+      <h1><font-awesome-icon :icon="['fas', 'info-circle']" /> About</h1>
+      <div class="main-content">
+        <div id="slider" class="slidesS">
+          <ul id="slideWrap">
+            <li><img src="../assets/1.png" alt="" /></li>
+            <li><img src="../assets/2.png" alt="" /></li>
+            <li><img src="../assets/3.png" alt="" /></li>
+            <li><img src="../assets/4.png" alt="" /></li>
+            <li><img src="../assets/5.png" alt="" /></li>
+          </ul>
+          <a id="prev" href="#"></a>
+          <a id="next" href="#"></a>
+        </div>
+        <div class="textarea">
+          <img class="logo" src="../assets/logo-text.png" alt="" />
+          <p>
+            Ne besojmë se krijimi i një aplikacioni siç është E-BloodDonor është
+            i domosdoshëm për një shoqëri në të cilën jetojmë. Qellimi ynë është
+            që të zbusim vdekshmërinë nga rastet e humbjës së gjakut. Jemi të
+            emocionuar që të ju ndihmojmë në udhetimin tonë!
+          </p>
+        </div>
       </div>
-      <div class="textarea">
-        <img class="logo" src="../assets/logo-text.png" alt="" />
-        <p>
-          Ne besojmë se krijimi i një aplikacioni siç është E-BloodDonor është i
-          domosdoshëm për një shoqëri në të cilën jetojmë. Qellimi ynë është që
-          të zbusim vdekshmërinë nga rastet e humbjës së gjakut. Jemi të
-          emocionuar që të ju ndihmojmë në udhetimin tonë!
-        </p>
+      <div class="team">
+        <h2>Our Team</h2>
+        <div class="members">
+          <div class="member">
+            <img src="../assets/altina.jpg" alt="" />
+            <h3 class="name">Altina Salihu</h3>
+          </div>
+          <div class="member">
+            <img src="../assets/rilind.png" alt="" />
+            <h3 class="name">Rilind Tasholli</h3>
+          </div>
+          <div class="member">
+            <img src="../assets/besarti.jpg" alt="" />
+            <h3 class="name">Besart Ibishi</h3>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="team">
-      <h2>Our Team</h2>
-      <div class="members">
-        <div class="member">
-          <img src="../assets/altina.jpg" alt="" />
-          <h3 class="name">Altina Salihu</h3>
-        </div>
-        <div class="member">
-          <img src="../assets/rilind.png" alt="" />
-          <h3 class="name">Rilind Tasholli</h3>
-        </div>
-        <div class="member">
-          <img src="../assets/besarti.jpg" alt="" />
-          <h3 class="name">Besart Ibishi</h3>
-        </div>
-      </div>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -75,7 +75,7 @@ var responsiveSlider = function () {
       count = count - 2;
       slideList.style.left = "-" + count * sliderWidth + "px";
       count++;
-    } else if ((count == 1)) {
+    } else if (count == 1) {
       count = items - 1;
       slideList.style.left = "-" + count * sliderWidth + "px";
       count++;
@@ -111,7 +111,7 @@ window.onload = function () {
   /* border: solid 2px red; */
 }
 
-svg{
+svg {
   color: rgb(190, 65, 71);
 }
 .main-content {
@@ -220,13 +220,10 @@ svg{
   height: auto;
 }
 
-
 @media only screen and (max-width: 800px) {
   .main-content {
     flex-direction: column;
   }
-
-  
 }
 
 @media only screen and (max-width: 600px) {
