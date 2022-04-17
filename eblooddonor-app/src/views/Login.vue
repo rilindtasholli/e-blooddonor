@@ -1,22 +1,15 @@
 <template>
   <div class="main">
+    <BackButton></BackButton>
+
     <div class="login">
       <div>
-        <h1 class="title">Get in touch<span>.</span> <font-awesome-icon :icon="['fas', 'message']" /></h1>
-
+        <img
+          src="../assets/avatar.png"
+          class="profile-image"
+          alt="profile icon"
+        />
         <form @submit.prevent="submit">
-          <div class="input-label">
-            <label for="title"
-              ><font-awesome-icon :icon="['fas', 'pen']" /> Title</label
-            >
-            <input
-              type="text"
-              name="title"
-              v-model="form.title"
-              placeholder="Enter Title"
-            />
-          </div>
-          
           <div class="input-label">
             <label for="email"
               ><font-awesome-icon :icon="['fas', 'envelope']" /> Email</label
@@ -25,47 +18,45 @@
               type="text"
               name="email"
               v-model="form.email"
-              placeholder="Enter Email"
+              placeholder="Enter your email"
             />
           </div>
-
           <div class="input-label">
-            <label for="text"
-              ><font-awesome-icon :icon="['fas', 'message']" /> Message</label
+            <label for="password"
+              ><font-awesome-icon :icon="['fas', 'key']" /> Password</label
             >
-            <textarea v-model="form.text" name="text" placeholder="Enter Message..." rows="6"></textarea>
-            
+            <input
+              type="password"
+              name="password"
+              v-model="form.password"
+              placeholder="Enter your password"
+            />
           </div>
-
-          <button type="submit">Send Message <font-awesome-icon :icon="['fas', 'paper-plane']" /></button>
+          <button type="submit">Login</button>
         </form>
-       
       </div>
     </div>
-    
-    <p v-if="showError" id="error"><font-awesome-icon :icon="['fas', 'circle-exclamation']" /> {{this.errorMessage}}</p>
+    <p v-if="showError" id="error">
+      <font-awesome-icon :icon="['fas', 'circle-exclamation']" />
+      {{ this.errorMessage }}
+    </p>
   </div>
 </template>
 
-
 <script>
-
+import BackButton from "../components/BackButton.vue";
 
 export default {
-  name: "sendMessage",
-  components: {},
+  components: { BackButton },
   data() {
     return {
       form: {
-        title: "",
-        text: "",
         email: "",
+        password: "",
       },
       showError: false,
-      errorMessage: ''
+      errorMessage: "",
     };
-  },
-  methods: {
   },
 };
 </script>
@@ -75,19 +66,26 @@ export default {
   box-sizing: border-box;
 }
 .main {
-  margin-top: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.title{
-  color: rgb(64, 100, 167);
+.login{
+  margin-top: 25px;
 }
-.title svg,
-.title span{
-  color: #ce4a55;
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin: 15px 0;
+  background: linear-gradient(
+    130deg,
+    rgba(255, 74, 77, 1) 9%,
+    rgba(48, 153, 255, 1) 100%
+  );
 }
 
 .input-label {
@@ -125,9 +123,6 @@ button[type="submit"]:hover {
     rgba(124, 38, 222, 1) 100%
   );
 }
-button[type="submit"] svg{
-  color: #f53e4e;
-}
 input {
   /* margin: 5px; */
   box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
@@ -135,17 +130,6 @@ input {
   border-radius: 18px;
   border: none;
   font-size: 11pt;
-  width: 100%;
-}
-textarea{
-   /* margin: 5px; */
-  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.25);
-  padding: 12px 18px;
-  border-radius: 11px;
-  border: none;
-  font-size: 11pt;
-  width: 300px;
-  max-height: 203px;
 }
 #error {
   color: rgb(201, 63, 63);

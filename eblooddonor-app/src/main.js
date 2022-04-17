@@ -1,10 +1,10 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from "./store"
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store";
 
-import { library } from "@fortawesome/fontawesome-svg-core"
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faBars,
   faHome,
@@ -22,8 +22,9 @@ import {
   faCalendarCheck,
   faClockRotateLeft,
   faUserPen,
-  faArrowLeft
-} from "@fortawesome/free-solid-svg-icons"
+  faArrowLeft,
+  faKey,
+} from "@fortawesome/free-solid-svg-icons";
 
 const importedIcons = {
   faBars,
@@ -42,19 +43,18 @@ const importedIcons = {
   faCalendarCheck,
   faClockRotateLeft,
   faUserPen,
-  faArrowLeft
+  faArrowLeft,
+  faKey,
 };
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.component("font-awesome-icon", FontAwesomeIcon)
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-library.add(importedIcons)
+library.add(importedIcons);
 
 new Vue({
   router,
   store,
-  render: h => h(App),
-}).$mount('#app')
-
-
+  render: (h) => h(App),
+}).$mount("#app");

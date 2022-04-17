@@ -3,29 +3,29 @@
     <span class="closeBtn" @click="toggleSideBar()">×</span>
     <div class="main-links">
       <ul>
-        <li>
-            <router-link to="/home">
-                <font-awesome-icon :icon="['fas', 'home']" />
-                Home
-            </router-link>
+        <li @click="toggleSideBar()">
+          <router-link to="/home">
+            <font-awesome-icon :icon="['fas', 'home']" />
+            Home
+          </router-link>
         </li>
-        <li>
-            <router-link to="/about">
-                <font-awesome-icon :icon="['fas', 'circle-info']" />
-                About
-            </router-link>
+        <li @click="toggleSideBar()">
+          <router-link to="/about">
+            <font-awesome-icon :icon="['fas', 'circle-info']" />
+            About
+          </router-link>
         </li>
-        <li>
-            <router-link to="/contact">
-                <font-awesome-icon :icon="['fas', 'address-book']" />
-                Contact
-            </router-link>
+        <li @click="toggleSideBar()">
+          <router-link to="/contact">
+            <font-awesome-icon :icon="['fas', 'address-book']" />
+            Contact
+          </router-link>
         </li>
-        <li>
-            <router-link to="/user">
-                <font-awesome-icon :icon="['fas', 'user']" />
-                Profile
-            </router-link>
+        <li @click="toggleSideBar()">
+          <router-link to="/user">
+            <font-awesome-icon :icon="['fas', 'user']" />
+            Profile
+          </router-link>
         </li>
       </ul>
     </div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   computed: mapGetters(["sideBarOpen"]),
@@ -72,8 +72,8 @@ export default {
   justify-content: center;
   align-items: center;
   background: rgba(185, 35, 48, 0.932);
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   align-self: flex-end;
   margin: 15px;
@@ -83,6 +83,7 @@ export default {
 }
 .closeBtn:hover {
   background: rgba(148, 27, 37, 0.932);
+  transition: 0.4s;
 }
 
 .main-links,
@@ -90,6 +91,7 @@ export default {
   /* border: dashed 1px red; */
   margin: 10px 0;
   width: 100%;
+  font-size: 18px;
 }
 
 .admin-panel-title {
