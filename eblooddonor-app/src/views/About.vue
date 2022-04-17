@@ -28,7 +28,7 @@
         <h2>Our Team</h2>
         <div class="members">
           <div class="member">
-            <img src="../assets/altina.jpg" alt="" />
+            <img src="../assets/altina1.jpg" alt="" />
             <h3 class="name">Altina Salihu</h3>
           </div>
           <div class="member">
@@ -36,7 +36,7 @@
             <h3 class="name">Rilind Tasholli</h3>
           </div>
           <div class="member">
-            <img src="../assets/besarti.jpg" alt="" />
+            <img src="../assets/besarti2.jpg" alt="" />
             <h3 class="name">Besart Ibishi</h3>
           </div>
         </div>
