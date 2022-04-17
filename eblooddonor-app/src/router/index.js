@@ -39,31 +39,26 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/user/register",
-    name: "Register",
+    path: "/contact",
     component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
+      import(/* webpackChunkName: "contact" */ "../views/ContactUs.vue"),
   },
-
-  {
-    path: "/user/login",
-    name: "Login",
-    component: () =>
-      import(/* webpackChunkName: "register" */ "../views/Login.vue"),
-  },
-
   {
     path: "/user/",
     component: User,
     redirect: "/user/profile",
     children: [
       {
-        path: "profile",
-        // component: () => import(/* webpackChunkName: "user" */ "../views/Profile.vue"),
+        path: 'profile',
+        component: () => import(/* webpackChunkName: "user" */ "../views/UserPages/Profile.vue"),
+      },
+      {
+        path: "register",
+        component: () => import(/* webpackChunkName: "user" */ "../views/Register.vue"),
       },
       {
         path: "login",
-        // component: () => import(/* webpackChunkName: "user" */ "../views/Login.vue"),
+        component: () => import(/* webpackChunkName: "user" */ "../views/Login.vue"),
       },
     ],
   },

@@ -75,7 +75,7 @@ export default {
   box-sizing: border-box;
 }
 .main {
-  min-height: 90vh;
+  margin-top: 25px;
   display: flex;
   flex-direction: column;
   justify-content: center;

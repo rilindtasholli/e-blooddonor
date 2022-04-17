@@ -19,6 +19,10 @@ import {
   faPen,
   faEnvelope,
   faPaperPlane,
+  faCalendarCheck,
+  faClockRotateLeft,
+  faUserPen,
+  faArrowLeft,
   faKey,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -36,6 +40,10 @@ const importedIcons = {
   faPen,
   faEnvelope,
   faPaperPlane,
+  faCalendarCheck,
+  faClockRotateLeft,
+  faUserPen,
+  faArrowLeft,
   faKey,
 };
 

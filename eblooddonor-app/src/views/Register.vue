@@ -1,6 +1,8 @@
 <template>
   <div class="main">
-    <div class="login">
+    <BackButton></BackButton>
+
+    <div class="register">
       <div>
         <img
           src="../assets/avatar-plus.png"
@@ -107,8 +109,9 @@
 </template>
 
 <script>
+import BackButton from "../components/BackButton.vue";
 export default {
-  components: {},
+  components: { BackButton },
   data() {
     return {
       form: {
@@ -131,12 +134,14 @@ export default {
   box-sizing: border-box;
 }
 .main {
-  min-height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 120px 0;
+}
+
+.register{
+  margin-top: 25px;
 }
 
 .profile-image {

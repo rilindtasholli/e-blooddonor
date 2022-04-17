@@ -3,25 +3,25 @@
     <span class="closeBtn" @click="toggleSideBar()">×</span>
     <div class="main-links">
       <ul>
-        <li>
+        <li @click="toggleSideBar()">
           <router-link to="/home">
             <font-awesome-icon :icon="['fas', 'home']" />
             Home
           </router-link>
         </li>
-        <li>
+        <li @click="toggleSideBar()">
           <router-link to="/about">
             <font-awesome-icon :icon="['fas', 'circle-info']" />
             About
           </router-link>
         </li>
-        <li>
+        <li @click="toggleSideBar()">
           <router-link to="/contact">
             <font-awesome-icon :icon="['fas', 'address-book']" />
             Contact
           </router-link>
         </li>
-        <li>
+        <li @click="toggleSideBar()">
           <router-link to="/user">
             <font-awesome-icon :icon="['fas', 'user']" />
             Profile
