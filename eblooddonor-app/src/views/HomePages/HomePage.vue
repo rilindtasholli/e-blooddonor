@@ -1,33 +1,40 @@
 <template>
   <div class="main">
-    <h1><font-awesome-icon :icon="['fas', 'bullhorn']" /> Announcements</h1>
+    <HomeHeader></HomeHeader>
+    
+    <div id="announcements-section">
+      <h2><font-awesome-icon :icon="['fas', 'bullhorn']" /> Announcements</h2>
 
-    <div v-if="this.announcements">
-       <div id="announcements">
-          <AnnouncementCard
-            v-for="announcement in announcements"
-            :key="announcement._id"
-            :announcement="announcement"
-          />
-        </div>
-        
-    </div>
+      <div v-if="this.announcements && this.announcements.length != 0">
+        <div id="announcements">
+            <AnnouncementCard
+              v-for="announcement in announcements"
+              :key="announcement._id"
+              :announcement="announcement"
+            />
+          </div>
+          
+      </div>
 
-    <div v-else>
-      <h3><font-awesome-icon :icon="['fas', 'circle-exclamation']" /> There are no announcements!</h3>
+      <div v-else>
+        <h3><font-awesome-icon :icon="['fas', 'circle-exclamation']" /> There are no announcements!</h3>
+      </div>
     </div>
+    
    
   </div>
 
 </template>
 
 <script>
+import HomeHeader from "@/components/HomeHeader.vue";
 import AnnouncementCard from "@/components/AnnouncementCard.vue";
 
 export default {
   name: "Home",
   components: {
     AnnouncementCard,
+    HomeHeader
   },
   data(){
     return{
@@ -64,6 +71,10 @@ export default {
 </script>
 
 <style scoped>
+
+#announcements-section{
+  margin-top: 40px;
+}
 #announcements {
   display: flex;
   justify-content: center;
@@ -71,7 +82,7 @@ export default {
   padding: 20px;
 }
 
-svg{
+#announcements-section svg{
   color: rgb(190, 65, 71);
 }
 
@@ -96,3 +107,4 @@ a {
   }
 }
 </style>
+
