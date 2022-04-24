@@ -28,6 +28,7 @@ export default {
 * {
   margin: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 #app {
