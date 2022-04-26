@@ -197,7 +197,6 @@ select {
 }
 .click-here a:hover {
   color: rgb(42, 0, 192);
-  font-weight: bold;
 }
 
 .photo-show img {

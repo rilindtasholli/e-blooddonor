@@ -65,12 +65,22 @@ const routes = [
       {
         path: "register",
         component: () =>
-          import(/* webpackChunkName: "user" */ "../views/Register.vue"),
+          import(/* webpackChunkName: "user" */ "../views/UserPages/Register.vue"),
       },
       {
         path: "login",
         component: () =>
-          import(/* webpackChunkName: "user" */ "../views/Login.vue"),
+          import(/* webpackChunkName: "user" */ "../views/UserPages/Login.vue"),
+      },
+      {
+        path: "appointments",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/UserPages/UserAppointments.vue"),
+      },
+      {
+        path: "history",
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/UserPages/DonationHistory.vue"),
       },
     ],
   },

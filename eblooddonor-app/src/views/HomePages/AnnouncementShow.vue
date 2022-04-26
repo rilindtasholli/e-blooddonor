@@ -33,6 +33,11 @@
           Set Appointment
         </button>
       </div>
+      
+      <hr>
+
+      <p class="click-here">To schedule a new appointment without participating in this announcement <router-link to="/home/appointment">click here</router-link></p>
+      
     </div>
   </div>
 
@@ -146,6 +151,25 @@ export default {
 
 svg {
   margin: 0 3px;
+}
+
+.announcement hr {
+  width: 100%;
+  max-width: 450px;
+  margin: 25px 0;
+  padding: 0;
+  border: solid 1px rgba(37, 37, 37, 0.23); 
+}
+
+.click-here{
+  color: rgb(87, 87, 99);
+}
+.click-here a{
+  color: rgb(61, 77, 214);
+  white-space:nowrap;
+}
+.click-here a:hover{
+  color: rgb(104, 62, 255);
 }
 
 .photo-show img {

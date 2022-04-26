@@ -5,7 +5,7 @@
     <div class="register">
       <div>
         <img
-          src="../assets/avatar-plus.png"
+          src="../../assets/avatar-plus.png"
           class="profile-image"
           alt="profile icon"
         />
@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import BackButton from "../components/BackButton.vue";
+import BackButton from "../../components/BackButton.vue";
 export default {
   components: { BackButton },
   data() {
