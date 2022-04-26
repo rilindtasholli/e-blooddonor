@@ -29,6 +29,13 @@ const routes = [
             /* webpackChunkName: "announcement" */ "../views/HomePages/AnnouncementShow.vue"
           ),
       },
+      {
+        path: "appointment",
+        component: () =>
+          import(
+            /* webpackChunkName: "announcement" */ "../views/HomePages/NewAppointment.vue"
+          ),
+      },
     ],
   },
   {
@@ -49,16 +56,21 @@ const routes = [
     redirect: "/user/profile",
     children: [
       {
-        path: 'profile',
-        component: () => import(/* webpackChunkName: "user" */ "../views/UserPages/Profile.vue"),
+        path: "profile",
+        component: () =>
+          import(
+            /* webpackChunkName: "user" */ "../views/UserPages/Profile.vue"
+          ),
       },
       {
         path: "register",
-        component: () => import(/* webpackChunkName: "user" */ "../views/Register.vue"),
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/Register.vue"),
       },
       {
         path: "login",
-        component: () => import(/* webpackChunkName: "user" */ "../views/Login.vue"),
+        component: () =>
+          import(/* webpackChunkName: "user" */ "../views/Login.vue"),
       },
     ],
   },
