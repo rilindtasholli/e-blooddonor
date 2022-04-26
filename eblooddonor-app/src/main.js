@@ -24,8 +24,10 @@ import {
   faUserPen,
   faArrowLeft,
   faKey,
+  faCircleExclamation,
   faFaceSmile,
-  faAngleDown
+  faAngleDown,
+  faTrash
 } from "@fortawesome/free-solid-svg-icons";
 
 const importedIcons = {
@@ -47,8 +49,10 @@ const importedIcons = {
   faUserPen,
   faArrowLeft,
   faKey,
+  faCircleExclamation,
   faFaceSmile,
-  faAngleDown
+  faAngleDown,
+  faTrash
 };
 
 Vue.config.productionTip = false;
