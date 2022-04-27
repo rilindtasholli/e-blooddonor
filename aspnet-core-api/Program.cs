@@ -1,4 +1,28 @@
+using aspnet_core_api.Models;
+using Microsoft.EntityFrameworkCore;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+
+//Configure Cors
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:8080",
+                                              "http://localhost:8081").AllowCredentials().AllowAnyHeader();
+                      });
+});
+
+//Configure Database connection
+builder.Services.AddDbContext<ApplicationDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
+                ));
+
+
 
 // Add services to the container.
 
@@ -15,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 
