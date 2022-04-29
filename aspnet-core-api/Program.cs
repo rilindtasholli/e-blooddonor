@@ -1,5 +1,7 @@
 using aspnet_core_api.Models;
+using aspnet_core_api.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
@@ -22,9 +24,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
                 ));
 
+//Dependency Injections
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
-
-// Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

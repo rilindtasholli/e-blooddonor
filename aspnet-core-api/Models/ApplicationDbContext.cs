@@ -11,6 +11,16 @@ namespace aspnet_core_api.Models
 
         }
 
+        public DbSet<User> Users { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //compute FullName property
+            modelBuilder.Entity<User>()
+                .Property(p => p.FullName)
+                .HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
+        }
+
     }
 
 
