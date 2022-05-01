@@ -13,6 +13,7 @@ namespace aspnet_core_api.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -20,7 +21,10 @@ namespace aspnet_core_api.Models
             modelBuilder.Entity<User>()
                 .Property(p => p.FullName)
                 .HasComputedColumnSql("[FirstName] + ' ' + [LastName]");
-            modelBuilder.Entity<Announcement>().ToTable("Announcement");
+
+            modelBuilder.Entity<Appointment>()
+                .Property(a => a.Status)
+                .HasDefaultValue("Pending");
         }
 
     }
