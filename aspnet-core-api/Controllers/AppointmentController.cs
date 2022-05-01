@@ -77,29 +77,6 @@ namespace aspnet_core_api.Controllers
             });
         }
 
-        [HttpDelete]
-        public async Task<ActionResult<User>> DeleteAppointment(Guid id)
-        {
-            try
-            {
-                await _appointmentRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-                return BadRequest(new
-                {
-                    Status = "Error",
-                    Message = "Couldn't delete appointment"
-                });
-            }
-
-            return Ok(new
-            {
-                Status = "Success",
-                Message = "Appointment deleted successfully!"
-            });
-        }
-
 
         // POST: api/Appointment
 
@@ -124,7 +101,29 @@ namespace aspnet_core_api.Controllers
 
             return CreatedAtAction(nameof(GetAppointments), new { id = appointment.Id }, newAppointment);
         }
-       
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<User>> DeleteAppointment(Guid id)
+        {
+            try
+            {
+                await _appointmentRepository.Delete(id);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new
+                {
+                    Status = "Error",
+                    Message = "Couldn't delete appointment"
+                });
+            }
+
+            return Ok(new
+            {
+                Status = "Success",
+                Message = "Appointment deleted successfully!"
+            });
+        }
 
     }
 }
