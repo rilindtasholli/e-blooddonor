@@ -26,6 +26,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 //Dependency Injections
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 
 
 builder.Services.AddControllers();
