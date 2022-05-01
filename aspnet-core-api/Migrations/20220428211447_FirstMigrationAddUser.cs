@@ -24,12 +24,29 @@ namespace aspnet_core_api.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+               name: "Announcement",
+               columns: table => new
+               {
+                   Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                   Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                   BloodType = table.Column<string>(type: "nvarchar(max)", nullable: true)
+               },
+               constraints: table =>
+               {
+                   table.PrimaryKey("PK_Announcement", x => x.Id);
+               });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Users");
+            migrationBuilder.DropTable(
+                name: "Announcement");
         }
     }
 }

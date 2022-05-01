@@ -5,7 +5,7 @@ VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "eblooddonor-app", "eblooddonor-app\eblooddonor-app.esproj", "{0618D09E-8ED3-4149-A7FB-68E7D7665D17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aspnet-core-api", "aspnet-core-api\aspnet-core-api.csproj", "{883C0A9C-838A-45DD-82BD-26DA725B6D48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "aspnet-core-api", "aspnet-core-api\aspnet-core-api.csproj", "{883C0A9C-838A-45DD-82BD-26DA725B6D48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
