@@ -12,6 +12,7 @@
         public string? Location { get; set; }
 
         public string? Bloodtype { get; set; }
+        public List<Appointment>? Appointments { get; set; }
 
     }
 }
