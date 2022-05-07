@@ -14,6 +14,7 @@ namespace aspnet_core_api.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Announcement> Announcements { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
