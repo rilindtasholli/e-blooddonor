@@ -1,9 +1,11 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnet_core_api.Models
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -18,6 +20,8 @@ namespace aspnet_core_api.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             //compute FullName property
             modelBuilder.Entity<User>()
                 .Property(p => p.FullName)
@@ -26,6 +30,19 @@ namespace aspnet_core_api.Models
             modelBuilder.Entity<Appointment>()
                 .Property(a => a.Status)
                 .HasDefaultValue("Pending");
+
+            modelBuilder.Entity<IdentityRole>().HasData(
+               new IdentityRole
+               {
+                   Name = "User",
+                   NormalizedName = "USER"
+               },
+               new IdentityRole
+               {
+                   Name = "Admin",
+                   NormalizedName = "ADMIN"
+               }
+               );
         }
 
     }

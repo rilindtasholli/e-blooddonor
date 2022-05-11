@@ -17,7 +17,7 @@ namespace aspnet_core_api.Repositories
             return await _context.Users.ToListAsync();
         }
 
-        public async Task<User> Get(Guid id)
+        public async Task<User> Get(string id)
         {
             return _context.Users.Where(u => u.Id == id).FirstOrDefault();
         }
@@ -38,7 +38,7 @@ namespace aspnet_core_api.Repositories
             return user;
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(string id)
         {
             var userToDelete = await _context.Users.FindAsync(id);
             _context.Users.Remove(userToDelete);

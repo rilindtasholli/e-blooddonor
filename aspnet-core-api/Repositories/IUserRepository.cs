@@ -5,9 +5,9 @@ namespace aspnet_core_api.Repositories
     public interface IUserRepository
     {
         Task<IEnumerable<User>> Get();
-        Task<User> Get(Guid id);
+        Task<User> Get(string id);
         Task<User> Create(User user);
         Task<User> Update(User user);
-        Task Delete(Guid id);
+        Task Delete(string id);
     }
 }

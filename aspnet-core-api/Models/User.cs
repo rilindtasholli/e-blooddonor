@@ -1,8 +1,9 @@
-﻿namespace aspnet_core_api.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace aspnet_core_api.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        public Guid Id { get; set; }
 
         // FullName will be computed automatically
         public string? FullName { get; private set; }
@@ -14,5 +15,7 @@
         public string? Location { get; set; }
 
         public string? BloodType { get; set; }
+
+        public List<Appointment>? Appointments { get; set; }
     }
 }
