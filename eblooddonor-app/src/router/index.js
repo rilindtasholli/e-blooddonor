@@ -84,6 +84,16 @@ const routes = [
       },
     ],
   },
+
+   //---------------- Admin Panel ----------------
+   { 
+    path: '/admin/dashboard',
+    // component: () => import(/* webpackChunkName: "dashboard" */ "../views/Admin/Dashboard.vue"),
+  },
+  { 
+    path: '/admin/users',
+    component: () => import(/* webpackChunkName: "users" */ "../views/Admin/Users.vue"),
+  },
 ];
 
 const router = new VueRouter({

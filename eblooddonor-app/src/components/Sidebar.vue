@@ -29,6 +29,18 @@
         </li>
       </ul>
     </div>
+
+     <div class="admin-links">
+      <ul>
+        <h3 class="admin-panel-title">Admin Panel</h3>
+        <li>
+          <router-link to="/admin/users">
+              <font-awesome-icon :icon="['fas', 'users']" />
+              Users
+          </router-link>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -137,6 +149,12 @@ ul a:hover {
 .main-links .router-link-active,
 .main-links .router-link-active:hover {
   background-color: rgba(185, 35, 48, 0.932);
+  color: white;
+}
+
+.admin-links .router-link-exact-active,
+.admin-links .router-link-exact-active:hover {
+  background-color: rgba(35, 75, 185, 0.932);
   color: white;
 }
 </style>
