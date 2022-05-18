@@ -39,6 +39,18 @@
               Users
           </router-link>
         </li>
+          <li>
+          <router-link to="/admin/announcements">
+              <font-awesome-icon :icon="['fas', 'bullhorn']" />
+               Announcements
+          </router-link>
+        </li>
+          <li>
+          <router-link to="/admin/messages">
+              <font-awesome-icon :icon="['fas', 'message']" />
+               Messages
+          </router-link>
+        </li>
       </ul>
     </div>
   </div>
