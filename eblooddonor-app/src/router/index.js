@@ -94,6 +94,10 @@ const routes = [
     path: '/admin/users',
     component: () => import(/* webpackChunkName: "users" */ "../views/Admin/Users.vue"),
   },
+  { 
+    path: '/admin/appointments',
+    component: () => import(/* webpackChunkName: "appointments" */ "../views/Admin/Appointments.vue"),
+  },
 ];
 
 const router = new VueRouter({

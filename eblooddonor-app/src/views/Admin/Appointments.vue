@@ -1,22 +1,22 @@
 <template>
-  <v-app id="users">
+  <v-app id="appointments">
     <div class="main">
-      <h1><font-awesome-icon :icon="['fas', 'users']" /> All Users</h1>
+      <h1><font-awesome-icon :icon="['fas', 'calendar']" /> All Appointments</h1>
 
       <div>
-        <h3 v-if="!users">Loading...</h3>
+        <h3 v-if="!appointments">Loading...</h3>
 
         <v-data-table
           v-else
           :headers="headers"
-          :items="users"
+          :items="appointments"
           :items-per-page="5"
           :search="search"
           class="elevation-1"
         >
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Users</v-toolbar-title>
+              <v-toolbar-title>Appointments</v-toolbar-title>
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
@@ -30,7 +30,7 @@
                         v-bind="attrs"
                         v-on="on"
                         >
-                        New Item
+                        New Appointments
                     </v-btn>
                 </template>
                 <v-card>
@@ -44,53 +44,41 @@
                       <v-row>
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
-                            v-model="editedItem.fname"
-                            label="First Name"
-                          ></v-text-field>
-                        </v-col>
-
-                        <v-col cols="12" sm="6" md="6">
-                          <v-text-field
-                            v-model="editedItem.lname"
-                            label="Last Name"
+                            v-model="editedItem.announcement"
+                            label="Announcement"
                           ></v-text-field>
                         </v-col>
                       </v-row>
+
                       
                       <!-- 2nd Row -->
                       <v-row>
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
-                            v-model="editedItem.email"
-                            label="Email"
+                            v-model="editedItem.date"
+                            label="Appointment date"
                           ></v-text-field>
                         </v-col>
-
-                        <v-col cols="12" sm="6" md="6">
-                          <v-select
-                            :items="cities"
-                            v-model="editedItem.city"
-                            label="City"
-                          ></v-select>
-                        </v-col>
                       </v-row>
+
 
                       <!-- 3rd Row -->
                       <v-row>
                         <v-col cols="12" sm="6" md="6">
-                          <v-select
-                            :items="bloodtypes"
-                            v-model="editedItem.bloodtype"
-                            label="Blood Type"
-                          ></v-select>
+                           <v-text-field
+                            v-model="editedItem.status"
+                            label="Status"
+                          ></v-text-field>
                         </v-col>
+                      </v-row>
 
+                       <!-- 4th Row -->
+                      <v-row>
                         <v-col cols="12" sm="6" md="6">
-                          <v-select
-                            :items="roles"
-                            v-model="editedItem.role"
-                            label="Role"
-                          ></v-select>
+                           <v-text-field
+                            v-model="editedItem.user"
+                            label="User"
+                          ></v-text-field>
                         </v-col>
                       </v-row>
 
@@ -105,7 +93,7 @@
                     </p>
                   </v-card-text>
                   
-                  <v-card-actions>
+                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="close">
                       Cancel
@@ -115,13 +103,13 @@
                     </v-btn>
                   </v-card-actions>
                 </v-card>
-              </v-dialog> <!-- End of Edit Modal -->
+              </v-dialog>
 
               <!-- Delete Modal -->
-              <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-dialog v-model="dialogDelete" max-width="600px">
                 <v-card>
                   <v-card-title class="text-h5"
-                    >Are you sure you want to delete this item?</v-card-title
+                    >Are you sure you want to delete this Appointment?</v-card-title
                   >
                   <v-card-actions>
                     <v-spacer></v-spacer>
@@ -147,12 +135,16 @@
               ></v-text-field>
             </v-container>
           </template>
-           <template v-slot:item.actions="{ item }">
-         <!-- <template v-slot:[`item.actions`]="{ item }"> -->
-            <v-icon small class="mr-2" @click="editItem(item)">
-              mdi-pencil
-            </v-icon>
-            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+          <template v-slot:[`item.actions`]="{ item }">
+            <v-icon style="margin-left: 5px"
+             small @click="deleteItem(item)"> mdi-delete </v-icon>
+                <v-btn
+              style="margin-right= 100px"
+              color="primary"
+              small
+              @click="approve(item)"
+              >Approve</v-btn
+            >
           </template>
           <!-- <template v-slot:no-data>
                     <v-btn
@@ -183,12 +175,10 @@ export default {
         sortable: false,
         value: "id",
         },
-        { text: "First Name", value: "fname" },
-        { text: "Last Name", value: "lname" },
-        { text: "Email", value: "email" },
-        { text: "Bloodtype", value: "bloodtype" },
-        { text: "Role", value: "role" },
-        { text: "City", value: "city" },
+        { text: "Announcement", value: "announcement" },
+        { text: "Date", value: "date" },
+        { text: "Status", value: "status" },
+        { text: "User", value: "user" },
         { text: "Actions", value: "actions", sortable: false },
     ],
 
@@ -196,30 +186,25 @@ export default {
     editedItem: {
         id: "",
         name: "",
-        email: "",
-        bloodtype: "",
-        role: "",
-        city: "",
+        date: "",
+        status: "",
+        user: "",
     },
     defaultItem: {
         id: "",
-        fname: "",
-        lname: "",
-        email: "",
-        bloodtype: "",
-        role: "",
-        city: "",
+        announcement: "",
+        date: "",
+        status: "",
+        user: "",
     },
 
-    users: [
+   appointments : [
         {
             id: 'asd654asd4as4d6',
-            fname: 'Filan',
-            lname: 'Fisteku',
-            email: 'filan@gmail.com',
-            bloodtype: 'B+',
-            role: 'user',
-            city: 'Prishtinë'
+            announcement: 'test',
+            date: '2022-05-18',
+            status: 'approved',
+            user: 'Filan'
         }
     ],
 
@@ -228,9 +213,9 @@ export default {
     }),
 
     computed: {
-        ...mapGetters(["roles", "cities", "bloodtypes"]),
+        ...mapGetters(["appointments"]),
         formTitle() {
-            return this.editedIndex === -1 ? "New Item" : "Edit Item";
+            return this.editedIndex === -1 ? "New Appointment" : "Edit Appointment";
         },
     },
 
@@ -245,13 +230,13 @@ export default {
 
     methods: {
         editItem(item) {
-            this.editedIndex = this.users.indexOf(item);
+            this.editedIndex = this.appointments.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
 
         deleteItem(item) {
-            this.editedIndex = this.users.indexOf(item);
+            this.editedIndex = this.appointments.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },

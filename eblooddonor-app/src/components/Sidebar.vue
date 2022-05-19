@@ -39,6 +39,12 @@
               Users
           </router-link>
         </li>
+         <li>
+          <router-link to="/admin/appointments">
+              <font-awesome-icon :icon="['fas', 'appointments']" />
+             Appointments
+          </router-link>
+        </li>
       </ul>
     </div>
   </div>
