@@ -17,9 +17,13 @@
             </div>
            
             <div>
-                <div class="register-login">
+                <div v-if="!isAuthenticated" class="register-login">
                     <router-link to="/user/register"><button class="register-btn">Register</button></router-link>
                     <router-link to="/user/login"><button class="login-btn">Login</button></router-link>
+                </div>
+
+                 <div v-else class="logout">
+                    <button @click="logout" class="logout-btn">Logout <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /></button>
                 </div>
             </div>
         </div>
@@ -27,12 +31,21 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
-    methods:{
+    computed: {
+        ...mapGetters(['isAuthenticated'])
+    },
+    methods: {
         toggleSideBar(){
             this.$store.dispatch('toggleSideBar')
         },
+        logout(){
+            this.$store.dispatch('Logout')
+            this.$router.push('/user/login')
+            location.reload(); 
+        }
     }
 }
 </script>

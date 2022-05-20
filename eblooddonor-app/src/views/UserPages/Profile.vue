@@ -18,14 +18,14 @@
             </div>
 
             <div class="basic-info">
-              <h2 class="name">Filan Fisteku</h2>
+              <h2 class="name">{{ userData.fname }} {{ userData.lname }}</h2>
               
               <!-- <img src="../assets/star.png" style="background: linear-gradient(121deg, rgba(153,111,94,1) 0%, rgba(163,148,141,1) 50%, rgba(153,111,94,1) 100%); " class="account-level" /> -->
             </div>
             
             <span class="email">
                 <font-awesome-icon :icon="['fas', 'envelope']" />
-                filanfisteku@gmail.com
+                {{ userData.email }}
             </span>
             <span class="city">
                 <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
@@ -34,7 +34,7 @@
           </div>
           <div class="header-bottom">
             <div class="blood-type">
-              <span class="info-value">B+</span>
+              <span class="info-value">{{ userData.bloodtype }}</span>
               <span class="info-title">Blood Type</span>
             </div>
             <div class="donations">
@@ -45,6 +45,10 @@
         </div>
 
         <div class="profile-bottom">
+           <button @click="Test()">
+              <font-awesome-icon :icon="['fas', 'calendar-check']" />
+              TEST
+            </button>
 
           <router-link class="appointmentBtn" to="/user/appointments">
             <button >
@@ -69,8 +73,24 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 
-export default {}
+export default {
+  computed: {
+    ...mapGetters(['userData'])
+  },
+  methods: {
+    Test(){
+      this.$store.dispatch('Test')
+    }
+  },
+  mounted(){
+    if(!this.$store.getters.isAuthenticated){
+      this.$router.back()
+    }
+  },
+  
+}
 
 </script>
 

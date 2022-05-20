@@ -3,6 +3,14 @@
     <span class="closeBtn" @click="toggleSideBar()">×</span>
     <div class="main-links">
       <ul>
+        <button @click="Test()">
+          
+            <font-awesome-icon :icon="['fas', 'user']" />
+            TEST
+          
+        </button>
+
+
         <li @click="toggleSideBar()">
           <router-link to="/home">
             <font-awesome-icon :icon="['fas', 'home']" />
@@ -61,7 +69,10 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
   computed: mapGetters(["sideBarOpen"]),
-  methods: mapActions(["toggleSideBar"]),
+  methods: {...mapActions(["toggleSideBar"]),
+  Test(){
+      this.$store.dispatch('Test')
+    }},
 };
 </script>
 

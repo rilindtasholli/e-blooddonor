@@ -3,13 +3,15 @@ import Vuex from "vuex"
 import createPersistedState from "vuex-persistedstate"
 import sidebar from './modules/sidebar'
 import data from './modules/data'
+import authentication from './modules/authentication'
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     sidebar,
-    data
+    data,
+    authentication
   },
   plugins: [createPersistedState()],
 });

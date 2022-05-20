@@ -22,7 +22,7 @@
           <span>{{ announcement.participants.length }}</span>
         </div>
       </div>
-      <div class="announcement-footer">
+      <div v-if="isAuthenticated" class="announcement-footer">
         <VueDatePicker
           v-model="date"
           
@@ -33,10 +33,17 @@
           Set Appointment
         </button>
       </div>
-      
-      <hr>
 
-      <p class="click-here">To schedule a new appointment without participating in this announcement <router-link to="/home/appointment">click here</router-link></p>
+      <div v-else class="announcement-footer">
+        <p class="click-here">
+          <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+          Please <router-link to="/user/login">login</router-link> first in order to set an appointment!
+        </p>
+      </div>
+      
+      <hr v-if="isAuthenticated">
+
+      <p v-if="isAuthenticated" class="click-here">To schedule a new appointment without participating in this announcement <router-link to="/home/appointment">click here</router-link></p>
       
     </div>
   </div>
@@ -47,6 +54,7 @@
 import BackButton from '@/components/BackButton.vue'
 import { VueDatePicker } from "@mathieustan/vue-datepicker";
 import "@mathieustan/vue-datepicker/dist/vue-datepicker.min.css";
+import { mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -66,6 +74,8 @@ export default {
       date: null
     };
   },
+
+  computed: mapGetters(['isAuthenticated'])
 };
 </script>
 
@@ -170,6 +180,9 @@ svg {
 }
 .click-here a:hover{
   color: rgb(104, 62, 255);
+}
+.click-here svg{
+  color: rgb(216, 131, 61);
 }
 
 .photo-show img {

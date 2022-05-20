@@ -9,7 +9,7 @@
           class="profile-image"
           alt="profile icon"
         />
-        <form @submit.prevent="submit">
+        <form @submit.prevent="handleSubmit">
           <div class="input-label">
             <label for="email"
               ><font-awesome-icon :icon="['fas', 'envelope']" /> Email</label
@@ -45,6 +45,7 @@
 
 <script>
 import BackButton from "../../components/BackButton.vue";
+import { mapActions } from "vuex";
 
 export default {
   components: { BackButton },
@@ -58,6 +59,25 @@ export default {
       errorMessage: "",
     };
   },
+  
+  methods: {
+    ...mapActions(['Login']),
+
+    async handleSubmit(){
+      var data = {
+        email: this.form.email,
+        password: this.form.password
+      }
+      
+      await this.Login(data).then(() => {
+        this.$router.push('/user/profile')
+      }).catch((error) => {
+        console.error(error);
+      });
+
+      
+    }
+  }
 };
 </script>
 

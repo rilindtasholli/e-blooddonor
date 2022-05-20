@@ -1,4 +1,5 @@
 ﻿using aspnet_core_api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -118,6 +119,15 @@ namespace aspnet_core_api.Controllers
             );
 
             return token;
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("test")]
+        public async Task<IActionResult> Test()
+        {
+
+            return Ok( new {message = "Success" });
         }
     }
 }

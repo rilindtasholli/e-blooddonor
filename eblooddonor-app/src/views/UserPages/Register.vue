@@ -9,18 +9,31 @@
           class="profile-image"
           alt="profile icon"
         />
-        <form @submit.prevent="submit">
+        <form @submit.prevent="handleSubmit">
           <div class="input-label">
             <label for="name"
-              ><font-awesome-icon :icon="['fas', 'user']" /> Name</label
+              ><font-awesome-icon :icon="['fas', 'user']" /> First Name</label
             >
             <input
               type="text"
               name="name"
-              v-model="form.name"
-              placeholder="Enter your full name"
+              v-model="form.fname"
+              placeholder="Enter your first name"
             />
           </div>
+
+          <div class="input-label">
+            <label for="name"
+              ><font-awesome-icon :icon="['fas', 'user']" /> Last Name</label
+            >
+            <input
+              type="text"
+              name="name"
+              v-model="form.lname"
+              placeholder="Enter your last name"
+            />
+          </div>
+          
 
           <div class="input-label">
             <label for="email"
@@ -60,7 +73,7 @@
             <label for="city"
               ><font-awesome-icon :icon="['fas', 'fa-home']" /> City</label
             >
-            <select>
+            <select v-model="form.city" class="select-city">
               <option disabled>Select City</option>
               <option>Prishtinë</option>
               <option>Mitrovicë</option>
@@ -110,12 +123,15 @@
 
 <script>
 import BackButton from "../../components/BackButton.vue";
+import { mapActions } from "vuex";
+
 export default {
   components: { BackButton },
   data() {
     return {
       form: {
-        name: "",
+        fname: "",
+        lname: "",
         email: "",
         bloodtype: "0-",
         city: "Prishtinë",
@@ -126,6 +142,30 @@ export default {
       errorMessage: "",
     };
   },
+  methods: {
+    ...mapActions(['Register']),
+
+    async handleSubmit(){
+      var userData = {
+        email: this.form.email,
+        firstName: this.form.fname,
+        lastName: this.form.lname,
+        bloodType: this.form.bloodtype,
+        location: this.form.city,
+        password: this.form.password,
+        confirmPassword: this.form.passwordConfirm
+      }
+
+      console.log(userData)
+
+      await this.Register(userData).then((response) => {
+        console.log(response)
+        this.$router.push('/user/login')
+      }).catch((error) => {
+        console.error(error)
+      })
+    }
+  }
 };
 </script>
 

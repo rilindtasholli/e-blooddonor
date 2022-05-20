@@ -4,6 +4,8 @@ import VueRouter from "vue-router";
 import Home from "@/views/Home";
 import User from "@/views/User";
 
+import store from "../store";
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -57,6 +59,7 @@ const routes = [
     children: [
       {
         path: "profile",
+        meta: { requiresAuth: true },
         component: () =>
           import(
             /* webpackChunkName: "user" */ "../views/UserPages/Profile.vue"
@@ -109,5 +112,63 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+
+router.beforeEach((to, from, next) => {
+
+  //if token is invalid or expired -> Logout
+  if(checkIfAuthenticated() && !checkToken()){
+    store.dispatch('Logout')
+    next("/user/login");
+    location.reload();
+  }
+
+  //if user is authenticated and tries to navigate to Login/Register
+  if(checkIfAuthenticated() && (to.path == '/user/login' || to.path == '/user/register')){
+    next("/user/profile");
+  }
+
+  //check authentication for every page that requires to be authenticated
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    
+    if(checkIfAuthenticated()){
+      next();
+      return;
+    }
+  
+    console.log('router: notAuthenticated')
+    next("/user/login");
+
+  }
+
+  next();
+});
+
+function checkIfAuthenticated(){
+  return store.getters.isAuthenticated
+}
+
+function checkToken(){
+  
+  if(localStorage.getItem('jwt') == store.getters.jwt.token){
+    var currentTime = new Date();
+    var tokenDate = new Date(store.getters.jwt.expiration)
+
+    if(currentTime > tokenDate){
+      console.error('checkToken: token expired')
+      return false
+    }
+
+    console.log('checkToken: token is not expired yet!')
+    return true
+
+  }else{
+    console.error('checkToken: invalid token')
+    return false
+  }
+
+}
+
+
 
 export default router;

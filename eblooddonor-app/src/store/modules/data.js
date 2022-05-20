@@ -1,6 +1,6 @@
 
 const state = {
-    roles: ['super-admin', 'admin', 'user'],
+    roles: ['superAdmin', 'admin', 'user'],
     bloodtypes: ["O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-"],
     cities: ["Prishtinë", "Mitrovicë", "Pejë", "Prizren", "Ferizaj", "Gjilan", "Gjakovë"]
 };

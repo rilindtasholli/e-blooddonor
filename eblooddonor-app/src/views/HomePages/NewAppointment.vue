@@ -11,7 +11,7 @@
 
       <div class="info">
         <div class="city">
-          <div class="input-label">
+          <div v-if="isAuthenticated" class="input-label">
             <label style="font-weight: bold" for="city">
               <font-awesome-icon :icon="['fas', 'map-marker-alt']" />Location:
             </label>
@@ -28,14 +28,21 @@
           </div>
         </div>
       </div>
-      <div class="appointment-footer">
+      <div v-if="isAuthenticated" class="appointment-footer">
         <VueDatePicker v-model="date" placeholder="Choose date" no-header />
         <button class="apply-button">Set Appointment</button>
       </div>
 
-      <hr />
+      <div v-else class="appointment-footer">
+        <p class="click-here">
+          <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+          Please <router-link to="/user/login">login</router-link> first in order to set an appointment!
+        </p>
+      </div>
 
-      <p class="click-here">
+      <hr v-if="isAuthenticated"/>
+
+      <p v-if="isAuthenticated" class="click-here">
         To participate in an announcement
         <router-link to="/">click here</router-link>
       </p>
@@ -47,6 +54,7 @@
 import BackButton from "@/components/BackButton.vue";
 import { VueDatePicker } from "@mathieustan/vue-datepicker";
 import "@mathieustan/vue-datepicker/dist/vue-datepicker.min.css";
+import { mapGetters } from "vuex";
 
 export default {
   components: {
@@ -66,6 +74,8 @@ export default {
       date: null,
     };
   },
+
+  computed: mapGetters(['isAuthenticated'])
 };
 </script>
 
@@ -197,6 +207,9 @@ select {
 }
 .click-here a:hover {
   color: rgb(42, 0, 192);
+}
+.click-here svg{
+  color: rgb(216, 131, 61);
 }
 
 .photo-show img {
