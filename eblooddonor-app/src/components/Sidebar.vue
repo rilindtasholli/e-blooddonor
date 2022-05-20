@@ -3,13 +3,10 @@
     <span class="closeBtn" @click="toggleSideBar()">×</span>
     <div class="main-links">
       <ul>
-        <button @click="Test()">
-          
-            <font-awesome-icon :icon="['fas', 'user']" />
-            TEST
-          
-        </button>
-
+        
+        <!-- <button @click="Test()">
+            <font-awesome-icon :icon="['fas', 'user']" />TEST
+        </button> -->
 
         <li @click="toggleSideBar()">
           <router-link to="/home">
@@ -38,7 +35,7 @@
       </ul>
     </div>
 
-     <div class="admin-links">
+     <div v-if="isAuthenticated" class="admin-links">
       <ul>
         <h3 class="admin-panel-title">Admin Panel</h3>
         <li>
@@ -47,13 +44,19 @@
               Users
           </router-link>
         </li>
-          <li>
+        <li>
           <router-link to="/admin/announcements">
               <font-awesome-icon :icon="['fas', 'bullhorn']" />
                Announcements
           </router-link>
         </li>
-          <li>
+        <li>
+          <router-link to="/admin/appointments">
+              <font-awesome-icon :icon="['fas', 'calendar-check']" />
+              Appointments
+          </router-link>
+        </li>
+        <li>
           <router-link to="/admin/messages">
               <font-awesome-icon :icon="['fas', 'message']" />
                Messages
@@ -68,7 +71,7 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(["sideBarOpen"]),
+  computed: mapGetters(["sideBarOpen", "isAuthenticated"]),
   methods: {...mapActions(["toggleSideBar"]),
   Test(){
       this.$store.dispatch('Test')

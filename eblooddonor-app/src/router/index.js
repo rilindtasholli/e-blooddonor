@@ -97,11 +97,15 @@ const routes = [
     path: '/admin/users',
     component: () => import(/* webpackChunkName: "users" */ "../views/Admin/Users.vue"),
   },
-   { 
+  { 
     path: '/admin/announcements',
     component: () => import(/* webpackChunkName: "announcements" */ "../views/Admin/Announcements.vue"),
   },
-    { 
+  { 
+    path: '/admin/appointments',
+    component: () => import(/* webpackChunkName: "appointments" */ "../views/Admin/Appointments.vue"),
+  },
+  { 
     path: '/admin/messages',
     component: () => import(/* webpackChunkName: "messages" */ "../views/Admin/Messages.vue"),
   },

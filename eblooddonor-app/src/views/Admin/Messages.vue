@@ -22,18 +22,19 @@
 
              
               <!-- Delete Modal -->
-              <v-dialog v-model="dialogDelete" max-width="500px">
+              <v-dialog v-model="dialogDelete" max-width="450px">
                 <v-card>
-                  <v-card-title class="text-h5"
-                    >Are you sure you want to delete this message?</v-card-title
-                  >
+                  <v-card-title class="text-h5 text-center">
+                    <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+                    Are you sure you want to delete?
+                  </v-card-title>
                   <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="blue darken-1" text @click="closeDelete"
                       >Cancel</v-btn
                     >
                     <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                      >OK</v-btn
+                      >YES</v-btn
                     >
                     <v-spacer></v-spacer>
                   </v-card-actions>
@@ -185,6 +186,11 @@ export default {
 }
 
 #error {
+  color: rgb(201, 63, 63);
+}
+
+svg{
+  margin-right: 10px;
   color: rgb(201, 63, 63);
 }
 </style>

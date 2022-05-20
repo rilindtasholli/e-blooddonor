@@ -45,10 +45,10 @@
         </div>
 
         <div class="profile-bottom">
-           <button @click="Test()">
+           <!-- <button @click="Test()">
               <font-awesome-icon :icon="['fas', 'calendar-check']" />
               TEST
-            </button>
+            </button> -->
 
           <router-link class="appointmentBtn" to="/user/appointments">
             <button >
@@ -56,8 +56,6 @@
               Appointments
             </button>
           </router-link>
-
-          <!-- <a href="#history"><font-awesome-icon :icon="['fas', 'medal']"/> Rewards</a> -->
 
           <router-link to="/user/history">
             <button>
