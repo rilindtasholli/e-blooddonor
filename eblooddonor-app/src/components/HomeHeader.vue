@@ -5,7 +5,7 @@
         <div class="home-header">
           <font-awesome-icon :icon="['fas', 'face-smile']"></font-awesome-icon>
           <div class="home-header-top">
-            <h1>Welcome back, <strong>Filan</strong></h1>
+            <h1>Welcome back, <strong>{{ userData.fname }}</strong></h1>
             <p>You don't have any appointments!</p>
           </div>
 
@@ -62,7 +62,7 @@ export default {
       this.$store.dispatch("toggleSideBar");
     },
   },
-  computed: mapGetters(['isAuthenticated'])
+  computed: mapGetters(['isAuthenticated', 'userData'])
 };
 </script>
 

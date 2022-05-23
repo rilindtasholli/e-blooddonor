@@ -22,7 +22,7 @@
 
               <!-- New/Edit Modal -->
               <v-dialog v-model="dialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
+                <!-- <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
                         dark
@@ -32,7 +32,7 @@
                         >
                         New Item
                     </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
