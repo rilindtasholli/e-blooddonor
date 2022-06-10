@@ -58,14 +58,7 @@
               v-model="form.bloodtype"
             >
               <option disabled>Select blood type</option>
-              <option>0-</option>
-              <option>0+</option>
-              <option>A+</option>
-              <option>A-</option>
-              <option>B-</option>
-              <option>B+</option>
-              <option>AB-</option>
-              <option>AB+</option>
+              <option v-for="bloodtype in bloodtypes" :key="bloodtype">{{ bloodtype }}</option>
             </select>
           </div>
 
@@ -75,13 +68,7 @@
             >
             <select v-model="form.city" class="select-city">
               <option disabled>Select City</option>
-              <option>Prishtinë</option>
-              <option>Mitrovicë</option>
-              <option>Pejë</option>
-              <option>Prizren</option>
-              <option>Ferizaj</option>
-              <option>Gjilan</option>
-              <option>Gjakovë</option>
+              <option v-for="city in cities" :key="city">{{ city }}</option>
             </select>
           </div>
 
@@ -123,7 +110,7 @@
 
 <script>
 import BackButton from "../../components/BackButton.vue";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: { BackButton },
@@ -133,7 +120,7 @@ export default {
         fname: "",
         lname: "",
         email: "",
-        bloodtype: "0-",
+        bloodtype: "O+",
         city: "Prishtinë",
         password: "",
         passwordConfirm: "",
@@ -142,6 +129,11 @@ export default {
       errorMessage: "",
     };
   },
+
+  computed: {
+    ...mapGetters(['cities', 'bloodtypes'])
+  },
+
   methods: {
     ...mapActions(['Register']),
 

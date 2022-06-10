@@ -22,7 +22,7 @@
 
               <!-- New/Edit Modal -->
               <v-dialog v-model="dialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
+                <!-- <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
                         dark
@@ -32,7 +32,7 @@
                         >
                         New Item
                     </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
@@ -44,14 +44,14 @@
                       <v-row>
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
-                            v-model="editedItem.fname"
+                            v-model="editedItem.firstName"
                             label="First Name"
                           ></v-text-field>
                         </v-col>
 
                         <v-col cols="12" sm="6" md="6">
                           <v-text-field
-                            v-model="editedItem.lname"
+                            v-model="editedItem.lastName"
                             label="Last Name"
                           ></v-text-field>
                         </v-col>
@@ -69,8 +69,8 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-select
                             :items="cities"
-                            v-model="editedItem.city"
-                            label="City"
+                            v-model="editedItem.location"
+                            label="location"
                           ></v-select>
                         </v-col>
                       </v-row>
@@ -80,7 +80,7 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-select
                             :items="bloodtypes"
-                            v-model="editedItem.bloodtype"
+                            v-model="editedItem.bloodType"
                             label="Blood Type"
                           ></v-select>
                         </v-col>
@@ -170,7 +170,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -184,12 +184,12 @@ export default {
         sortable: false,
         value: "id",
         },
-        { text: "First Name", value: "fname" },
-        { text: "Last Name", value: "lname" },
+        { text: "First Name", value: "firstName" },
+        { text: "Last Name", value: "lastName" },
         { text: "Email", value: "email" },
-        { text: "Bloodtype", value: "bloodtype" },
-        { text: "Role", value: "role" },
-        { text: "City", value: "city" },
+        { text: "BloodType", value: "bloodType" },
+        // { text: "Role", value: "role" },
+        { text: "location", value: "location" },
         { text: "Actions", value: "actions", sortable: false },
     ],
 
@@ -198,29 +198,29 @@ export default {
         id: "",
         name: "",
         email: "",
-        bloodtype: "",
+        bloodType: "",
         role: "",
-        city: "",
+        location: "",
     },
     defaultItem: {
         id: "",
-        fname: "",
-        lname: "",
+        firstName: "",
+        lastName: "",
         email: "",
-        bloodtype: "",
+        bloodType: "",
         role: "",
-        city: "",
+        location: "",
     },
 
     users: [
         {
             id: 'asd654asd4as4d6',
-            fname: 'Filan',
-            lname: 'Fisteku',
+            firstName: 'Filan',
+            lastName: 'Fisteku',
             email: 'filan@gmail.com',
-            bloodtype: 'B+',
+            bloodType: 'B+',
             role: 'user',
-            city: 'Prishtinë'
+            location: 'Prishtinë'
         }
     ],
 
@@ -228,8 +228,12 @@ export default {
         
     }),
 
+    created(){
+        this.updateUserList();
+    },
+
     computed: {
-        ...mapGetters(["roles", "cities", "bloodtypes"]),
+        ...mapGetters(["roles", "cities", "bloodtypes", "getUsers"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -245,6 +249,16 @@ export default {
     },
 
     methods: {
+        ...mapActions(["getAllUsers", "editUser", "deleteUser"]),
+
+        updateUserList(){
+            this.getAllUsers().then(()=>{
+              this.users = this.getUsers
+            }).catch((error) => {
+              console.log(error)
+            })
+        },
+
         editItem(item) {
             this.editedIndex = this.users.indexOf(item);
             this.editedItem = Object.assign({}, item);
@@ -258,6 +272,12 @@ export default {
         },
 
         deleteItemConfirm() {
+            this.deleteUser(this.editedItem.id).then(() => {
+              this.updateUserList();
+            }).catch((error) => {
+              console.log(error)
+            })
+
             this.closeDelete();
         },
 
@@ -267,7 +287,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
-            this.removeErrorMessage();
+            // this.removeErrorMessage();
         },
 
         closeDelete() {
@@ -279,6 +299,12 @@ export default {
         },
 
         save() {
+            this.editUser(this.editedItem).then(() => {
+              this.updateUserList();
+            }).catch((error) => {
+              console.log(error)
+            })
+
             this.close();
         }
     }

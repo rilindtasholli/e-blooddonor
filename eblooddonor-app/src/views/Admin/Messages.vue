@@ -84,8 +84,7 @@ export default {
         sortable: false,
         value: "id",
         },
-        { text: "First Name", value: "fname" },
-        { text: "Last Name", value: "lname" },
+        { text: "Title", value: "title" },
         { text: "Email", value: "email" },
         { text: "Message", value: "message"},
         { text: "Actions", value: "actions", sortable: false },
@@ -94,14 +93,13 @@ export default {
     editedIndex: -1,
     editedItem: {
         id: "",
-        name: "",
+        title: "",
         email: "",
         message: ""
     },
     defaultItem: {
         id: "",
-        fname: "",
-        lname: "",
+        title: "",
         email: "",
         message: ""
     },
@@ -109,10 +107,9 @@ export default {
     messages: [
         {
             id: 'asd654asd4as4d6',
-            fname: 'Filan',
-            lname: 'Fisteku',
+            title: 'title1',
             email: 'filan@gmail.com',
-            message: 'test'
+            message: 'This is a test message'
         }
     ],
 

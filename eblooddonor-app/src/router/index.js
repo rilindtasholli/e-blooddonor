@@ -77,11 +77,13 @@ const routes = [
       },
       {
         path: "appointments",
+        meta: { requiresAuth: true },
         component: () =>
           import(/* webpackChunkName: "user" */ "../views/UserPages/UserAppointments.vue"),
       },
       {
         path: "history",
+        meta: { requiresAuth: true },
         component: () =>
           import(/* webpackChunkName: "user" */ "../views/UserPages/DonationHistory.vue"),
       },
@@ -91,22 +93,27 @@ const routes = [
    //---------------- Admin Panel ----------------
    { 
     path: '/admin/dashboard',
+    meta: { requiresAuth: true },
     // component: () => import(/* webpackChunkName: "dashboard" */ "../views/Admin/Dashboard.vue"),
   },
   { 
     path: '/admin/users',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "users" */ "../views/Admin/Users.vue"),
   },
   { 
     path: '/admin/announcements',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "announcements" */ "../views/Admin/Announcements.vue"),
   },
   { 
     path: '/admin/appointments',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "appointments" */ "../views/Admin/Appointments.vue"),
   },
   { 
     path: '/admin/messages',
+    meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "messages" */ "../views/Admin/Messages.vue"),
   },
 ];

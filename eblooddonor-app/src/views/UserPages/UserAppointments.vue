@@ -26,7 +26,7 @@
                     </td>
                 </tr>
 
-                <tr>
+                <!-- <tr>
                     <td>2</td>
                     <td>19/06/2022</td>
                     <td> 
@@ -39,7 +39,7 @@
                             <font-awesome-icon :icon="['fas', 'trash']"></font-awesome-icon>
                         </button>
                     </td>
-                </tr>
+                </tr> -->
             </table>
 
             <div v-else class="no-appointments-message">

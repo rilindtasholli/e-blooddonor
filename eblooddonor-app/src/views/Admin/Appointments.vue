@@ -202,9 +202,9 @@ export default {
    appointments : [
         {
             id: 'asd654asd4as4d6',
-            announcement: 'test',
+            announcement: 'Kerkese Gjaku',
             date: '2022-05-18',
-            status: 'approved',
+            status: 'pending',
             user: 'Filan'
         }
     ],
