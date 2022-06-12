@@ -9,7 +9,7 @@
                 <th>#</th>
                 <th>Date</th>
                 <th>Announcement</th>
-                <th></th>
+                <th>Action</th>
 
                 <tr>
                     <td>1</td>
@@ -61,7 +61,8 @@
 </template>
 
 <script>
-import BackButton from '@/components/BackButton.vue'
+import BackButton from '@/components/BackButton.vue';
+import {mapGetters, mapActions} from "vuex";
 
 export default {
     components: {
@@ -80,7 +81,31 @@ export default {
                 }
             ]
         }
-    }
+    },
+
+   computed: {
+    ...mapGetters(["myappointments"]),
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+  },
+
+   created() {
+    this.updateMyAppointmentList();  
+  },
+
+   methods: {
+    ...mapActions(["getUserAppointments", "deleteAppointment"]),
+
+    updateMyAppointmentList(){
+        this.getUserAppointments().then(()=>{
+            this.appointments = this.getUserAppointments
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },
+
+   }
 }
 
 </script>

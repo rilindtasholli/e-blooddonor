@@ -162,7 +162,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -213,6 +213,10 @@ export default {
         
     }),
 
+    created(){
+      this.updateAppointmentList();
+    },
+
     computed: {
         ...mapGetters(["appointments"]),
         formTitle() {
@@ -230,6 +234,18 @@ export default {
     },
 
     methods: {
+
+        ...mapActions(["getAllAppointments", 
+        "deleteAppointment", "editAppointment"]),
+
+        updateAppointmentList(){
+          this.getAllAppointments().then(()=>{
+            this.appointments = this.getAllAppointments
+          }).catch((error)=>{
+            console.log(error)
+          })
+        },
+
         editItem(item) {
             this.editedIndex = this.appointments.indexOf(item);
             this.editedItem = Object.assign({}, item);
@@ -264,7 +280,12 @@ export default {
         },
 
         save() {
-            this.close();
+            this.editAppointment(this.editedItem).then(()=>{
+              this.updateAppointmentList();
+            }).catch((error)=>{
+              console.log(error)
+            })
+          this.close();
         }
     }
 };
