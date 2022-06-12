@@ -62,6 +62,12 @@
                Messages
           </router-link>
         </li>
+        <li>
+          <router-link to="/admin/logger">
+              <font-awesome-icon :icon="['fas', 'file-signature']" />
+               Logger
+          </router-link>
+        </li>
       </ul>
     </div>
   </div>

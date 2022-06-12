@@ -31,7 +31,8 @@ import {
   faFaceSmile,
   faAngleDown,
   faTrash,
-  faArrowRightFromBracket
+  faFileSignature,
+  faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 const importedIcons = {
@@ -57,6 +58,7 @@ const importedIcons = {
   faFaceSmile,
   faAngleDown,
   faTrash,
+  faFileSignature,
   faArrowRightFromBracket
 };
 

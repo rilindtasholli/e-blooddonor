@@ -116,6 +116,11 @@ const routes = [
     meta: { requiresAuth: true },
     component: () => import(/* webpackChunkName: "messages" */ "../views/Admin/Messages.vue"),
   },
+  { 
+    path: '/admin/logger',
+    meta: { requiresAuth: true },
+    component: () => import(/* webpackChunkName: "logger" */ "../views/Admin/Logger.vue"),
+  },
 ];
 
 const router = new VueRouter({
