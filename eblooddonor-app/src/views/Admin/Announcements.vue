@@ -22,7 +22,7 @@
 
               <!-- New/Edit Modal -->
               <v-dialog v-model="dialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
+                 <!-- <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
                         dark
@@ -32,7 +32,7 @@
                         >
                         New Item
                     </v-btn>
-                </template>
+                </template> -->
                 <v-card>
                   <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
@@ -60,9 +60,9 @@
                     <v-row>
                         <v-col cols="12" sm="6" md="6">
                           <v-select
-                            :items="cities"
-                            v-model="editedItem.city"
-                            label="City"
+                            :items="location"
+                            v-model="editedItem.location"
+                            label="Location"
                           ></v-select>
                         </v-col>
                      
@@ -72,7 +72,7 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-select
                             :items="bloodtypes"
-                            v-model="editedItem.bloodtype"
+                            v-model="editedItem.bloodType"
                             label="Blood Type"
                           ></v-select>
                         </v-col>
@@ -154,7 +154,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -171,8 +171,8 @@ export default {
         
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
-        { text: "Bloodtype", value: "bloodtype" },
-        { text: "City", value: "city" },
+        { text: "BloodType", value: "bloodType" },
+        { text: "Location", value: "location" },
         { text: "Actions", value: "actions", sortable: false },
     ],
 
@@ -181,15 +181,15 @@ export default {
         id: "",
         title: "",
         description: "",
-        bloodtype: "",
-        city: "",
+        bloodType: "",
+        location: "",
     },
     defaultItem: {
         id: "",
         title: "",
         description: "",
-        bloodtype: "",
-        city: "",
+        bloodType: "",
+        location: "",
     },
 
     announcements: [
@@ -197,8 +197,8 @@ export default {
             id: 'asd654asd4as4d6',
             title: "Kerkese Gjaku",
             description: 'Urgjente',
-            bloodtype: 'B+',
-            city: 'Prishtinë'
+            bloodType: 'B+',
+            location: 'Prishtinë'
         }
     ],
 
@@ -206,8 +206,12 @@ export default {
         
     }),
 
+     created(){
+        this.updateAnnouncementList();
+    },
+
     computed: {
-        ...mapGetters(["cities", "bloodtypes"]),
+        ...mapGetters(["location", "bloodtypes", "getAnnouncements"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -223,6 +227,15 @@ export default {
     },
 
     methods: {
+      ...mapActions(["getAllAnnouncements", "editAnnouncement", "deleteAnnouncement"]),
+
+        updateAnnouncementList(){
+            this.getAllAnnouncements().then(()=>{
+              this.announcements = this.getAllAnnouncements
+            }).catch((error) => {
+              console.log(error)
+            })
+        },
         editItem(item) {
             this.editedIndex = this.announcements.indexOf(item);
             this.editedItem = Object.assign({}, item);
@@ -236,6 +249,11 @@ export default {
         },
 
         deleteItemConfirm() {
+           this.deleteAnnouncement(this.editedItem.id).then(() => {
+              this.updateAnnouncementList();
+            }).catch((error) => {
+              console.log(error)
+            })
             this.closeDelete();
         },
 
@@ -245,7 +263,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
-            this.removeErrorMessage();
+           // this.removeErrorMessage();
         },
 
         closeDelete() {
@@ -257,6 +275,11 @@ export default {
         },
 
         save() {
+           this.editAnnouncement(this.editedItem).then(() => {
+              this.updateAnnouncementList();
+            }).catch((error) => {
+              console.log(error)
+            })
             this.close();
         }
     }
