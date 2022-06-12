@@ -91,10 +91,14 @@ const routes = [
   },
 
    //---------------- Admin Panel ----------------
-   { 
+   {
+    path: "/admin/",
+    redirect: "/admin/dashboard",
+  },
+  { 
     path: '/admin/dashboard',
     meta: { requiresAuth: true },
-    // component: () => import(/* webpackChunkName: "dashboard" */ "../views/Admin/Dashboard.vue"),
+    component: () => import(/* webpackChunkName: "dashboard" */ "../views/Admin/Dashboard.vue"),
   },
   { 
     path: '/admin/users',

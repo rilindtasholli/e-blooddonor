@@ -39,6 +39,12 @@
       <ul>
         <h3 class="admin-panel-title">Admin Panel</h3>
         <li>
+          <router-link to="/admin/dashboard">
+              <font-awesome-icon :icon="['fas', 'chart-pie']" />
+              Dashboard
+          </router-link>
+        </li>
+        <li>
           <router-link to="/admin/users">
               <font-awesome-icon :icon="['fas', 'users']" />
               Users

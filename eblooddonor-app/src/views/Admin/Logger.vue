@@ -1,22 +1,22 @@
 <template>
   <v-app id="logger">
     <div class="main">
-      <h1> <font-awesome-icon :icon="['fas', 'file-signature']" /> Logger</h1>
+      <h1> <font-awesome-icon :icon="['fas', 'file-signature']" /> All Logs</h1>
 
       <div>
-        <h3 v-if="!logger">Loading...</h3>
+        <h3 v-if="!logs">Loading...</h3>
 
         <v-data-table
           v-else
           :headers="headers"
-          :items="logger"
+          :items="logs"
           :items-per-page="5"
           :search="search"
           class="elevation-1"
         >
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Logger</v-toolbar-title>
+              <v-toolbar-title>Logs</v-toolbar-title>
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
@@ -180,12 +180,18 @@ export default {
         action: "",
     },
 
-    logger: [
+    logs: [
         {
-            id: 'asd654asd4as4d6',
-            datetime: "12-06-2022, 10:11",
-            user: 'admin - Filan1',
-            action: 'Approved a appointment',
+          id: 'asd654asd4as4d6',
+          datetime: "12-06-2022, 11:11:01",
+          user: 'Filan Fisteku',
+          action: 'Approved an appointment',
+        },
+        {
+          id: 'd4as4d6asd654as',
+          datetime: "12-06-2022, 10:20:55",
+          user: 'Filan Fisteku',
+          action: 'Created new announcement',
         }
     ],
 
@@ -211,13 +217,13 @@ export default {
 
     methods: {
         editItem(item) {
-            this.editedIndex = this.logger.indexOf(item);
+            this.editedIndex = this.logs.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
 
         deleteItem(item) {
-            this.editedIndex = this.logger.indexOf(item);
+            this.editedIndex = this.logs.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialogDelete = true;
         },
