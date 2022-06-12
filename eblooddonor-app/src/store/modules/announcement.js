@@ -24,8 +24,8 @@ const mutations = {
 };
 
 const actions = {
-    async getAllannouncements({ commit }){
-        await AnnouncementService.Getannouncements().then((response) => {
+    async getAllannouncement({ commit }){
+        await AnnouncementService.GetAnnouncement().then((response) => {
             commit('SET_ANNOUNCEMENTS', response.data);
         }).catch((error) => {
             throw error
