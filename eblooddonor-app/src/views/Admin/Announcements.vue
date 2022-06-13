@@ -22,7 +22,7 @@
 
               <!-- New/Edit Modal -->
               <v-dialog v-model="dialog" max-width="500px">
-                 <!-- <template v-slot:activator="{ on, attrs }">
+                <template v-slot:activator="{ on, attrs }">
                     <v-btn
                         color="primary"
                         dark
@@ -32,7 +32,7 @@
                         >
                         New Item
                     </v-btn>
-                </template> -->
+                </template>
                 <v-card>
                   <v-card-title>
                     <span class="text-h5">{{ formTitle }}</span>
@@ -60,7 +60,7 @@
                     <v-row>
                         <v-col cols="12" sm="6" md="6">
                           <v-select
-                            :items="location"
+                            :items="cities"
                             v-model="editedItem.location"
                             label="Location"
                           ></v-select>
@@ -211,7 +211,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["location", "bloodtypes", "getAnnouncements"]),
+        ...mapGetters(["cities", "bloodtypes", "getAnnouncements"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },

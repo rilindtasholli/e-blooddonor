@@ -33,7 +33,8 @@ import {
   faTrash,
   faFileSignature,
   faArrowRightFromBracket,
-  faChartPie
+  faChartPie,
+  faRankingStar
 } from "@fortawesome/free-solid-svg-icons";
 
 const importedIcons = {
@@ -61,7 +62,8 @@ const importedIcons = {
   faTrash,
   faFileSignature,
   faArrowRightFromBracket,
-  faChartPie
+  faChartPie,
+  faRankingStar
 };
 
 Vue.config.productionTip = false;
