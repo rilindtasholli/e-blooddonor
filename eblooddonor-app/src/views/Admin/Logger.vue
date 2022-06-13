@@ -20,80 +20,6 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
-              <!-- New/Edit Modal -->
-              <v-dialog v-model="dialog" max-width="500px">
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        color="primary"
-                        dark
-                        class="mb-2"
-                        v-bind="attrs"
-                        v-on="on"
-                        >
-                        New Item
-                    </v-btn>
-                </template>
-                <v-card>
-                  <v-card-title>
-                    <span class="text-h5">{{ formTitle }}</span>
-                  </v-card-title>
-
-                  <v-card-text>
-                    <v-container>
-                      <!-- 1st Row -->
-                        <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                          <v-text-field
-                            v-model="editedItem.datetime"
-                            label="DateTime"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-                      
-                    <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                          <v-select
-                            :items="users"
-                            v-model="editedItem.user"
-                            label="User"
-                          ></v-select>
-                        </v-col>
-                     
-
-                      <!-- 3rd Row -->
-                      
-                        <v-col cols="12" sm="6" md="6">
-                          <v-select
-                            :items="actions"
-                            v-model="editedItem.action"
-                            label="Action"
-                          ></v-select>
-                        </v-col>
-                  </v-row>
-                     
-
-                    </v-container>
-
-                    <!-- Error Message -->
-                    <p v-if="showError" id="error">
-                      <font-awesome-icon
-                        :icon="['fas', 'circle-exclamation']"
-                      />
-                      {{ errorMessage }}
-                    </p>
-                  </v-card-text>
-                  
-                  <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cancel
-                    </v-btn>
-                    <v-btn color="blue darken-1" text @click="save">
-                      Save
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog> <!-- End of Edit Modal -->
 
               <!-- Delete Modal -->
               <v-dialog v-model="dialogDelete" max-width="600px">
@@ -267,4 +193,10 @@ export default {
 #error {
   color: rgb(201, 63, 63);
 }
+
+svg{
+  margin-right: 10px;
+  color: rgb(201, 63, 63);
+}
+
 </style>
