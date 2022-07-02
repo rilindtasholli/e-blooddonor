@@ -17,15 +17,18 @@ namespace aspnet_core_api.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly Repositories.IAppointmentRepository _appointmentRepository;
 
 
         public AuthenticateController(
             UserManager<User> userManager,
-            IConfiguration configuration
+            IConfiguration configuration,
+            Repositories.IAppointmentRepository appointmentRepository
         )
         {
             _userManager = userManager;
             _configuration = configuration;
+            _appointmentRepository = appointmentRepository;
 
         }
 
@@ -52,15 +55,15 @@ namespace aspnet_core_api.Controllers
 
                 var token = GetToken(authClaims);
 
+                var appointments = await _appointmentRepository.GetUserAppointments(user.Id);
+                var donations = await _appointmentRepository.GetUserDonations(user.Id);
+
                 var userInfo = new
                 {
-                    id = user.Id,
-                    fname = user.FirstName,
-                    lname = user.LastName,
-                    email = user.Email,
-                    bloodtype = user.BloodType,
-                    roles = userRoles,
-                    appointments = user.Appointments
+                    userData = user,
+                    userRole = userRoles[0],
+                    userAppointments = appointments,
+                    userDonations = donations
                 };
 
                 return Ok(new
@@ -90,7 +93,8 @@ namespace aspnet_core_api.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 BloodType = model.BloodType,
-                Location = model.Location
+                Location = model.Location,
+                CreatedDate = DateTime.Now
             };
 
             try

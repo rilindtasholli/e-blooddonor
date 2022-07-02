@@ -1,6 +1,7 @@
 ﻿using aspnet_core_api.Models;
 using aspnet_core_api.Repositories;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnet_core_api.Controllers
@@ -10,9 +11,14 @@ namespace aspnet_core_api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
-        public UserController(IUserRepository userRepository)
+        private readonly UserManager<User> _userManager;
+        private readonly IAppointmentRepository _appointmentRepository;
+
+        public UserController(IUserRepository userRepository, UserManager<User> userManager, IAppointmentRepository appointmentRepository)
         {
             _userRepository = userRepository;
+            _userManager = userManager;
+            _appointmentRepository = appointmentRepository;
         }
 
         [HttpGet]
@@ -22,15 +28,27 @@ namespace aspnet_core_api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(string id)
+        public async Task<ActionResult<Object>> GetUser(string id)
         {
             try
             {
-                return await _userRepository.Get(id);
+                var user = await _userRepository.Get(id);
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var appointments = await _appointmentRepository.GetUserAppointments(user.Id);
+                var donations = await _appointmentRepository.GetUserDonations(user.Id);
+
+                return new
+                {
+                    userData = user,
+                    userRole = userRoles[0],
+                    userAppointments = appointments,
+                    userDonations = donations
+                };
             }
             catch (Exception)
             {
-                return BadRequest(new {
+                return BadRequest(new
+                {
                     Status = "Error",
                     Message = "Couldn't get user!"
                 });
@@ -86,6 +104,40 @@ namespace aspnet_core_api.Controllers
                 Status = "Success", 
                 Message = "User deleted successfully!" 
             });
+        }
+
+
+        [HttpGet("role/getAllAdmins")]
+        public async Task<IEnumerable<Object>> GetAllAdministrators()
+        {
+            return await _userRepository.GetAdmins(); ;
+        }
+
+        [HttpPut]
+        [Route("role/setUserRole")]
+        public async Task<IActionResult> SetUserRole(string id, string role)
+        {
+            role = role.ToUpper();
+
+            if (!(role == "USER" || role == "ADMIN" || role == "SUPERADMIN"))
+            {
+                return BadRequest(new { Message = "Invalid user role" });
+            }
+
+            //var user = await _userManager.FindByNameAsync(email);
+            var user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
+                return BadRequest(new { Message = "User not found" });
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            await _userManager.RemoveFromRolesAsync(user, roles.ToArray());
+            await _userManager.AddToRoleAsync(user, role);
+
+            return Ok(user);
         }
     }
 }

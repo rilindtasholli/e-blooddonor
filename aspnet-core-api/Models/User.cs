@@ -16,6 +16,8 @@ namespace aspnet_core_api.Models
 
         public string? BloodType { get; set; }
 
+        public DateTime CreatedDate { get; set; }
+
         public List<Appointment>? Appointments { get; set; }
     }
 }

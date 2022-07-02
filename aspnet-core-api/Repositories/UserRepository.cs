@@ -45,5 +45,24 @@ namespace aspnet_core_api.Repositories
             await _context.SaveChangesAsync();
         }
 
+
+        public async Task<IEnumerable<Object>> GetAdmins()
+        {
+            var result = (from user in _context.Users
+                          join userRole in _context.UserRoles on user.Id equals userRole.UserId
+                          join role in _context.Roles on userRole.RoleId equals role.Id
+                          where user.Id == userRole.UserId && (role.Name == "ADMIN" || role.Name == "SUPERADMIN")
+                          select new
+                          {
+                              Id = user.Id,
+                              Name = user.FullName,
+                              Email = user.Email,
+                              Location = user.Location,
+                              Role = role.Name
+                          });
+
+            return result;
+        }
+
     }
 }

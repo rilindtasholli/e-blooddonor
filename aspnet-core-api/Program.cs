@@ -57,6 +57,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
                 ));
 
+//ignore error when including enteties with relations
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
 // For Identity
 builder.Services.Configure<IdentityOptions>(options =>
 {

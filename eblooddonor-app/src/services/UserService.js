@@ -21,8 +21,17 @@ export default {
   },
   DeleteUser(id) {
     return apiClient.delete("/api/User/" + id)
+  },
+  
+  //Manage Admins (Roles)
+  GetAdmins() {
+    return apiClient.get("/api/User/role/getAllAdmins")
+  },
+  SetUserRole(id, role) {
+    return apiClient.put(`/api/User/role/setUserRole?id=${id}&role=${role}`)
+  },
+  GetUserRole(id) {
+    return apiClient.get("/api/User/role/getUserRole?id=" + id)
   }
-  // Test() {
-  //   return apiClient.get("/api/User")
-  // }
+  
 }

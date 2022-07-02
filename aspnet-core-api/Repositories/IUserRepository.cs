@@ -9,5 +9,7 @@ namespace aspnet_core_api.Repositories
         Task<User> Create(User user);
         Task<User> Update(User user);
         Task Delete(string id);
+
+        Task<IEnumerable<Object>> GetAdmins();
     }
 }

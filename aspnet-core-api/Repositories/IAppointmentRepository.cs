@@ -9,5 +9,8 @@ namespace aspnet_core_api.Repositories
         Task<Appointment> Create(Appointment appoint);
         Task<Appointment> Update(Appointment appoint);
         Task Delete(Guid id);
+
+        Task<IEnumerable<Object>> GetUserAppointments(string id);
+        Task<IEnumerable<Object>> GetUserDonations(string id);
     }
 }

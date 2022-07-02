@@ -41,6 +41,11 @@ namespace aspnet_core_api.Models
                {
                    Name = "Admin",
                    NormalizedName = "ADMIN"
+               },
+               new IdentityRole
+               {
+                   Name = "SuperAdmin",
+                   NormalizedName = "SUPERADMIN"
                }
                );
         }

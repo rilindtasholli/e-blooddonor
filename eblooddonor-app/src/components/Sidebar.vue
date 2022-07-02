@@ -35,16 +35,16 @@
       </ul>
     </div>
 
-     <div v-if="isAuthenticated" class="admin-links">
+     <div v-if="isAdmin || isSuperAdmin" class="admin-links">
       <ul>
         <h3 class="admin-panel-title">Admin Panel</h3>
-        <li>
+        <li v-if="isSuperAdmin">
           <router-link to="/admin/dashboard">
               <font-awesome-icon :icon="['fas', 'chart-pie']" />
               Dashboard
           </router-link>
         </li>
-        <li>
+        <li v-if="isSuperAdmin">
           <router-link to="/admin/users">
               <font-awesome-icon :icon="['fas', 'users']" />
               Users
@@ -68,7 +68,7 @@
                Messages
           </router-link>
         </li>
-        <li>
+        <li v-if="isSuperAdmin">
           <router-link to="/admin/logger">
               <font-awesome-icon :icon="['fas', 'file-signature']" />
                Logger
@@ -83,7 +83,7 @@
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(["sideBarOpen", "isAuthenticated"]),
+  computed: mapGetters(["sideBarOpen", "isAuthenticated",  "isAdmin", "isSuperAdmin"]),
   methods: {...mapActions(["toggleSideBar"]),
   Test(){
       this.$store.dispatch('Test')
@@ -190,8 +190,8 @@ ul a:hover {
   color: white;
 }
 
-.admin-links .router-link-exact-active,
-.admin-links .router-link-exact-active:hover {
+.admin-links .router-link-active,
+.admin-links .router-link-active:hover {
   background-color: rgba(35, 75, 185, 0.932);
   color: white;
 }

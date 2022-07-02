@@ -42,5 +42,32 @@ namespace aspnet_core_api.Repositories
 
             return appoint;
         }
+
+
+        public async Task<IEnumerable<Object>> GetUserAppointments(string id)
+        {
+            var result = await _context.Appointments.Where(a => a.Status == "Pending" && a.UserId == id)
+                .Select(a => new
+                {
+                    Id = a.Id,
+                    Date = a.Date,
+                    Location = a.Location,
+                    Announcement = a.Announcement
+                }).ToListAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<Object>> GetUserDonations(string id)
+        {
+            var result = await _context.Appointments.Where(a => a.Status == "Approved" && a.UserId == id)
+                .Select(a => new
+                {
+                    Id = a.Id,
+                    Date = a.Date,
+                    Location = a.Location,
+                    Announcement = a.Announcement
+                }).ToListAsync();
+            return result;
+        }
     }
 }

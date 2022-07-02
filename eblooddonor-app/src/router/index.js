@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 
 import Home from "@/views/Home";
 import User from "@/views/User";
+import Users from "@/views/Admin/Users";
 
 import store from "../store";
 
@@ -104,8 +105,24 @@ const routes = [
   },
   { 
     path: '/admin/users',
-    meta: { requiresAuth: true },
-    component: () => import(/* webpackChunkName: "users" */ "../views/Admin/Users.vue"),
+    component: Users,
+    meta: { requiresAuth: true, isSuperAdmin: true },
+    children: [
+      {
+        path: "",
+        component: () =>
+          import(
+            /* webpackChunkName: "users" */ "../views/Admin/UsersPages/UsersList.vue"
+          ),
+      },
+      {
+        path: "manager",
+        component: () =>
+          import(
+            /* webpackChunkName: "users" */ "../views/Admin/UsersPages/AdminManager.vue"
+          ),
+      }
+    ] 
   },
   { 
     path: '/admin/announcements',
@@ -154,9 +171,38 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     
     if(checkIfAuthenticated()){
-      next();
-      return;
-    }
+
+      //check if isAdmin for every page that requires to be authenticated as Admin
+      if (to.matched.some((record) => record.meta.isAdmin)) {
+        
+        if(checkIfAdmin() || checkIfSuperAdmin()){
+          next();
+          return;
+        }
+      
+        console.log('router: notAdmin')
+        next("/home");
+
+      }
+
+      //check if isSuperAdmin for every page that requires to be authenticated as SuperAdmin
+      else if (to.matched.some((record) => record.meta.isSuperAdmin)) {
+        
+        if(checkIfSuperAdmin()){
+          next();
+          return;
+        }
+      
+        console.log('router: notSuperAdmin')
+        next("/home");
+
+      }
+      else{
+        next();
+        return;
+      }
+    
+  }
   
     console.log('router: notAuthenticated')
     next("/user/login");
@@ -168,6 +214,14 @@ router.beforeEach((to, from, next) => {
 
 function checkIfAuthenticated(){
   return store.getters.isAuthenticated
+}
+
+function checkIfAdmin(){
+  return store.getters.isAdmin
+}
+
+function checkIfSuperAdmin(){
+  return store.getters.isSuperAdmin
 }
 
 function checkToken(){
