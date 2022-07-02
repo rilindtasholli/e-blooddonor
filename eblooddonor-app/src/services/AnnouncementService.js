@@ -9,14 +9,16 @@ const apiClient = axios.create({
 })
   
 export default {
-  GetAnnouncement() {
-    return apiClient.get("/api/Announcement")
+  GetAnnouncements(page) {
+    return apiClient.get("/api/Announcement/all/" + page)
   },
   GetAnnouncement(id) {
-    return apiClient.post("/api/Announcement/" + id)
+    return apiClient.get("/api/Announcement/" + id)
+  },
+  CreateAnnouncement(announcement) {
+    return apiClient.post("/api/Announcement/", announcement)
   },
   EditAnnouncement(announcement) {
-    console.log(announcement)
     return apiClient.put("/api/Announcement?id=" + announcement.id, announcement)
   },
   DeleteAnnouncement(id) {

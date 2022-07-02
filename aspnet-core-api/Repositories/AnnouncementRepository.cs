@@ -1,4 +1,5 @@
 ﻿using aspnet_core_api.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace aspnet_core_api.Repositories
@@ -12,14 +13,40 @@ namespace aspnet_core_api.Repositories
             this._context = context;
         }
 
-        public async Task<IEnumerable<Announcement>> Get()
+        public async Task<ActionResult<Object>> GetAll(int page)
         {
-            return await _context.Announcements.ToListAsync();
+            var pageResults = 3f;
+            var pageCount = Math.Ceiling(_context.Announcements.Count() / pageResults);
+
+            var announcements = new Object();
+
+            if (page <= 0)
+            {
+                announcements = await _context.Announcements.Include(a => a.Appointments)
+                .ToListAsync();
+            }
+            else
+            {
+                announcements = await _context.Announcements.Include(a => a.Appointments)
+                .Skip((page - 1) * (int)pageResults)
+                .Take((int)pageResults)
+                .ToListAsync();
+            }
+
+
+            var response = new
+            {
+                Announcements = announcements,
+                CurrentPage = page,
+                Pages = (int)pageCount
+            };
+
+            return response;
         }
 
         public async Task<Announcement> Get(Guid id)
         {
-            return _context.Announcements.Where(u => u.Id == id).FirstOrDefault();
+            return _context.Announcements.Where(a => a.Id == id).FirstOrDefault();
         }
 
         public async Task<Announcement> Create(Announcement announcement)

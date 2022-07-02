@@ -21,6 +21,7 @@
       </div>
     </div>
     
+    <Pagination></Pagination>
    
   </div>
 
@@ -29,41 +30,50 @@
 <script>
 import HomeHeader from "@/components/HomeHeader.vue";
 import AnnouncementCard from "@/components/AnnouncementCard.vue";
+import Pagination from "@/components/Pagination.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
   components: {
     AnnouncementCard,
-    HomeHeader
+    HomeHeader,
+    Pagination
   },
   data(){
     return{
-      announcements: [
-        {
-          _id: '1',
-          title: 'Title1',
-          text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-          bloodtype: 'B-',
-          city: 'Prishtine',
-          participants: ['user', 'user', 'user', 'user', 'user', 'user', 'user']
-        },
-        {
-          _id: '2',
-          title: 'Title2',
-          text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-          bloodtype: 'O+',
-          city: 'Prizren',
-          participants: ['user', 'user', 'user', 'user', 'user', 'user', 'user', 'user', 'user', 'user' ,'user']
-        },
-        {
-          _id: '3',
-          title: 'Title3',
-          text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-          bloodtype: 'A+',
-          city: 'Ferizaj',
-          participants: ['user', 'user', 'user', 'user', 'user', 'user', 'user', 'user', 'user', 'user' ,'user' ,'user' ,'user' ,'user']
-        },
-      ]
+      announcements: [],
+    }
+  },
+
+  computed: {
+    page(){
+      return parseInt(this.$route.query.page) || 1
+    },
+    
+    ...mapGetters(['getAnnouncements'])
+    
+  },
+
+  watch: {
+    $route() {
+      this.fetchAnnouncements()
+    }
+  },
+
+  created(){
+    this.fetchAnnouncements()
+  },
+
+  methods: {
+    ...mapActions(['getAllAnnouncements']),
+    fetchAnnouncements(){
+       this.getAllAnnouncements(this.page).then(() => {
+        console.log('announcements fetched successfuly')
+        this.announcements = this.getAnnouncements;
+      }).catch((error) => {
+        console.log(error)
+      })
     }
   }
   

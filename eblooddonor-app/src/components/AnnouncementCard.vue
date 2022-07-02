@@ -1,6 +1,6 @@
 <template>
     <div>
-      <router-link to="/home/announcement">
+      <router-link :to="{ name: 'AnnouncementShow', params: {id: announcement.id}}">
         <div class="card">
           <div class="card-header">
             <h2 class="title">{{announcement.title}}</h2>
@@ -11,12 +11,12 @@
                 <span>{{announcement.bloodtype}}</span>
             </div>
            
-            <p class="description">{{announcement.text}}</p>
+            <p class="description">{{announcement.description}}</p>
           </div>
            <div class="card-footer">
               <div class="info">
-                <span class="city"><font-awesome-icon :icon="['fas', 'map-marker-alt']" />{{announcement.city}}</span>
-                <span class="participants"><font-awesome-icon :icon="['fas', 'users']" />{{announcement.participants.length}}</span>
+                <span class="city"><font-awesome-icon :icon="['fas', 'map-marker-alt']" />{{announcement.location}}</span>
+                <span class="participants"><font-awesome-icon :icon="['fas', 'users']" />{{this.participants}}</span>
               </div>
               <button>Appoint</button>
            </div>
@@ -29,6 +29,12 @@
 export default {
   props: {
     announcement: Object
+  },
+  computed: {
+    participants(){
+      if(this.announcement.appointments) return this.announcement.appointments.length
+      return 0
+    }
   }
 
 }

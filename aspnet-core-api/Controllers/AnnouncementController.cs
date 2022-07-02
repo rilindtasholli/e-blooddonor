@@ -19,10 +19,10 @@ namespace aspnet_core_api.Controllers
             _announcementRepository = announcementRepository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Announcement>> GetAnnouncements()
+        [HttpGet("all/{page}")]
+        public async Task<ActionResult<Object>> GetAnnouncements(int page)
         {
-            return await _announcementRepository.Get();
+            return await _announcementRepository.GetAll(page);
         }
 
         [HttpGet("{id}")]

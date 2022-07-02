@@ -72,7 +72,7 @@
                         <v-col cols="12" sm="6" md="6">
                           <v-select
                             :items="bloodtypes"
-                            v-model="editedItem.bloodType"
+                            v-model="editedItem.bloodtype"
                             label="Blood Type"
                           ></v-select>
                         </v-col>
@@ -171,7 +171,7 @@ export default {
         
         { text: "Title", value: "title" },
         { text: "Description", value: "description" },
-        { text: "BloodType", value: "bloodType" },
+        { text: "Bloodtype", value: "bloodtype" },
         { text: "Location", value: "location" },
         { text: "Actions", value: "actions", sortable: false },
     ],
@@ -181,14 +181,14 @@ export default {
         id: "",
         title: "",
         description: "",
-        bloodType: "",
+        bloodtype: "",
         location: "",
     },
     defaultItem: {
         id: "",
         title: "",
         description: "",
-        bloodType: "",
+        bloodtype: "",
         location: "",
     },
 
@@ -197,7 +197,7 @@ export default {
             id: 'asd654asd4as4d6',
             title: "Kerkese Gjaku",
             description: 'Urgjente',
-            bloodType: 'B+',
+            bloodtype: 'B+',
             location: 'Prishtinë'
         }
     ],
@@ -206,12 +206,13 @@ export default {
         
     }),
 
-     created(){
+    
+    created(){
         this.updateAnnouncementList();
     },
 
     computed: {
-        ...mapGetters(["cities", "bloodtypes", "getAnnouncements"]),
+        ...mapGetters(["cities", "bloodtypes", "getAnnouncements", "getAnnouncements"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -227,15 +228,16 @@ export default {
     },
 
     methods: {
-      ...mapActions(["getAllAnnouncements", "editAnnouncement", "deleteAnnouncement"]),
+        ...mapActions(["getAllAnnouncements", "editAnnouncement", "createAnnouncement", "deleteAnnouncement"]),
 
         updateAnnouncementList(){
-            this.getAllAnnouncements().then(()=>{
-              this.announcements = this.getAllAnnouncements
+            this.getAllAnnouncements(0).then(()=>{
+              this.announcements = this.getAnnouncements
             }).catch((error) => {
               console.log(error)
             })
         },
+
         editItem(item) {
             this.editedIndex = this.announcements.indexOf(item);
             this.editedItem = Object.assign({}, item);
@@ -249,12 +251,13 @@ export default {
         },
 
         deleteItemConfirm() {
-           this.deleteAnnouncement(this.editedItem.id).then(() => {
-              this.updateAnnouncementList();
-            }).catch((error) => {
-              console.log(error)
-            })
-            this.closeDelete();
+          this.deleteAnnouncement(this.editedItem.id).then(() => {
+            this.updateAnnouncementList();
+          }).catch((error) => {
+            console.log(error)
+          })
+
+          this.closeDelete();
         },
 
         close() {
@@ -263,7 +266,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
-           // this.removeErrorMessage();
+            // this.removeErrorMessage();
         },
 
         closeDelete() {
@@ -275,12 +278,32 @@ export default {
         },
 
         save() {
-           this.editAnnouncement(this.editedItem).then(() => {
+          if(this.editedIndex == -1){        
+            //Add new announcement
+
+             var announcement = {
+              title: this.editedItem.title,
+              description: this.editedItem.description,
+              bloodtype: this.editedItem.bloodtype,
+              location: this.editedItem.location
+            }
+
+            this.createAnnouncement(announcement).then(() => {
               this.updateAnnouncementList();
             }).catch((error) => {
               console.log(error)
             })
-            this.close();
+          }else{
+            //Edit announcement
+
+            this.editAnnouncement(this.editedItem).then(() => {
+              this.updateAnnouncementList();
+            }).catch((error) => {
+              console.log(error)
+            })
+          }
+          
+          this.close();
         }
     }
 };

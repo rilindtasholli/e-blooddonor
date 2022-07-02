@@ -4,7 +4,7 @@
 
     <div class="announcement">
       <h1>{{ announcement.title }}</h1>
-      <p>{{ announcement.text }}</p>
+      <p>{{ announcement.description }}</p>
       <div class="info">
         <div class="bloodtype">
           <font-awesome-icon :icon="['fas', 'droplet']" />
@@ -14,22 +14,30 @@
         <div class="city">
           <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
           <span style="font-weight: bold">Location: </span>
-          <span>{{ announcement.city }}</span>
+          <span>{{ announcement.location }}</span>
         </div>
         <div class="participants">
           <font-awesome-icon :icon="['fas', 'users']" />
           <span style="font-weight: bold">Participants: </span>
-          <span>{{ announcement.participants.length }}</span>
+          <span>{{ this.participants }}</span>
         </div>
       </div>
-      <div v-if="isAuthenticated" class="announcement-footer">
+
+      <div v-if="isAuthenticated && hasAppointment" class="announcement-footer">
+        <p class="hasAppointment">
+          <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+          You already have an appointment
+        </p>
+      </div>
+
+      <div v-else-if="isAuthenticated" class="announcement-footer">
         <VueDatePicker
           v-model="date"
           
           placeholder="Choose date"
           no-header
         />
-        <button class="apply-button">
+        <button @click="setAppointment" class="apply-button">
           Set Appointment
         </button>
       </div>
@@ -54,28 +62,71 @@
 import BackButton from '@/components/BackButton.vue'
 import { VueDatePicker } from "@mathieustan/vue-datepicker";
 import "@mathieustan/vue-datepicker/dist/vue-datepicker.min.css";
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   components: {
     VueDatePicker,
     BackButton
   },
+  props: ['id'],
   data() {
     return {
       announcement: {
-        _id: '1',
-        title: 'Title1',
-        text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
-        bloodtype: 'B-',
-        city: 'Prishtine',
-        participants: ['user', 'user', 'user', 'user', 'user', 'user', 'user']
+        id: '',
+        title: '',
+        text: '',
+        bloodtype: '',
+        location: '',
+        participants: []
       },
+      // announcement: {
+      //   _id: '1',
+      //   title: 'Title1',
+      //   text: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+      //   bloodtype: 'B-',
+      //   city: 'Prishtine',
+      //   participants: ['user', 'user', 'user', 'user', 'user', 'user', 'user']
+      // },
       date: null
     };
   },
 
-  computed: mapGetters(['isAuthenticated'])
+  computed: {
+    ...mapGetters(['isAuthenticated', 'getCurrentAnnouncement']),
+    participants(){
+      if(this.announcement.appointments) return this.announcement.appointments.length
+      return 0
+    }
+  },
+
+  created() {
+    this.reset()
+    console.log(this.id)
+    this.getAnnouncement(this.id).then(() => {
+      this.announcement = this.getCurrentAnnouncement
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
+
+  methods: {
+    ...mapActions(['getAnnouncement', 'createAppointment', "fetchUserData"]),
+    reset(){
+      this.announcement = {
+        id: '',
+        title: '',
+        text: '',
+        bloodtype: '',
+        location: '',
+        participants: []
+      }
+    },
+
+    setAppointment(){
+      //set appointment
+    }
+  }
 };
 </script>
 
@@ -181,7 +232,8 @@ svg {
 .click-here a:hover{
   color: rgb(104, 62, 255);
 }
-.click-here svg{
+.click-here svg,
+.hasAppointment svg{
   color: rgb(216, 131, 61);
 }
 

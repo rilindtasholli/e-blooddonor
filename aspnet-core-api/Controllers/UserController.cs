@@ -37,27 +37,6 @@ namespace aspnet_core_api.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<User>> CreateUser([FromBody] User user)
-        //{
-        //    User newUser;
-
-        //    try
-        //    {
-        //        newUser = await _userRepository.Create(user);
-                
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BadRequest(new {
-        //            Status = "Error",
-        //            Message = "Couldn't create user!"
-        //        });
-        //    }
-
-        //    return CreatedAtAction(nameof(GetUsers), new { id = newUser.Id }, newUser);
-        //}
-
         [HttpPut]
         public async Task<ActionResult<User>> UpdateUser(string id, [FromBody] User user)
         {
