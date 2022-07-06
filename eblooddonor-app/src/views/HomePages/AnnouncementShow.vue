@@ -125,6 +125,25 @@ export default {
 
     setAppointment(){
       //set appointment
+       // var DateTime = today.toISOString()
+      var DateTime = `${this.date}T00:00:00.000Z`;
+
+      var newAppointment = {
+        date: DateTime,
+        location: this.announcement.location,
+        status: "Pending",
+        userId: this.userData.id,
+        announcementId: this.announcement.id
+      }
+      this.createAppointment(newAppointment).then(()=>{
+        this.fetchUserData(this.userData.id).then(()=>{
+          this.$router.push('/home')
+        }).catch((error)=>{
+          throw error
+        })
+      }).catch((error)=>{
+        console.log(error);
+      })
     }
   }
 };

@@ -15,22 +15,24 @@
             <label style="font-weight: bold" for="city">
               <font-awesome-icon :icon="['fas', 'map-marker-alt']" />Location:
             </label>
-            <select class="select-location">
+            <select v-model="location" class="select-location">
               <option disabled>Select Location</option>
-              <option>Prishtinë</option>
-              <option>Mitrovicë</option>
-              <option>Pejë</option>
-              <option>Prizren</option>
-              <option>Ferizaj</option>
-              <option>Gjilan</option>
-              <option>Gjakovë</option>
+              <option v-for="city in cities" :key="city">{{ city }}</option>
             </select>
           </div>
         </div>
       </div>
-      <div v-if="isAuthenticated" class="appointment-footer">
+
+      <div v-if="isAuthenticated && hasAppointment" class="appointment-footer">
+        <p class="hasAppointment">
+          <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+          You already have an appointment
+        </p>
+      </div>
+
+      <div v-else-if="isAuthenticated" class="appointment-footer">
         <VueDatePicker v-model="date" placeholder="Choose date" no-header />
-        <button class="apply-button">Set Appointment</button>
+        <button @click="setAppointment" class="apply-button">Set Appointment</button>
       </div>
 
       <div v-else class="appointment-footer">
@@ -54,7 +56,7 @@
 import BackButton from "@/components/BackButton.vue";
 import { VueDatePicker } from "@mathieustan/vue-datepicker";
 import "@mathieustan/vue-datepicker/dist/vue-datepicker.min.css";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
@@ -63,19 +65,38 @@ export default {
   },
   data() {
     return {
-      appointment: {
-        _id: "1",
-        title: "Title1",
-        text: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry",
-        bloodtype: "B-",
-        city: "Prishtine",
-        participants: ["user", "user", "user", "user", "user", "user", "user"],
-      },
       date: null,
+      location: "Prishtinë"
     };
   },
 
-  computed: mapGetters(['isAuthenticated'])
+  computed: mapGetters(['isAuthenticated', 'cities', 'userData', 'hasAppointment']),
+
+  methods: {
+    ...mapActions(['createAppointment', 'fetchUserData']),
+    setAppointment(){
+      var DateTime = `${this.date}T00:00:00.000Z`
+
+      var newAppointment = {
+        date: DateTime,
+        location: this.location,
+        status: "Pending",
+        userId: this.userData.id
+      }
+
+      this.createAppointment(newAppointment).then(()=>{
+
+         this.fetchUserData(this.userData.id).then(()=>{
+            this.$router.push('/home')
+          }).catch((error) => {
+            throw error
+          })
+
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
+  }
 };
 </script>
 
@@ -208,7 +229,8 @@ select {
 .click-here a:hover {
   color: rgb(42, 0, 192);
 }
-.click-here svg{
+.click-here svg,
+.hasAppointment svg{
   color: rgb(216, 131, 61);
 }
 

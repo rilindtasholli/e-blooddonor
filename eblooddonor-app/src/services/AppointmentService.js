@@ -12,23 +12,16 @@ export default {
     GetAppointments(){
         return apiClient.get("/api/Appointment")
     },
-    
     GetAppointment(id) {
-                        //post
-        return apiClient.get("/api/Appointment/" + id);
+        return apiClient.get("/api/Appointment?id=" + id);
     },
-    CreateAppointment(appointment){
-        console.log(appointment);
-        return apiClient.post("/api/Appointment?id=" + appointment.id, appointment)
+    CreateAppointment(user){
+        return apiClient.post("/api/Appointment",user)
     },
-
-    EditAppointment(appointment){
-        console.log(appointment);
-        return apiClient.put("/api/Appointment?id=" + appointment.id, appointment)
-    },
-
     DeleteAppointment(id){
-        return apiClient.delete("/api/Appointment" + id);
+        return apiClient.delete("/api/Appointment" +id);
+    },
+    ApproveAppointment(id){
+        return apiClient.put("/api/Appointment/approve?id=" +id);
     }
-
 }

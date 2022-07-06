@@ -7,7 +7,7 @@ const state = {
 
 const getters = {
     getAppointments: (state) => state.appointments,
-    getAppointment: (state) => state.appointment,
+    getCurrentAppointment: (state) => state.appointment,
 }
 
 const mutations = {
@@ -24,35 +24,18 @@ const mutations = {
 }
 
     const actions = {
-        async getAllAppointments({commit}){
-            await AppointmentService.GetAppointments().then((response) => {
+        async getAllAppointments({commit},page){
+            await AppointmentService.GetAppointments(page).then((response) => {
                 commit('SET_APPOINTMENTS', response.data);
             }).catch((error) => {
                 throw error
             });
         },
 
-          async getUserAppointments({commit}, id){
-            await AppointmentService.GetUserAppointments(id).then((response) => {
-                commit('SET_APPOINTMENTS', response.data);
+          async getAppointment({commit}, id){
+            await AppointmentService.GetAppointment(id).then((response) => {
+                commit('SET_APPOINTMENT', response.data);
             }).catch((error) => {
-                throw error
-            });
-        },
-
-        async editAppointment({commit}, appointment){
-            await AppointmentService.EditAppointment(appointment)
-            .then(()=> {
-                commit('CLEAR_DATA');
-            }).catch((error)=>{
-                throw error
-            });
-        },
-
-        async deleteAppointment({commit}, id){
-            await AppointmentService.DeleteAppointment(id).then(()=>{
-                commit('CLEAR_DATA');
-            }).catch((error)=>{
                 throw error
             });
         },
@@ -63,6 +46,14 @@ const mutations = {
           }).catch((error)=>{
             throw error
           });
+        },
+
+        async approveAppointment({commit}, id){
+            await AppointmentService.ApproveAppointment(id).then(()=>{
+                commit('CLEAR_DATA');
+            }).catch((error)=>{
+                throw error
+            });
         }
 
     };

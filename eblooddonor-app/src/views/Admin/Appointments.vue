@@ -20,104 +20,27 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
-              <!-- New/Edit Modal -->
+              <!-- Modal -->
               <v-dialog v-model="dialog" max-width="500px">
-                <!-- <template v-slot:activator="{ on, attrs }">
-                    <v-btn
-                        color="primary"
-                        dark
-                        class="mb-2"
-                        v-bind="attrs"
-                        v-on="on"
-                        >
-                        New Item
-                    </v-btn>
-                </template> -->
                 <v-card>
-                  <v-card-title>
-                    <span class="text-h5">{{ formTitle }}</span>
-                  </v-card-title>
 
-                  <v-card-text>
-                    <v-container>
-                      <!-- 1st Row -->
-                      <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                          <v-text-field
-                            v-model="editedItem.announcement"
-                            label="Announcement"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-
-                      
-                      <!-- 2nd Row -->
-                      <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                          <v-text-field
-                            v-model="editedItem.date"
-                            label="Appointment date"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-
-
-                      <!-- 3rd Row -->
-                      <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                           <v-text-field
-                            v-model="editedItem.status"
-                            label="Status"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-
-                       <!-- 4th Row -->
-                      <v-row>
-                        <v-col cols="12" sm="6" md="6">
-                           <v-text-field
-                            v-model="editedItem.user"
-                            label="User"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
-
-                    </v-container>
-
-                    <!-- Error Message -->
-                    <p v-if="showError" id="error">
-                      <font-awesome-icon
-                        :icon="['fas', 'circle-exclamation']"
-                      />
-                      {{ errorMessage }}
-                    </p>
-                  </v-card-text>
-                  
-                   <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="close">
-                      Cancel
-                    </v-btn>
-                    <v-btn color="blue darken-1" text @click="save">
-                      Save
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-
-              <!-- Delete Modal -->
-              <v-dialog v-model="dialogDelete" max-width="450px">
-                <v-card>
-                  <v-card-title class="text-h5 text-center">
+                  <v-card-title v-if="isDelete" class="text-h5 text-center">
                     <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
                     Are you sure you want to delete?
                   </v-card-title>
+
+                   <v-card-title v-else class="text-h5 text-center">
+                    <font-awesome-icon :icon="['fas', 'circle-exclamation']"/>
+                    Are you sure you want to approve?
+                  </v-card-title>
+
+
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="closeDelete"
+                    <v-btn color="blue darken-1" text @click="close"
                       >Cancel</v-btn
                     >
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                    <v-btn color="blue darken-1" text @click="save"
                       >YES</v-btn
                     >
                     <v-spacer></v-spacer>
@@ -137,13 +60,17 @@
             </v-container>
           </template>
           <template v-slot:[`item.actions`]="{ item }">
-            <v-icon style="margin-left: 5px"
-             small @click="deleteItem(item)"> mdi-delete </v-icon>
-                <v-btn
+            <!-- <v-icon 
+              class="mx-3"
+             small @click="deleteItem(item)"> 
+             mdi-delete 
+            </v-icon> -->
+
+              <v-btn v-if="item.status == 'Pending'"
               style="margin-right= 100px"
               color="primary"
               small
-              @click="approve(item)"
+              @click="approveItem(item)"
               >Approve</v-btn
             >
           </template>
@@ -168,7 +95,7 @@ export default {
     data: () => ({
     search: "",
     dialog: false,
-    dialogDelete: false,
+    isDelete: false,
     headers: [
         {
         text: "ID",
@@ -183,10 +110,10 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
     ],
 
-    editedIndex: -1,
-    editedItem: {
+    itemIndex: -1,
+    itemID: {
         id: "",
-        name: "",
+        announcement: "",
         date: "",
         status: "",
         user: "",
@@ -202,9 +129,9 @@ export default {
    appointments : [
         {
             id: 'asd654asd4as4d6',
-            announcement: 'Kerkese Gjaku',
+            announcement: 'test',
             date: '2022-05-18',
-            status: 'pending',
+            status: 'approved',
             user: 'Filan'
         }
     ],
@@ -213,14 +140,14 @@ export default {
         
     }),
 
-    created(){
-      this.updateAppointmentList();
+    created() {
+      this.updateAppointmentList()
     },
 
     computed: {
-        ...mapGetters(["appointments"]),
+        ...mapGetters(["getAppointments"]),
         formTitle() {
-            return this.editedIndex === -1 ? "New Appointment" : "Edit Appointment";
+            return this.itemIndex === -1 ? "New Appointment" : "Edit Appointment";
         },
     },
 
@@ -228,64 +155,61 @@ export default {
         dialog(val) {
             val || this.close();
         },
-        dialogDelete(val) {
+        isDelete(val) {
             val || this.closeDelete();
         },
     },
 
     methods: {
-
-        ...mapActions(["getAllAppointments", 
-        "deleteAppointment", "editAppointment"]),
+        ...mapActions(['getAllAppointments', "approveAppointment"]),
 
         updateAppointmentList(){
           this.getAllAppointments().then(()=>{
-            this.appointments = this.getAllAppointments
-          }).catch((error)=>{
+            this.appointments = this.getAppointments
+          }).catch((error) => {
             console.log(error)
           })
+          
         },
 
-        editItem(item) {
-            this.editedIndex = this.appointments.indexOf(item);
-            this.editedItem = Object.assign({}, item);
+        approveItem(item) {
+            this.itemIndex = this.appointments.indexOf(item);
+            this.itemID = item.id;
+            this.isDelete = false
             this.dialog = true;
         },
 
         deleteItem(item) {
-            this.editedIndex = this.appointments.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialogDelete = true;
-        },
-
-        deleteItemConfirm() {
-            this.closeDelete();
+            this.itemIndex = this.appointments.indexOf(item);
+            this.itemID = item.id;
+            this.isDelete = true;
+            this.dialog = true;
         },
 
         close() {
             this.dialog = false;
             this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
+                this.itemID = "";
+                this.itemIndex = -1;
             });
-            this.removeErrorMessage();
-        },
-
-        closeDelete() {
-            this.dialogDelete = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
+            //this.removeErrorMessage();
         },
 
         save() {
-            this.editAppointment(this.editedItem).then(()=>{
+          if(!this.isDelete){
+
+            //approve appointment
+            this.approveAppointment(this.itemID).then(() => {
               this.updateAppointmentList();
-            }).catch((error)=>{
+            }).catch((error) => {
               console.log(error)
             })
-          this.close();
+
+          }else{
+            //delete appointment
+          }
+          
+          this.close()
         }
     }
 };
