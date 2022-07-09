@@ -18,7 +18,7 @@
             </div>
 
             <div class="basic-info">
-              <h2 class="name">{{ userData.fname }} {{ userData.lname }}</h2>
+              <h2 class="name">{{ userData.fullName }}</h2>
               
               <!-- <img src="../assets/star.png" style="background: linear-gradient(121deg, rgba(153,111,94,1) 0%, rgba(163,148,141,1) 50%, rgba(153,111,94,1) 100%); " class="account-level" /> -->
             </div>
@@ -29,16 +29,16 @@
             </span>
             <span class="city">
                 <font-awesome-icon :icon="['fas', 'map-marker-alt']" />
-                Prishtine
+                {{ userData.location }}
             </span>
           </div>
           <div class="header-bottom">
             <div class="blood-type">
-              <span class="info-value">{{ userData.bloodtype }}</span>
+              <span class="info-value">{{ userData.bloodType }}</span>
               <span class="info-title">Blood Type</span>
             </div>
             <div class="donations">
-              <span class="info-value">11</span>
+              <span class="info-value">{{ userDonations.length }}</span>
               <span class="info-title">Donations</span>
             </div>
           </div>
@@ -71,13 +71,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   computed: {
-    ...mapGetters(['userData'])
+    ...mapGetters(['userData', 'userDonations', 'userData'])
   },
   methods: {
+    ...mapActions(['fetchUserData']),
     Test(){
       this.$store.dispatch('Test')
     }
@@ -86,6 +87,8 @@ export default {
     if(!this.$store.getters.isAuthenticated){
       this.$router.back()
     }
+
+    this.fetchUserData(this.userData.id);
   },
   
 }
