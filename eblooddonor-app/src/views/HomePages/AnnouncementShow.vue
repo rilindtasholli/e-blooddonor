@@ -33,7 +33,9 @@
       <div v-else-if="isAuthenticated" class="announcement-footer">
         <VueDatePicker
           v-model="date"
-          
+
+          :min-date="minDate"
+
           placeholder="Choose date"
           no-header
         />
@@ -92,22 +94,28 @@ export default {
     };
   },
 
-  computed: {
-    ...mapGetters(['isAuthenticated', 'getCurrentAnnouncement']),
-    participants(){
-      if(this.announcement.appointments) return this.announcement.appointments.length
-      return 0
-    }
-  },
-
   created() {
     this.reset()
-    console.log(this.id)
+
     this.getAnnouncement(this.id).then(() => {
       this.announcement = this.getCurrentAnnouncement
     }).catch((error) => {
       console.log(error)
     })
+  },
+
+  computed: {
+    ...mapGetters(['isAuthenticated', 'getCurrentAnnouncement', 'hasAppointment', 'userData']),
+
+    participants(){
+      if(this.announcement.appointments) return this.announcement.appointments.length
+      return 0
+    },
+
+    minDate(){
+      var date = new Date()
+      return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    }
   },
 
   methods: {

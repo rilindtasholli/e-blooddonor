@@ -46,13 +46,20 @@ export default {
     }
   },
 
+  created(){
+    this.fetchAnnouncements()
+
+    if(this.isAuthenticated){
+      this.fetchUserData(this.userData.id)
+    }
+  },
+
   computed: {
+    ...mapGetters(['getAnnouncements', 'isAuthenticated', 'userData']),
+
     page(){
       return parseInt(this.$route.query.page) || 1
-    },
-    
-    ...mapGetters(['getAnnouncements'])
-    
+    }
   },
 
   watch: {
@@ -61,12 +68,9 @@ export default {
     }
   },
 
-  created(){
-    this.fetchAnnouncements()
-  },
-
   methods: {
-    ...mapActions(['getAllAnnouncements']),
+    ...mapActions(['getAllAnnouncements', 'fetchUserData']),
+    
     fetchAnnouncements(){
        this.getAllAnnouncements(this.page).then(() => {
         console.log('announcements fetched successfuly')

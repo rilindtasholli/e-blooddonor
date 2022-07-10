@@ -20,9 +20,9 @@ namespace aspnet_core_api.Controllers
         // GET: api/Appointment
         [HttpGet]
        
-        public async Task<IEnumerable<Appointment>> GetAppointments()
+        public async Task<IEnumerable<Object>> GetAppointments()
         {
-            return await _appointmentRepository.Get();
+            return await _appointmentRepository.GetAll();
         }
 
         // GET: api/Appointment/5
@@ -123,6 +123,52 @@ namespace aspnet_core_api.Controllers
                 Status = "Success",
                 Message = "Appointment deleted successfully!"
             });
+        }
+
+        [HttpPut("approve")]
+        public async Task<IActionResult> ApproveAppointment(Guid id)
+        {
+            var appointment = await _appointmentRepository.Get(id);
+
+
+            if (appointment == null)
+            {
+                return BadRequest(new
+                {
+                    Status = "Error",
+                    Message = "Couldn't find Appointment"
+                });
+            }
+
+            try
+            {
+                DateTime now = DateTime.Today;
+                appointment.Status = "Approved";
+                appointment.ApproveDate = now;
+                await _appointmentRepository.Update(appointment);
+            }
+            catch (Exception)
+            {
+                return BadRequest(new
+                {
+                    Status = "Error",
+                    Message = "Couldn't approve Appointment"
+                });
+            }
+
+            return Ok(new
+            {
+                Status = "Success",
+                Message = "Appointment approved successfully"
+            });
+        }
+
+
+        // GET: api/Appointment
+        [HttpGet("getUserAppointments")]
+        public async Task<IEnumerable<Object>> GetUserAppointments(string id)
+        {
+            return await _appointmentRepository.GetUserAppointments(id);
         }
 
     }

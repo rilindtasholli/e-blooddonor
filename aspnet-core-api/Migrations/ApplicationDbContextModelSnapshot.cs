@@ -54,6 +54,9 @@ namespace aspnet_core_api.Migrations
                     b.Property<Guid?>("AnnouncementId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("ApproveDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("Date")
                         .HasColumnType("datetime2");
 
@@ -212,22 +215,22 @@ namespace aspnet_core_api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "874dd047-1aaf-4264-807f-12967a65628c",
-                            ConcurrencyStamp = "0a8f7e6e-5859-4e00-818f-6903ce664840",
+                            Id = "2b712f67-0cbc-4650-a013-61416c7d8007",
+                            ConcurrencyStamp = "c52aaee8-ce34-4879-b796-12ee736636c5",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "f4e4fedb-5eca-4de7-8d52-fac8e93dbf5e",
-                            ConcurrencyStamp = "26a35636-1615-4fdf-887d-4f269958b0f0",
+                            Id = "b4ea8206-4114-483f-a250-e84f5f739bdf",
+                            ConcurrencyStamp = "33cbc40a-b994-4d1e-a950-d77f37feb66c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "87239a49-7825-4fdf-8f9c-4c293fb5b620",
-                            ConcurrencyStamp = "edb655db-cfa4-41cb-8cc8-32fa5e43ae4c",
+                            Id = "71e3b5d7-809a-4f40-a2bf-d6b7b1fcb574",
+                            ConcurrencyStamp = "2af5546d-7db5-4ce7-be79-5ac6991b460e",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         });

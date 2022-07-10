@@ -13,7 +13,7 @@ export default {
     return apiClient.get("/api/User")
   },
   GetUser(id) {
-    return apiClient.post("/api/User/" + id)
+    return apiClient.get("/api/User/" + id)
   },
   EditUser(user) {
     console.log(user)

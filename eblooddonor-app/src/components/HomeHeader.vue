@@ -5,11 +5,16 @@
         <div class="home-header">
           <font-awesome-icon :icon="['fas', 'face-smile']"></font-awesome-icon>
           <div class="home-header-top">
-            <h1>Welcome back, <strong>{{ userData.fname }}</strong></h1>
-            <p>You don't have any appointments!</p>
+            <h1>Welcome back, <strong>{{ userData.firstName }}</strong></h1>
+
+            <p v-if="!hasAppointment">You don't have any appointments!</p>
+
+            <div v-else class="user-appointment">
+              <p>{{ this.daysLeftMessage }} <router-link to="/user/appointments">View</router-link></p>
+            </div>
           </div>
 
-          <div class="home-header-bottom">
+          <div v-if="!hasAppointment" class="home-header-bottom">
             <router-link class="appoint-btn" to="/home/appointment">
               <button>Set New Appointment</button>
             </router-link>
@@ -57,12 +62,35 @@
 import { mapGetters } from 'vuex';
 
 export default {
+
+  computed: {
+    ...mapGetters(['isAuthenticated', 'userData', 'hasAppointment', 'userAppointments']),
+
+    daysLeftMessage(){
+      var today = new Date()
+      today.setHours(0,0,0,0)
+      var appointmentDate = new Date(this.userAppointments[0].date)
+      
+      const diffTime = Math.abs(appointmentDate - today);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      if(diffDays > 1){
+        return `You have an appointment in ${diffDays} days (${appointmentDate.toDateString()})`
+      }else if(diffDays == 1){
+        return `You have an appointment tomorrow (${appointmentDate.toDateString()})`
+      }else{
+        return `You have an appointment today (${appointmentDate.toDateString()})`
+      }
+    }
+  },
+  
   methods: {
     toggleSideBar() {
       this.$store.dispatch("toggleSideBar");
-    },
-  },
-  computed: mapGetters(['isAuthenticated', 'userData'])
+    }
+  }
+  
+
 };
 </script>
 
@@ -196,6 +224,33 @@ export default {
 }
 .home-header-top > p {
   margin: 8px 20px;
+}
+
+.home-header-top .user-appointment{
+  /* border: dashed 1px red; */
+  margin: 20px 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.user-appointment p{
+  /* border: solid 1px rgba(255, 255, 255, 0.411); */
+  border-radius: 11px;
+  padding: 20px 25px;
+  background: linear-gradient(138deg, rgb(212, 195, 231) 0% ,rgb(181, 205, 228) 100%);
+  box-shadow: 0px 0px 15px 2px rgba(255, 255, 255, 0.30);
+}
+.user-appointment p > a{
+  margin: 0 5px;
+}
+
+.user-appointment a{
+  color: rgba(19, 95, 172, 0.788);
+  transition: 0.3s;
+}
+.user-appointment a:hover{
+  color: rgba(2, 36, 73, 0.788);
 }
 
 .home-header-bottom {

@@ -25,9 +25,17 @@ namespace aspnet_core_api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Appointment>> Get()
+        public async Task<IEnumerable<Object>> GetAll()
         {
-            return await _context.Appointments.ToListAsync();   
+            return await _context.Appointments
+                .Select(a => new {
+                    Id = a.Id,
+                    Announcement = a.Announcement.Title,
+                    Date = a.Date,
+                    ApproveDate = a.ApproveDate,
+                    Status = a.Status,
+                    User = a.User.FullName
+                }).ToListAsync();
         }
 
         public Task<Appointment> Get(Guid id)

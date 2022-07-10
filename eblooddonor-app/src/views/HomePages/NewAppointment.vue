@@ -31,7 +31,7 @@
       </div>
 
       <div v-else-if="isAuthenticated" class="appointment-footer">
-        <VueDatePicker v-model="date" placeholder="Choose date" no-header />
+        <VueDatePicker v-model="date" :min-date="minDate" placeholder="Choose date" no-header />
         <button @click="setAppointment" class="apply-button">Set Appointment</button>
       </div>
 
@@ -70,7 +70,14 @@ export default {
     };
   },
 
-  computed: mapGetters(['isAuthenticated', 'cities', 'userData', 'hasAppointment']),
+  computed: {
+    ...mapGetters(['isAuthenticated', 'cities', 'userData', 'hasAppointment']),
+
+    minDate(){
+      var date = new Date()
+      return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    }
+  },
 
   methods: {
     ...mapActions(['createAppointment', 'fetchUserData']),

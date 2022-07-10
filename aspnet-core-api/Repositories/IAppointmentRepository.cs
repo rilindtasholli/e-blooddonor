@@ -4,7 +4,7 @@ namespace aspnet_core_api.Repositories
 {
     public interface IAppointmentRepository
     {
-        Task<IEnumerable<Appointment>> Get();
+        Task<IEnumerable<Object>> GetAll();
         Task<Appointment> Get(Guid id);
         Task<Appointment> Create(Appointment appoint);
         Task<Appointment> Update(Appointment appoint);
