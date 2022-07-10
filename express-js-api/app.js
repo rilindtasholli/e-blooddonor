@@ -8,6 +8,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var loggerRoutes = require('./routes/logger');
+var notificationsRoutes = require('./routes/notifications');
+
 
 var app = express();
 
@@ -26,6 +28,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/logger', loggerRoutes);
+app.use('/notifications', notificationsRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
