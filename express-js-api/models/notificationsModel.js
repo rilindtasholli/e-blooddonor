@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const LogSchema = mongoose.Schema({
+const NotificationsSchema = mongoose.Schema({
     dateTime: {
         type: Date,
         default: Date.now

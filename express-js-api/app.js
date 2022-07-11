@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 
 var loggerRoutes = require('./routes/logger');
 var notificationsRoutes = require('./routes/notifications');
+var messagesRoutes = require("./routes/messages");
 
 
 var app = express();
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 
 app.use('/logger', loggerRoutes);
 app.use('/notifications', notificationsRoutes);
+app.use('/messages', messagesRoutes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
