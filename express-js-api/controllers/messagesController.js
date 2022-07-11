@@ -4,7 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 exports.getAllMessages = catchAsync(async(req,res,next)=>{
     const messages = await Messages.find();
 
-    req.status(200).json({
+    res.status(200).json({
         status:"success",
         messages
     });
