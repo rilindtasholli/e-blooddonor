@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const cors = require("cors");
 
 var loggerRoutes = require('./routes/logger');
 var notificationsRoutes = require('./routes/notifications');
@@ -13,6 +14,13 @@ var messagesRoutes = require("./routes/messages");
 
 
 var app = express();
+
+var corsOptions = {
+    origin: "http://localhost:8080",
+    optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

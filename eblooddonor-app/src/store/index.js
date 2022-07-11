@@ -7,6 +7,7 @@ import authentication from './modules/authentication'
 import user from './modules/user'
 import announcement from './modules/announcement'
 import appointment from './modules/appointment'
+import messages from "./modules/messages";
 
 Vue.use(Vuex);
 
@@ -17,7 +18,8 @@ export default new Vuex.Store({
     authentication,
     user,
     announcement,
-    appointment
+    appointment,
+    messages
   },
   plugins: [createPersistedState()],
 });

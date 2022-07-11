@@ -20,7 +20,51 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
-             
+              <v-dialog v-model="dialog" max-width="500px">
+              <v-card>
+              <v-card-title>
+              <span class="text-h5">{{formTitle}}</span>
+              </v-card-title>
+
+              <v-card-text>
+               <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.title" 
+                       label ="title">
+                    </v-text-field>
+                  </v-col>
+
+                   <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.message" 
+                       label ="message">
+                    </v-text-field>
+                  </v-col> 
+
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.email" 
+                       label ="email">
+                    </v-text-field>
+                  </v-col> 
+                </v-row>
+               </v-container>
+              </v-card-text>              
+
+              <v-card-actions>
+                <v-spancer></v-spancer>
+                <v-btn color="blue darken-1" text @click="close">
+                   Cancel
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="save">
+                      Save
+                    </v-btn>
+              </v-card-actions>
+              </v-card>
+              </v-dialog>
+          
               <!-- Delete Modal -->
               <v-dialog v-model="dialogDelete" max-width="450px">
                 <v-card>
@@ -70,7 +114,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -84,9 +128,9 @@ export default {
         sortable: false,
         value: "id",
         },
-        { text: "Title", value: "title" },
-        { text: "Email", value: "email" },
-        { text: "Message", value: "message"},
+        { text: "title", value: "title" },
+        { text: "message", value: "message" },
+        { text: "email", value: "email"},
         { text: "Actions", value: "actions", sortable: false },
     ],
 
@@ -94,31 +138,18 @@ export default {
     editedItem: {
         id: "",
         title: "",
+        message: "",
         email: "",
-        message: ""
     },
     defaultItem: {
         id: "",
         title: "",
+        message: "",
         email: "",
-        message: ""
     },
-
-    messages: [
-        {
-            id: 'asd654asd4as4d6',
-            title: 'title1',
-            email: 'filan@gmail.com',
-            message: 'This is a test message'
-        }
-    ],
-
-    showError: false,
-        
-    }),
-
+  }),
     computed: {
-        ...mapGetters(["cities", "bloodtypes"]),
+        ...mapGetters(["messages"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -133,45 +164,59 @@ export default {
         },
     },
 
+    created(){
+      this.getMessages();
+    },
+
     methods: {
-        editItem(item) {
-            this.editedIndex = this.messages.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
-        },
+    ...mapActions(["getAllMessages", "deleteMessages"]),
+    async getMessages() {
+      try {
+        await this.getAllMessages();
+      } catch (error) {
+        console.log(error);
+      }
+    },
 
-        deleteItem(item) {
-            this.editedIndex = this.messages.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialogDelete = true;
-        },
+    deleteItem(item) {
+      this.editedIndex = this.messages.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
 
-        deleteItemConfirm() {
-            this.closeDelete();
-        },
+    deleteItemConfirm() {
+      this.deleteMessages(this.editedItem._id);
+      this.closeDelete();
+      setTimeout(() => {
+        this.getAllMessages();
+      }, 1000);
+    },
 
-        close() {
-            this.dialog = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-            this.removeErrorMessage();
-        },
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
 
-        closeDelete() {
-            this.dialogDelete = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-        },
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
 
-        save() {
-            this.close();
-        }
-    }
-};
+    async save() {
+      this.close();
+      setTimeout(() => {
+        this.getMessages();
+      }, 1000);
+    },
+  },
+}
+
 </script>
 
 <style scoped>
