@@ -49,7 +49,7 @@
 
 
 <script>
-
+import {mapActions} from "vuex"
 
 export default {
   name: "sendMessage",
@@ -58,14 +58,19 @@ export default {
     return {
       form: {
         title: "",
-        text: "",
         email: "",
+        text: "",
       },
       showError: false,
       errorMessage: ''
     };
   },
   methods: {
+    ...mapActions(["createMessages"]),
+    async submit(){
+  
+    }
+
   },
 };
 </script>

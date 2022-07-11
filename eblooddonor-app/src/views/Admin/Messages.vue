@@ -38,15 +38,15 @@
 
                    <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                       v-model="editedItem.message" 
-                       label ="message">
+                       v-model="editedItem.email" 
+                       label ="email">
                     </v-text-field>
                   </v-col> 
 
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field
-                       v-model="editedItem.email" 
-                       label ="email">
+                       v-model="editedItem.message" 
+                       label ="message">
                     </v-text-field>
                   </v-col> 
                 </v-row>
@@ -123,33 +123,34 @@ export default {
     dialogDelete: false,
     headers: [
         {
-        text: "ID",
+        text: "DateTime",
         align: "start",
         sortable: false,
-        value: "id",
+        value: "dateTime",
         },
         { text: "title", value: "title" },
-        { text: "message", value: "message" },
         { text: "email", value: "email"},
+        { text: "message", value: "message" },
         { text: "Actions", value: "actions", sortable: false },
     ],
 
     editedIndex: -1,
     editedItem: {
-        id: "",
+        dateTime: "",
         title: "",
-        message: "",
         email: "",
+        message: "",
     },
     defaultItem: {
-        id: "",
+        dateTime: "",
         title: "",
-        message: "",
         email: "",
+        message: "",
     },
+    messages: null
   }),
     computed: {
-        ...mapGetters(["messages"]),
+        ...mapGetters(["getMessages"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -165,17 +166,19 @@ export default {
     },
 
     created(){
-      this.getMessages();
+      this.updateMessagesList()
     },
 
     methods: {
-    ...mapActions(["getAllMessages", "deleteMessages"]),
-    async getMessages() {
-      try {
-        await this.getAllMessages();
-      } catch (error) {
-        console.log(error);
-      }
+    ...mapActions(["getAllMessages", "deleteMessage"]),
+
+    updateMessagesList(){
+      this.getAllMessages().then(()=>{
+        this.messages = this.getMessages
+      }).catch((error) => {
+        console.log(error)
+      })
+        
     },
 
     deleteItem(item) {
@@ -185,9 +188,10 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.deleteMessages(this.editedItem._id);
+      this.deleteMessage(this.editedItem._id);
       this.closeDelete();
       setTimeout(() => {
+
         this.getAllMessages();
       }, 1000);
     },

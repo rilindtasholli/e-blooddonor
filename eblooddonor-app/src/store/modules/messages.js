@@ -1,26 +1,26 @@
 import MessageService from "../../services/MessageService";
 
 const state = {
-    message: null
+    messages: null
 };
 
 const getters = {
-    getMessages: (state)=>state.message
+    getMessages: (state) => state.messages
 };
 
 const mutations = {
-    SET_MESSAGE(state, data){
-        state.message = data;
+    SET_MESSAGES(state, data){
+        state.messages = data.messages;
     },
     CLEAR_DATA(state){
-        state.message = null;
+        state.messages = null;
     }
 }
 
 const actions = {
-    async getMessages({commit}){
-        await MessageService.getAllMessages().then((response)=>{
-            commit('SET_MESSAGE', response.data);
+    async getAllMessages({commit}){
+        await MessageService.GetAllMessages().then((response)=>{
+            commit('SET_MESSAGES', response.data);
         })
         .catch((error)=>{
             throw error
@@ -28,7 +28,7 @@ const actions = {
     },
 
     async createMessage({commit},message){
-        await MessageService.createMessages(message).then(()=>{
+        await MessageService.CreateMessages(message).then(()=>{
             commit('CLEAR_DATA');
         })
         .catch((error)=>{
@@ -37,7 +37,7 @@ const actions = {
     },
 
     async deleteMessages({commit}, id){
-        await MessageService.deleteMessages(id).then(()=>{
+        await MessageService.DeleteMessages(id).then(()=>{
             commit('CLEAR_DATA');
         })
         .catch((error)=>{

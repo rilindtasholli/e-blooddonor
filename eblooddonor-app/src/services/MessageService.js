@@ -1,22 +1,26 @@
 import axios from 'axios';
 
-const apiClient = axios.create({
-    baseURL: `https://localhost:1337`,
-    withCredentials: true,
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt')}`
-    }
-})
+// const apiClient = axios.create({
+//     baseURL: `https://localhost:1337`,
+//     withCredentials: true,
+//     headers: {
+//         Authorization: `Bearer ${localStorage.getItem('jwt')}`
+//     }
+// })
   
+const apiClient = axios.create({
+    baseURL: `http://localhost:1337`
+})
+
 export default {
-    getAllMessages(){
-        return apiClient.get("/api/Messages")
+    GetAllMessages(){
+        return apiClient.get("/messages")
     },
-    createMessages(message){
-        return apiClient.post("/api/Messages/"+message);
+    CreateMessage(message){
+        return apiClient.post("/messages/"+message);
     },
 
-    deleteMessages(id){
-        return apiClient.delete("/api/Messages/"+id)
+    DeleteMessage(id){
+        return apiClient.delete("/messages/"+id)
     }
 }

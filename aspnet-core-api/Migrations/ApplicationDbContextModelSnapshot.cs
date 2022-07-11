@@ -215,22 +215,22 @@ namespace aspnet_core_api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2b712f67-0cbc-4650-a013-61416c7d8007",
-                            ConcurrencyStamp = "c52aaee8-ce34-4879-b796-12ee736636c5",
+                            Id = "269b3edd-2dd4-43e5-a7b4-b9818c776e7f",
+                            ConcurrencyStamp = "1309aa3a-3b47-4ff9-8162-6728ec46b640",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b4ea8206-4114-483f-a250-e84f5f739bdf",
-                            ConcurrencyStamp = "33cbc40a-b994-4d1e-a950-d77f37feb66c",
+                            Id = "b55bf6a0-b064-4cda-a139-551d8e6dd8b1",
+                            ConcurrencyStamp = "1a0a848a-d8c0-4048-9e5e-167713180354",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "71e3b5d7-809a-4f40-a2bf-d6b7b1fcb574",
-                            ConcurrencyStamp = "2af5546d-7db5-4ce7-be79-5ac6991b460e",
+                            Id = "03617978-0f6a-41ec-a564-8578222b79e5",
+                            ConcurrencyStamp = "2b055ed4-0ea5-44c3-8d39-200cea80efba",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         });
