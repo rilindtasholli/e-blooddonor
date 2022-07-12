@@ -97,10 +97,10 @@
             </v-container>
           </template>
 
-          <!-- <template v-slot:item.actions="{ item }">
+         <template v-slot:item.actions="{ item }">
             <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
           </template>
-           -->
+           
           <!-- <template v-slot:no-data>
                     <v-btn
                         color="primary"
@@ -133,7 +133,7 @@ export default {
         { text: "title", value: "title" },
         { text: "email", value: "email"},
         { text: "message", value: "message" },
-        { text: "Actions", value: "actions", sortable: false },
+        //{ text: "Actions", value: "actions", sortable: false },
     ],
 
     editedIndex: -1,

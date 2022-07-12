@@ -145,7 +145,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["getAppointments"]),
+        ...mapGetters(["getAppointments", "userData"]),
         formTitle() {
             return this.itemIndex === -1 ? "New Appointment" : "Edit Appointment";
         },

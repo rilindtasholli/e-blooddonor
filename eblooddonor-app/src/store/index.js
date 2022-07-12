@@ -8,6 +8,7 @@ import user from './modules/user'
 import announcement from './modules/announcement'
 import appointment from './modules/appointment'
 import messages from "./modules/messages";
+import logger from "./modules/logger"
 
 Vue.use(Vuex);
 
@@ -19,7 +20,8 @@ export default new Vuex.Store({
     user,
     announcement,
     appointment,
-    messages
+    messages,
+    logger
   },
   plugins: [createPersistedState()],
 });
