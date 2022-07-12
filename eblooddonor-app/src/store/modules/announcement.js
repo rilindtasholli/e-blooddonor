@@ -1,4 +1,5 @@
 import AnnouncementService from '@/services/AnnouncementService';
+import LoggerService from '@/services/LoggerService';
 
 const state = {
     announcements: null,
@@ -43,26 +44,53 @@ const actions = {
         });
     },
 
-    async createAnnouncement({ commit }, announcement){
-        await AnnouncementService.CreateAnnouncement(announcement).then(() => {
+    async createAnnouncement({ commit }, {announcement, userData}){
+        await AnnouncementService.CreateAnnouncement(announcement).then((response) => {
             commit('CLEAR_DATA');
+
+            var logData ={
+                userId: userData.id,
+                user: userData.fullName,
+                action: `Created announcement: id(${response.data.id})`
+            }
+
+            LoggerService.CreateLog(logData);
+
         }).catch((error) => {
             throw error
         });
     },
 
 
-    async editAnnouncement({ commit }, announcement){
+    async editAnnouncement({ commit }, {announcement, userData}){
         await AnnouncementService.EditAnnouncement(announcement).then(() => {
             commit('CLEAR_DATA');
+
+            var logData ={
+                userId: userData.id,
+                user: userData.fullName,
+                action: `Edited announcement: id(${announcement.id})`
+            }
+
+            LoggerService.CreateLog(logData);
+
         }).catch((error) => {
             throw error
         });
     },
 
-    async deleteAnnouncement({ commit }, id){
+    async deleteAnnouncement({ commit }, {id, userData}){
         await AnnouncementService.DeleteAnnouncement(id).then(() => {
             commit('CLEAR_DATA');
+
+            var logData ={
+                userId: userData.id,
+                user: userData.fullName,
+                action: `Deleted announcement: id(${id})`
+            }
+
+            LoggerService.CreateLog(logData);
+            
         }).catch((error) => {
             throw error
         });

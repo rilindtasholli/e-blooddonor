@@ -28,7 +28,7 @@ const actions = {
     },
 
     async createMessages({commit},message){
-        console.log(message)
+
         await MessageService.CreateMessages(message).then(()=>{
             commit('CLEAR_DATA');
         })

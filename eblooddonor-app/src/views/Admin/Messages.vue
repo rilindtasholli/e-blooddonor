@@ -96,9 +96,11 @@
               ></v-text-field>
             </v-container>
           </template>
-          <template v-slot:item.actions="{ item }">
+
+          <!-- <template v-slot:item.actions="{ item }">
             <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
           </template>
+           -->
           <!-- <template v-slot:no-data>
                     <v-btn
                         color="primary"

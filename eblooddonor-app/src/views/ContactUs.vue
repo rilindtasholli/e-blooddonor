@@ -68,7 +68,7 @@ export default {
     async submit(){
       const messages = this.form
         this.createMessages(messages).then(()=>{
-          this.$router.push("/user/profile");
+          this.$router.push("/home");
         })
       .catch(err=>{
         this.errorMessage = err.message

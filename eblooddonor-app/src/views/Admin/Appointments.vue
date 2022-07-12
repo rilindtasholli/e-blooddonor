@@ -198,8 +198,13 @@ export default {
         save() {
           if(!this.isDelete){
 
+            var data = {
+              id: this.itemID,
+              userData: this.userData
+            }
+
             //approve appointment
-            this.approveAppointment(this.itemID).then(() => {
+            this.approveAppointment(data).then(() => {
               this.updateAppointmentList();
             }).catch((error) => {
               console.log(error)

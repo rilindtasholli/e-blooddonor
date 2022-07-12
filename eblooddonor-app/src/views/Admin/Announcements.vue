@@ -212,7 +212,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["cities", "bloodtypes", "getAnnouncements", "getAnnouncements"]),
+        ...mapGetters(["cities", "bloodtypes", "getAnnouncements", "getAnnouncements", "userData"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -278,17 +278,22 @@ export default {
         },
 
         save() {
+          var data;
+
           if(this.editedIndex == -1){        
             //Add new announcement
 
-             var announcement = {
-              title: this.editedItem.title,
-              description: this.editedItem.description,
-              bloodtype: this.editedItem.bloodtype,
-              location: this.editedItem.location
+            data = {
+              announcement: {
+                title: this.editedItem.title,
+                description: this.editedItem.description,
+                bloodtype: this.editedItem.bloodtype,
+                location: this.editedItem.location
+              },
+              userData: this.userData
             }
 
-            this.createAnnouncement(announcement).then(() => {
+            this.createAnnouncement(data).then(() => {
               this.updateAnnouncementList();
             }).catch((error) => {
               console.log(error)
@@ -296,7 +301,12 @@ export default {
           }else{
             //Edit announcement
 
-            this.editAnnouncement(this.editedItem).then(() => {
+            data = {
+              announcement: this.editedItem,
+              userData: this.userData
+            }
+
+            this.editAnnouncement(data).then(() => {
               this.updateAnnouncementList();
             }).catch((error) => {
               console.log(error)

@@ -218,7 +218,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["getAdmins"]),
+        ...mapGetters(["getAdmins", "userData"]),
         formTitle() {
             return this.itemIndex === -1 ? "Add New Admin" : "Edit Item";
         },
@@ -282,9 +282,14 @@ export default {
         },
 
         save() {
+
             var data = {
+              setRoleData: {
                 id: this.itemID,
                 role: this.setRole
+              },
+
+              userData: this.userData
             }
             
             this.setUserRole(data).then(() => {

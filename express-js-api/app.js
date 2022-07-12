@@ -16,10 +16,11 @@ var messagesRoutes = require("./routes/messages");
 var app = express();
 
 var corsOptions = {
-    origin: "http://localhost:8080",
-    optionsSuccessStatus: 200,
+  origin: "http://localhost:8080",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
+//cors
 app.use(cors(corsOptions));
 
 // uncomment after placing your favicon in /public
