@@ -33,7 +33,7 @@
             <label for="text"
               ><font-awesome-icon :icon="['fas', 'message']" /> Message</label
             >
-            <textarea v-model="form.text" name="text" placeholder="Enter Message..." rows="6"></textarea>
+            <textarea v-model="form.message" name="text" placeholder="Enter Message..." rows="6"></textarea>
             
           </div>
 
@@ -52,14 +52,12 @@
 import {mapActions} from "vuex"
 
 export default {
-  name: "sendMessage",
-  components: {},
   data() {
     return {
       form: {
         title: "",
         email: "",
-        text: "",
+        message: "",
       },
       showError: false,
       errorMessage: ''
@@ -68,9 +66,16 @@ export default {
   methods: {
     ...mapActions(["createMessages"]),
     async submit(){
-  
-    }
-
+      const messages = this.form
+        this.createMessages(messages).then(()=>{
+          this.$router.push("/user/profile");
+        })
+      .catch(err=>{
+        this.errorMessage = err.message
+        this.showError = true
+      })
+    } 
+          
   },
 };
 </script>

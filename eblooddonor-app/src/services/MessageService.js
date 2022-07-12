@@ -16,10 +16,9 @@ export default {
     GetAllMessages(){
         return apiClient.get("/messages")
     },
-    CreateMessage(message){
-        return apiClient.post("/messages/"+message);
+    CreateMessages(message){
+        return apiClient.post("/messages",message);
     },
-
     DeleteMessage(id){
         return apiClient.delete("/messages/"+id)
     }

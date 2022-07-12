@@ -27,7 +27,8 @@ const actions = {
         });
     },
 
-    async createMessage({commit},message){
+    async createMessages({commit},message){
+        console.log(message)
         await MessageService.CreateMessages(message).then(()=>{
             commit('CLEAR_DATA');
         })
@@ -36,8 +37,8 @@ const actions = {
         });
     },
 
-    async deleteMessages({commit}, id){
-        await MessageService.DeleteMessages(id).then(()=>{
+    async deleteMessage({commit}, id){
+        await MessageService.DeleteMessage(id).then(()=>{
             commit('CLEAR_DATA');
         })
         .catch((error)=>{

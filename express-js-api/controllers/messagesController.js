@@ -27,7 +27,7 @@ exports.createMessage = catchAsync(async(req,res,next)=>{
 exports.deleteMessage = catchAsync(async(req,res,next)=>{
     const message = await Messages.findByIdAndDelete(req.params.id);
 
-    if(log == null){
+    if(message == null){
         res.status(404).json({
             status: 'fail',
             message:"Couldn't find the log!"
