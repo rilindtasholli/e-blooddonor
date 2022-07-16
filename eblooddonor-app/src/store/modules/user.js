@@ -39,12 +39,21 @@ const actions = {
     },
 
     async editUser({ commit }, user){
+        console.log(user);
         await UserService.EditUser(user).then(() => {
             commit('CLEAR_DATA');
         }).catch((error) => {
             throw error
         });
     },
+
+    //  async updateMe({ commit }, user){
+    //     await UserService.UpdateMe(user).then(() => {
+    //         commit('CLEAR_DATA');
+    //     }).catch((error) => {
+    //         throw error
+    //     });
+    // },
 
     async getAllAdmins({ commit }){
         await UserService.GetAdmins().then((response) => {

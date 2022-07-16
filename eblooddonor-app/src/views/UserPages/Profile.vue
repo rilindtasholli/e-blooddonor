@@ -1,6 +1,6 @@
 <template>
+  <v-app id="profile">
     <div class="main">
-
       <div class="profile">
         <div class="profile-header">
           <div class="header-top">
@@ -12,7 +12,7 @@
                 
                 <img class="profile-image" src="../../assets/avatar.png"  alt="profile icon"/>
 
-                <button class="editUser-btn">
+                <button @click="editItem()" class="editUser-btn">
                     <font-awesome-icon :icon="['fas', 'user-pen']" />
                 </button>
             </div>
@@ -44,6 +44,69 @@
           </div>
         </div>
 
+        <v-dialog v-model="dialog" max-width="700px">
+        <v-card>
+          <v-card-title>
+            <span class="text-h5"
+              ><font-awesome-icon :icon="['fas', 'user-pen']" /> Edit
+              Profile</span
+            >
+          </v-card-title>
+
+          <v-card-text>
+            <v-container>
+              <v-row>
+                <v-col sm="12" md="6">
+                  <v-text-field
+                    v-model="editedItem.firstName"
+                    label="First Name"
+                  ></v-text-field>
+                </v-col>
+                <v-col sm="12" md="6">
+                  <v-text-field
+                    v-model="editedItem.lastName"
+                    label="Last Name"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col sm="12" md="6">
+                  <v-select
+                    :items="cities"
+                    v-model="editedItem.location"
+                    label="Location"
+                  ></v-select>
+                </v-col>
+                <!-- <v-col cols="12" sm="6" md="4">
+                  <v-text-field
+                    v-model="editedItem.email"
+                    label="Email"
+                  ></v-text-field>
+                </v-col> -->
+                <v-col sm="12" md="6">
+                  <v-select
+                    :items="bloodtypes"
+                    v-model="editedItem.bloodType"
+                    label="Blood Type"
+                  ></v-select>
+                </v-col>
+              </v-row>
+            </v-container>
+            <p v-if="showError" id="error">
+              <font-awesome-icon :icon="['fas', 'circle-exclamation']" />
+              {{ errorMessage }}
+            </p>
+          </v-card-text>
+
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="close"> Cancel </v-btn>
+            <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
         <div class="profile-bottom">
            <!-- <button @click="Test()">
               <font-awesome-icon :icon="['fas', 'calendar-check']" />
@@ -68,20 +131,55 @@
 
       
     </div>
+  </v-app>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
-  computed: {
-    ...mapGetters(['userData', 'userDonations', 'userData'])
-  },
-  methods: {
-    ...mapActions(['fetchUserData']),
-    Test(){
-      this.$store.dispatch('Test')
+  data(){
+    return {
+      dialog: false,
+      editedItem: null,
+      showError: false,
+      errorMessage: ""
     }
+  },
+  
+  created(){
+    this.editedItem = this.userData;
+  },
+
+  computed: {
+    ...mapGetters(['userData', 'userDonations',"bloodtypes", "cities"])
+  },
+
+  methods: {
+    ...mapActions(['fetchUserData', "editUser"]),
+    editItem(){
+      this.editedItem = this.userData;
+      this.dialog = true;
+    },
+
+    close(){
+      this.dialog = false;
+       this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    
+    },
+    
+    async save(){
+        this.editUser(this.editedItem).then(() => {
+           this.fetchUserData(this.userData.id);
+        });
+
+        this.close();
+    },
+
+
   },
   mounted(){
     if(!this.$store.getters.isAuthenticated){
@@ -90,6 +188,7 @@ export default {
 
     this.fetchUserData(this.userData.id);
   },
+  
   
 }
 

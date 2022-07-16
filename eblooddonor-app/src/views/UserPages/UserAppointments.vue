@@ -30,7 +30,7 @@
             <div v-else class="no-appointments-message">
             
                 <p>You don't have any appointments!</p>
-                <router-link class="appoint-btn" to="/home/announcement">
+                <router-link class="appoint-btn" to="/home/appointment">
                     <button>Set New Appointment</button>
                 </router-link>
             </div>
