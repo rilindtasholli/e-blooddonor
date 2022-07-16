@@ -18,10 +18,10 @@
                     </div>
 
                     <div class="info">
-                        <span class="date">{{donation.date}}</span>
+                        <span class="date">{{convertToDate(donation.date)}}</span>
                         <span class="location">
                             <font-awesome-icon :icon="['fas', 'map-marker-alt']"></font-awesome-icon>
-                            Prishtine
+                            {{donation.location}}
                         </span>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="info">
-                        <span class="date">{{ accountCreated }}</span>
+                        <span class="date">{{convertToDate(accountCreated)}}</span>
                         <span class="account-created">
                             <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
                             Created account
@@ -71,6 +71,7 @@
 
 <script>
 import BackButton from '@/components/BackButton.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -91,6 +92,24 @@ export default {
                 },
             ],
             accountCreated: '03 April, 2021'
+        }
+    },
+
+    created(){
+        this.donationHistory = this.userDonations
+        this.accountCreated = this.userData.createdDate
+    },
+
+    computed: {
+        ...mapGetters(['userDonations', 'userData'])
+    },
+
+    methods: {
+      
+        convertToDate(isoStringDate){
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var date = new Date(isoStringDate)
+            return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
         }
     }
 }

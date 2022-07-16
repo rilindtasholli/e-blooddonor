@@ -74,7 +74,7 @@ namespace aspnet_core_api.Repositories
                     Date = a.Date,
                     Location = a.Location,
                     Announcement = a.Announcement
-                }).ToListAsync();
+                }).OrderByDescending(a => a.Date).ToListAsync();
             return result;
         }
     }
