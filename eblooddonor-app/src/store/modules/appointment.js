@@ -48,6 +48,13 @@ const mutations = {
             throw error
           });
         },
+        async deleteAppointment({ commit }, id){
+            await AppointmentService.DeleteAppointment(id).then(() => {
+                commit('CLEAR_DATA');
+            }).catch((error) => {
+                throw error
+            });
+        },
 
         async approveAppointment({commit}, {id, userData}){
             await AppointmentService.ApproveAppointment(id).then(()=>{

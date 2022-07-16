@@ -6,40 +6,25 @@
             <h1><font-awesome-icon :icon="['fas', 'calendar-check']"></font-awesome-icon> My Appointments</h1>
 
             <table v-if="myAppointments.length > 0">
-                <th>#</th>
                 <th>Date</th>
                 <th>Announcement</th>
-                <th>Action</th>
+                <th></th>
 
-                <tr>
-                    <td>1</td>
-                    <td>05/02/2022</td>
+                 <tr v-for="appoint in myAppointments" :key="appoint.id">
+                    <td>{{ convertToDate(appoint.date) }}</td>
                     <td> 
-                        <router-link to="/home/announcement" exact>
-                            Title1 
+                        <router-link v-if="appoint.announcement" :to="`/home/announcement/${appoint.announcement.id}`" exact>
+                            {{ appoint.announcement.title }}
                         </router-link>
+
+                        <span v-else>----</span>
                     </td>
                     <td>
-                        <button>
+                        <button @click="handeDelete(appoint.id)">
                             <font-awesome-icon :icon="['fas', 'trash']"></font-awesome-icon>
                         </button>
                     </td>
                 </tr>
-
-                <!-- <tr>
-                    <td>2</td>
-                    <td>19/06/2022</td>
-                    <td> 
-                        <router-link to="/home/announcement" exact>
-                            Title2
-                        </router-link>
-                    </td>
-                    <td>
-                        <button>
-                            <font-awesome-icon :icon="['fas', 'trash']"></font-awesome-icon>
-                        </button>
-                    </td>
-                </tr> -->
             </table>
 
             <div v-else class="no-appointments-message">
@@ -61,8 +46,8 @@
 </template>
 
 <script>
-import BackButton from '@/components/BackButton.vue';
-import {mapGetters, mapActions} from "vuex";
+import BackButton from '@/components/BackButton.vue'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -83,29 +68,39 @@ export default {
         }
     },
 
-   computed: {
-    ...mapGetters(["myappointments"]),
-    formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Edit Item";
-    },
-  },
-
-   created() {
-    this.updateMyAppointmentList();  
-  },
-
-   methods: {
-    ...mapActions(["getUserAppointments", "deleteAppointment"]),
-
-    updateMyAppointmentList(){
-        this.getUserAppointments().then(()=>{
-            this.appointments = this.getUserAppointments
-        }).catch((error)=>{
-            console.log(error)
-        })
+    created(){
+        this.myAppointments = this.userAppointments
     },
 
-   }
+    computed: {
+        ...mapGetters(['userAppointments', 'userData'])
+    },
+    
+    methods: {
+        ...mapActions(['deleteAppointment', 'fetchUserData']),
+
+        convertToDate(isoStringDate){
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var date = new Date(isoStringDate)
+            return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
+        },
+
+        updateAppointment(){
+            this.fetchUserData(this.userData.id).then(() =>{
+                this.myAppointments = this.userAppointments
+            }).catch((error) => {
+                console.log(error)
+            })
+        },
+
+        handeDelete(id){
+            this.deleteAppointment(id).then(() => {
+                this.updateAppointment()
+            }).catch((error) => {
+                console.log(error)
+            })
+        }
+    }
 }
 
 </script>

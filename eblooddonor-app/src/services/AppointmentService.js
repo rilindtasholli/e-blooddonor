@@ -9,19 +9,19 @@ const apiClient = axios.create({
 })
 
 export default {
-    GetAppointments(){
-        return apiClient.get("/api/Appointment")
+    GetAppointments() {
+      return apiClient.get("/api/Appointment")
     },
     GetAppointment(id) {
-        return apiClient.get("/api/Appointment?id=" + id);
+      return apiClient.get("/api/Appointment?id=" + id)
     },
-    CreateAppointment(user){
-        return apiClient.post("/api/Appointment",user)
+    CreateAppointment(user) {
+      return apiClient.post("/api/Appointment", user)
     },
-    DeleteAppointment(id){
-        return apiClient.delete("/api/Appointment" +id);
+    DeleteAppointment(id) {
+      return apiClient.delete("/api/Appointment/" + id)
     },
-    ApproveAppointment(id){
-        return apiClient.put("/api/Appointment/approve?id=" +id);
+    ApproveAppointment(id) {
+      return apiClient.put("/api/Appointment/approve?id=" + id)
     }
-}
+  }
