@@ -6,25 +6,17 @@ const schema = Joi.object({
     "string.empty": "Please enter title",
     "string.min": "Title should contain at least 4 characters",
   }),
-  text: Joi.string().min(4).messages({
+  description: Joi.string().min(4).messages({
     "string.empty": "Please enter description",
     "string.min": "Description should contain at least 4 characters",
   }),
-  bloodtype: Joi.string()
-    .valid("O+", "O-", "A+", "A-", "B+", "B-", "AB+", "AB-")
-    .error(new Error("Invalid blood type")),
-
-  city: Joi.string()
-    .valid(
-      "Prishtinë",
-      "Mitrovicë",
-      "Pejë",
-      "Prizren",
-      "Ferizaj",
-      "Gjilan",
-      "Gjakovë"
-    )
-    .error(new Error("Invalid City name")),
+  location: Joi.string().messages({
+    "string.empty": "Please select a location"
+  }),
+  bloodtype: Joi.string().messages({
+    "string.empty": "Please select a blood type"
+  })
+   
 });
 
 export default schema;

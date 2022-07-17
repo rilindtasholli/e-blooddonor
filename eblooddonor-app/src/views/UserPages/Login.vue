@@ -46,6 +46,7 @@
 <script>
 import BackButton from "../../components/BackButton.vue";
 import { mapActions } from "vuex";
+import schema from '@/data/loginSchema'
 
 export default {
   components: { BackButton },
@@ -68,14 +69,28 @@ export default {
         email: this.form.email,
         password: this.form.password
       }
+
+      try{
+        await schema.validateAsync(data)
+      }catch(error){
+        this.errorMessage = error.message
+        this.showError = true
+        return
+      }
       
       await this.Login(data).then(() => {
+        this.removeErrorMessage()
         this.$router.push('/user/profile')
       }).catch((error) => {
         console.error(error);
       });
 
       
+    },
+
+    removeErrorMessage(){
+      this.errorMessage = ""
+      this.showError = false
     }
   }
 };

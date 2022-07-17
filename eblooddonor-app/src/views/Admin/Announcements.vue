@@ -155,6 +155,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import schema from '@/data/announcementSchema'
 
 export default {
     data: () => ({
@@ -202,7 +203,8 @@ export default {
         }
     ],
 
-    showError: false,
+    errorMessage: "",
+    showError: false
         
     }),
 
@@ -266,7 +268,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
-            // this.removeErrorMessage();
+            this.removeErrorMessage();
         },
 
         closeDelete() {
@@ -277,12 +279,32 @@ export default {
             });
         },
 
-        save() {
+        async save() {
+
+          //validate
+          var validateData = {
+            title: this.editedItem.title,
+            description: this.editedItem.description,
+            location: this.editedItem.location,
+            bloodtype: this.editedItem.bloodtype
+          }
+          
+          try{
+            await schema.validateAsync(validateData);
+          }
+          catch (error) {
+
+            this.errorMessage = error.message;
+            this.showError = true;
+            return;
+          }
+
+
           var data;
 
-          if(this.editedIndex == -1){        
+          if(this.editedIndex == -1){   
             //Add new announcement
-
+          
             data = {
               announcement: {
                 title: this.editedItem.title,
@@ -298,9 +320,10 @@ export default {
             }).catch((error) => {
               console.log(error)
             })
+            
           }else{
             //Edit announcement
-
+          
             data = {
               announcement: this.editedItem,
               userData: this.userData
@@ -311,10 +334,16 @@ export default {
             }).catch((error) => {
               console.log(error)
             })
+           
           }
           
           this.close();
-        }
+        },
+
+        removeErrorMessage(){
+          this.showError = false
+          this.errorMessage = ""
+        } 
     }
 };
 </script>

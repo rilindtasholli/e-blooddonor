@@ -12,8 +12,8 @@ using aspnet_core_api.Models;
 namespace aspnet_core_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220711193729_newMigration")]
-    partial class newMigration
+    [Migration("20220717113604_newMigrationn")]
+    partial class newMigrationn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,26 +81,6 @@ namespace aspnet_core_api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("aspnet_core_api.Models.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Messages")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("aspnet_core_api.Models.User", b =>
@@ -217,22 +197,22 @@ namespace aspnet_core_api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "269b3edd-2dd4-43e5-a7b4-b9818c776e7f",
-                            ConcurrencyStamp = "1309aa3a-3b47-4ff9-8162-6728ec46b640",
+                            Id = "48bb6af2-1936-4100-b2e5-4ab8fb27e065",
+                            ConcurrencyStamp = "5e06db94-dc02-40df-a103-93699a27a6bc",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b55bf6a0-b064-4cda-a139-551d8e6dd8b1",
-                            ConcurrencyStamp = "1a0a848a-d8c0-4048-9e5e-167713180354",
+                            Id = "98a99b40-c801-42f0-aec3-67920ba4587b",
+                            ConcurrencyStamp = "9b0b339a-f9bd-427f-ae19-b51c38712fe4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "03617978-0f6a-41ec-a564-8578222b79e5",
-                            ConcurrencyStamp = "2b055ed4-0ea5-44c3-8d39-200cea80efba",
+                            Id = "944d701d-5439-4b51-ae7c-d5cf0836a2f3",
+                            ConcurrencyStamp = "fa95f7f4-46e6-4e17-8052-9a2aea251a47",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         });

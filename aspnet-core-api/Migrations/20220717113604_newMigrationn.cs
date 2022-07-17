@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace aspnet_core_api.Migrations
 {
-    public partial class newMigration : Migration
+    public partial class newMigrationn : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,20 +67,6 @@ namespace aspnet_core_api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Messages = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,17 +206,17 @@ namespace aspnet_core_api.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "03617978-0f6a-41ec-a564-8578222b79e5", "2b055ed4-0ea5-44c3-8d39-200cea80efba", "SuperAdmin", "SUPERADMIN" });
+                values: new object[] { "48bb6af2-1936-4100-b2e5-4ab8fb27e065", "5e06db94-dc02-40df-a103-93699a27a6bc", "User", "USER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "269b3edd-2dd4-43e5-a7b4-b9818c776e7f", "1309aa3a-3b47-4ff9-8162-6728ec46b640", "User", "USER" });
+                values: new object[] { "944d701d-5439-4b51-ae7c-d5cf0836a2f3", "fa95f7f4-46e6-4e17-8052-9a2aea251a47", "SuperAdmin", "SUPERADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "b55bf6a0-b064-4cda-a139-551d8e6dd8b1", "1a0a848a-d8c0-4048-9e5e-167713180354", "Admin", "ADMIN" });
+                values: new object[] { "98a99b40-c801-42f0-aec3-67920ba4587b", "9b0b339a-f9bd-427f-ae19-b51c38712fe4", "Admin", "ADMIN" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Appointments_AnnouncementId",
@@ -301,9 +287,6 @@ namespace aspnet_core_api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Announcements");
