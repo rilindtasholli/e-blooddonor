@@ -14,7 +14,7 @@
   
           <a class="card users-card" href="#user-stats">
             <h3>Users <font-awesome-icon :icon="['fas', 'user']" /></h3>
-            <span>97</span>
+            <span>{{ this.getUsersNumber}}</span>
           </a>
         </div>
       </section>
@@ -39,7 +39,8 @@
 
         <div class="section-body">
           <div class="chart">
-            <Bar/>
+            <h2></h2>
+            <Bar :datasets="this.getUsersFromLocationsDatasets()"/>
           </div>
   
           <div class="chart">
@@ -134,13 +135,14 @@ export default {
   components: {
     LineChart,
     Doughnut,
-    Bar
+    Bar,
     // Pie
   },
 
   created(){
     this.getDonationsData()
     this.getUsersData()
+    this.getLocationUsers();
   },
 
   computed:{
@@ -155,7 +157,7 @@ export default {
   },
 
   methods:{
-    ...mapActions(['getDonationsData', 'getUsersData']),
+    ...mapActions(['getDonationsData', 'getUsersData', 'GetLocationUsers']),
 
     getMonthlyDonationsDatasets(){
       var datasets = [{
@@ -178,6 +180,15 @@ export default {
         }]
 
         return datasets
+    },
+
+    getUsersFromLocationsDatasets(){
+      var datasets = [{
+        'label': 'Users location' ,
+        backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+           data: this.getUsersFromLocations
+      }]
+      return datasets
     }
   }
 }
