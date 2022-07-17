@@ -127,6 +127,7 @@
 import Doughnut from '@/components/charts/Doughnut.vue'
 import LineChart from '@/components/charts/Line.vue'
 import Bar from '@/components/charts/Bar.vue'
+import { mapActions } from 'vuex'
 // import Pie from '@/components/charts/Pie.vue'
 
 export default {
@@ -135,6 +136,13 @@ export default {
     Doughnut,
     Bar
     // Pie
+  },
+  created(){
+    this.getDonationsData()
+    this.getUsersData()
+  },
+  methods:{
+    ...mapActions(['getDonationsData', 'getUsersData'])
   }
 }
 </script>

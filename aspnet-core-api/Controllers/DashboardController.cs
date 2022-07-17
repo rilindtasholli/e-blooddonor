@@ -120,7 +120,7 @@ namespace aspnet_core_api.Controllers
 
             return new
             {
-                usersNumber = users
+                topDonators = users
             };
         }
     }
