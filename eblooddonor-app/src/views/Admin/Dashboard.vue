@@ -48,72 +48,17 @@
             <div class="top-users">
               <table>
                 <tr>
-                  <th style="padding: 0 15px">#</th>
                   <th width="100%">Name</th>
                   <th>Location</th>
                   <th>Donations</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Filan Fisteku</td>
-                  <td>Prishtine</td>
-                  <td>35</td>
-                </tr>
 
-                <tr>
-                  <td>2</td>
-                  <td>Rinor Gashi</td>
-                  <td>Prishtine</td>
-                  <td>30</td>
-                </tr>
-
-                <tr>
-                  <td>3</td>
-                  <td>Admir Bytyqi</td>
-                  <td>Ferizaj</td>
-                  <td>28</td>
-                </tr>
-
-                <tr>
-                  <td>4</td>
-                  <td>Fjolla Krasniqi</td>
-                  <td>Gjilan</td>
-                  <td>22</td>
-                </tr>
-
-                <tr>
-                  <td>5</td>
-                  <td>Arber Hajdari</td>
-                  <td>Prizren</td>
-                  <td>20</td>
+                <tr v-for="user in this.getTopDonators" :key="user.user.id">
+                  <td>{{ user.user.name }}</td>
+                  <td>{{ user.user.location }}</td>
+                  <td>{{ user.donationsCount }}</td>
                 </tr>
               </table>
-              <!-- <ol>
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-              </ol> -->
             </div>
           </div>
         </div>
@@ -142,7 +87,6 @@ export default {
   created(){
     this.getDonationsData()
     this.getUsersData()
-    this.getLocationUsers();
   },
 
   computed:{
@@ -157,7 +101,7 @@ export default {
   },
 
   methods:{
-    ...mapActions(['getDonationsData', 'getUsersData', 'GetLocationUsers']),
+    ...mapActions(['getDonationsData', 'getUsersData']),
 
     getMonthlyDonationsDatasets(){
       var datasets = [{
