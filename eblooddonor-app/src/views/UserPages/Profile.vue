@@ -136,7 +136,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-//import schema from '@/data/editProfileSchema';
+import schema from '@/data/editProfileSchema';
 
 export default {
   data(){
@@ -172,20 +172,33 @@ export default {
     },
 
     async save(){
-      
-      //   try{
-      //     schema.validateAsync(this.userData);
-      //   }
-      //   catch (error) {
-      //   this.errorMessage = error.message;
-      //   this.showError = true;
-      //   return;
-      // }
-        this.editUser(this.editedItem).then(() => {
-           this.fetchUserData(this.userData.id);
-        });
-        this.close();
+        this.removeError();
 
+        var validateData = {
+          firstName: this.editedItem.firstName,
+          lastName: this.editedItem.lastName
+        }
+
+        try{
+         await schema.validateAsync(validateData);
+        }
+        catch (error) {
+
+        this.errorMessage = error.message;
+        this.showError = true;
+        return;
+      }
+
+      this.editUser(this.editedItem).then(() => {
+          this.fetchUserData(this.userData.id);
+      });
+      this.close();
+
+    },
+
+    removeError(){
+      this.showError = false
+      this.errorMessage = ""
     }
     
 

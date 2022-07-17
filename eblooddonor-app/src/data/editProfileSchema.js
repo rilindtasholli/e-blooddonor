@@ -1,13 +1,18 @@
 import Joi from "joi";
 
 const schema = Joi.object({
-    firstName: Joi.string()
-    .pattern(new RegExp(/^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/))
-    .message("Please enter a valid name"),
+   
 
-     lastName: Joi.string()
-    .pattern(new RegExp(/^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/))
-    .message("Please enter a valid name"),
+ firstName: Joi.string().min(2).messages({
+    "string.empty": "Please enter title",
+    "string.min": "First name should contain at least 2 characters",
+ 
+  }),
+
+   lastName: Joi.string().min(2).messages({
+    "string.empty": "Please enter title",
+    "string.min": "Last name should contain at least 2 characters",
+  }),
 
 });
 
