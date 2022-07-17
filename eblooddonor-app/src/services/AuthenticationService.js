@@ -13,6 +13,7 @@ export default {
     return apiClient.post("/api/Authenticate/login", user)
   },
   Register(user) {
+    console.log(user)
     return apiClient.post("/api/Authenticate/register", user)
   },
   Test() {

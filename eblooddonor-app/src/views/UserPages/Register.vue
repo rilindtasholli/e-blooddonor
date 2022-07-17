@@ -111,6 +111,7 @@
 <script>
 import BackButton from "../../components/BackButton.vue";
 import { mapActions, mapGetters } from "vuex";
+import schema from '@/data/registerSchema'
 
 export default {
   components: { BackButton },
@@ -148,7 +149,15 @@ export default {
         confirmPassword: this.form.passwordConfirm
       }
 
-      console.log(userData)
+      //console.log(userData)
+
+      try{
+        await schema.validateAsync(userData)
+      }catch(error){
+        this.errorMessage = error.message
+        this.showError = true
+        return
+      }
 
       await this.Register(userData).then((response) => {
         console.log(response)
