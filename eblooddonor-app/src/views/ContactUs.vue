@@ -50,6 +50,7 @@
 
 <script>
 import {mapActions} from "vuex"
+import schema from '@/data/contactSchema'
 
 export default {
   data() {
@@ -67,10 +68,13 @@ export default {
     ...mapActions(["createMessages"]),
     async submit(){
       const messages = this.form
+    
+      schema.validateAsync(messages).then(()=>{
         this.createMessages(messages).then(()=>{
           this.$router.push("/home");
         })
-      .catch(err=>{
+        
+      }).catch(err=>{
         this.errorMessage = err.message
         this.showError = true
       })

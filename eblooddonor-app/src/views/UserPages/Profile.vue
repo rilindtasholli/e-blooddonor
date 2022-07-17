@@ -136,6 +136,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+//import schema from '@/data/editProfileSchema';
 
 export default {
   data(){
@@ -168,17 +169,25 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
-    
     },
-    
+
     async save(){
+      
+      //   try{
+      //     schema.validateAsync(this.userData);
+      //   }
+      //   catch (error) {
+      //   this.errorMessage = error.message;
+      //   this.showError = true;
+      //   return;
+      // }
         this.editUser(this.editedItem).then(() => {
            this.fetchUserData(this.userData.id);
         });
-
         this.close();
-    },
 
+    }
+    
 
   },
   mounted(){
