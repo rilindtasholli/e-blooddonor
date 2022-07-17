@@ -35,7 +35,7 @@ namespace aspnet_core_api.Controllers
 
             for (int i = 0; i < 7; i++)
             {
-                var date = DateTime.Now.AddMonths(i - 3);
+                var date = DateTime.Now.AddMonths(i - 6);
                 var month = await _dashboardRepository.GetDonationsByMonth(date.Month);
                 array[i] = month.Count();
             }

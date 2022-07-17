@@ -39,7 +39,6 @@
 
         <div class="section-body">
           <div class="chart">
-            <h2></h2>
             <Bar :datasets="this.getUsersFromLocationsDatasets()"/>
           </div>
   
@@ -127,11 +126,13 @@ export default {
     },
 
     getUsersFromLocationsDatasets(){
-      var datasets = [{
-        'label': 'Users location' ,
-        backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
-           data: this.getUsersFromLocations
-      }]
+      var datasets = [
+        {
+            label: 'Users',
+            backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+            data: this.getUsersFromLocations
+        }
+      ]
       return datasets
     }
   }
