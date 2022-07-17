@@ -60,23 +60,27 @@ export default {
       type: Array,
       default: () => []
     },
-    chartData: {
-      type: Object,
-      default: () => {
-        return {
-          labels: ["Prishtinë", "Mitrovicë", "Pejë", "Prizren", "Ferizaj", "Gjilan", "Gjakovë"],
-          datasets: [
-            {
-              backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
-              data: [80, 20, 15, 30, 40, 35, 25]
-            }
-          ]
-        }
-      }
+    labels: {
+      type: Array,
+      default: () => ["Prishtinë", "Mitrovicë", "Pejë", "Prizren", "Ferizaj", "Gjilan", "Gjakovë"]
     },
+    datasets: {
+      type: Array,
+      default: () => [
+        {
+          backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+          data: [80, 20, 15, 30, 40, 35, 25]
+        }
+      ]
+    }
   },
+  
   data() {
     return {
+      chartData: {
+        labels: this.labels,
+        datasets: this.datasets,
+      },
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false,

@@ -8,7 +8,7 @@
          
           <a class="card donations-card" href="#donation-stats">
             <h3>Donations <font-awesome-icon :icon="['fas', 'droplet']" /></h3>
-            <span>352</span>
+            <span>{{ this.getDonationsNumber }}</span>
           </a>
          
   
@@ -24,11 +24,11 @@
 
         <div class="section-body">
           <div class="chart">
-            <LineChart/>
+            <LineChart :datasets="this.getMonthlyDonationsDatasets()"/>
           </div>
   
           <div class="chart">
-            <Doughnut />
+            <Doughnut :datasets="this.getDonationsFromLocationsDatasets()"/>
           </div>
         </div>
         
@@ -127,7 +127,7 @@
 import Doughnut from '@/components/charts/Doughnut.vue'
 import LineChart from '@/components/charts/Line.vue'
 import Bar from '@/components/charts/Bar.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 // import Pie from '@/components/charts/Pie.vue'
 
 export default {
@@ -137,12 +137,48 @@ export default {
     Bar
     // Pie
   },
+
   created(){
     this.getDonationsData()
     this.getUsersData()
   },
+
+  computed:{
+    ...mapGetters([
+      'getDonationsNumber',
+      'getDonationsFromLastMonths',
+      'getDonationsFromLocations',
+      'getUsersNumber',
+      'getUsersFromLocations',
+      'getTopDonators',
+    ])
+  },
+
   methods:{
-    ...mapActions(['getDonationsData', 'getUsersData'])
+    ...mapActions(['getDonationsData', 'getUsersData']),
+
+    getMonthlyDonationsDatasets(){
+      var datasets = [{
+          label: 'Donations',
+          backgroundColor:  'rgba(58, 83, 222, 0.18)',
+          data: this.getDonationsFromLastMonths,
+          fill: true,
+          borderColor: '#7faef4',
+          pointBackgroundColor: 'rgba(230, 69, 69, 0.6)',
+          tension: 0.2
+        }]
+
+        return datasets
+    },
+
+    getDonationsFromLocationsDatasets(){
+      var datasets = [{
+          backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+          data: this.getDonationsFromLocations
+        }]
+
+        return datasets
+    }
   }
 }
 </script>
