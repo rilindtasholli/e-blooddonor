@@ -1,5 +1,6 @@
 ﻿using aspnet_core_api.Models;
 using aspnet_core_api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,6 +18,7 @@ namespace aspnet_core_api.Controllers
             _dashboardRepository = dashboardRepository;
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetDonationsNumber")]
         public async Task<ActionResult<Object>> GetDonationsNumber()
         {
@@ -28,6 +30,7 @@ namespace aspnet_core_api.Controllers
             };
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetMonthlyDonations")]
         public async Task<ActionResult<Object>> GetMonthlyDonations()
         {
@@ -46,6 +49,7 @@ namespace aspnet_core_api.Controllers
             };
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetLocationDonations")]
         public async Task<ActionResult<Object>> GetLocationDonations()
         {
@@ -74,7 +78,7 @@ namespace aspnet_core_api.Controllers
 
 
         // ---------------------------------------------
-
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetUsersNumber")]
         public async Task<ActionResult<Object>> GetUsersNumber()
         {
@@ -86,6 +90,7 @@ namespace aspnet_core_api.Controllers
             };
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetLocationUsers")]
         public async Task<ActionResult<Object>> GetLocationUsers()
         {
@@ -112,7 +117,7 @@ namespace aspnet_core_api.Controllers
             };
         }
 
-
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet("GetTopDonators")]
         public async Task<ActionResult<Object>> GetTopDonators()
         {

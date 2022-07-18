@@ -304,10 +304,26 @@ tr:nth-child(even) {
   background-color: #eceef3;
 }
 
-@media only screen and (max-width: 800px) {
-  .main-content {
+@media only screen and (max-width: 1140px) {
+  #donation-stats .section-body,
+  #user-stats .section-body{
     flex-direction: column;
   }
 }
+
+/* @media only screen and (max-width: 800px) {
+  .main-content {
+    flex-direction: column;
+  }
+} */
+
+@media only screen and (max-width: 560px) {
+  .section-body{
+    flex-direction: column;
+  }
+}
+
+
+
 
 </style>

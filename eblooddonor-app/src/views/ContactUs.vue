@@ -14,6 +14,7 @@
               name="title"
               v-model="form.title"
               placeholder="Enter Title"
+              @click="removeErrorMessage()"
             />
           </div>
           
@@ -26,14 +27,19 @@
               name="email"
               v-model="form.email"
               placeholder="Enter Email"
+              @click="removeErrorMessage()"
             />
           </div>
 
           <div class="input-label">
-            <label for="text"
-              ><font-awesome-icon :icon="['fas', 'message']" /> Message</label
-            >
-            <textarea v-model="form.message" name="text" placeholder="Enter Message..." rows="6"></textarea>
+            <label for="text"><font-awesome-icon :icon="['fas', 'message']" /> Message</label>
+            <textarea 
+              v-model="form.message" 
+              name="text" 
+              placeholder="Enter Message..." 
+              rows="6"
+              @click="removeErrorMessage()"
+            ></textarea>
             
           </div>
 
@@ -67,18 +73,27 @@ export default {
   methods: {
     ...mapActions(["createMessages"]),
     async submit(){
-      const messages = this.form
-    
-      schema.validateAsync(messages).then(()=>{
-        this.createMessages(messages).then(()=>{
-          this.$router.push("/home");
-        })
-        
-      }).catch(err=>{
-        this.errorMessage = err.message
+
+      try{
+        await schema.validateAsync(this.form)
+      }catch(error){
+        this.errorMessage = error.message
+        this.showError = true
+        return
+      }
+
+      this.createMessages(this.form).then(()=>{
+        this.$router.push("/home");
+      }).catch(error =>{
+        this.errorMessage = error.message
         this.showError = true
       })
-    } 
+    },
+
+    removeErrorMessage(){
+      this.errorMessage = ""
+      this.showError = false
+    }
           
   },
 };

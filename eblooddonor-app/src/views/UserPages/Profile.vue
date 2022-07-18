@@ -60,12 +60,14 @@
                   <v-text-field
                     v-model="editedItem.firstName"
                     label="First Name"
+                    @click="removeErrorMessage()"
                   ></v-text-field>
                 </v-col>
                 <v-col sm="12" md="6">
                   <v-text-field
                     v-model="editedItem.lastName"
                     label="Last Name"
+                    @click="removeErrorMessage()"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -76,6 +78,7 @@
                     :items="cities"
                     v-model="editedItem.location"
                     label="Location"
+                    @click="removeErrorMessage()"
                   ></v-select>
                 </v-col>
                 <!-- <v-col cols="12" sm="6" md="4">
@@ -89,6 +92,7 @@
                     :items="bloodtypes"
                     v-model="editedItem.bloodType"
                     label="Blood Type"
+                    @click="removeErrorMessage()"
                   ></v-select>
                 </v-col>
               </v-row>
@@ -169,21 +173,19 @@ export default {
         this.editedItem = Object.assign({}, this.defaultItem);
         this.editedIndex = -1;
       });
+      this.removeErrorMessage();
     },
 
     async save(){
-        this.removeError();
 
-        var validateData = {
-          firstName: this.editedItem.firstName,
-          lastName: this.editedItem.lastName
-        }
+      var validateData = {
+        firstName: this.editedItem.firstName,
+        lastName: this.editedItem.lastName
+      }
 
-        try{
-         await schema.validateAsync(validateData);
-        }
-        catch (error) {
-
+      try{
+        await schema.validateAsync(validateData);
+      }catch(error) {
         this.errorMessage = error.message;
         this.showError = true;
         return;
@@ -191,12 +193,17 @@ export default {
 
       this.editUser(this.editedItem).then(() => {
           this.fetchUserData(this.userData.id);
+      }).catch((error) => {
+        console.log(error)
+        this.errorMessage = error.message
+        this.showError = true
       });
+
       this.close();
 
     },
 
-    removeError(){
+    removeErrorMessage(){
       this.showError = false
       this.errorMessage = ""
     }

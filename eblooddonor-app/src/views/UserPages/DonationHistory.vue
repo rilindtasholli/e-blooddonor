@@ -82,16 +82,26 @@ export default {
             donationHistory: [
                 {
                     id: '1',
-                    date: '15 April, 2021',
+                    date: '11 Oct, 2022',
+                    location: 'Ferizaj',
+                },
+                {
+                    id: '2',
+                    date: '7 July, 2022',
                     location: 'Prishtine',
                 },
                 {
                     id: '2',
-                    date: '02 July, 2021',
+                    date: '10 May, 2022',
+                    location: 'Prishtine',
+                },
+                {
+                    id: '2',
+                    date: '5 Jan, 2022',
                     location: 'Prishtine',
                 },
             ],
-            accountCreated: '03 April, 2021'
+            accountCreated: '10 Dec, 2021'
         }
     },
 

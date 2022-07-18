@@ -19,6 +19,7 @@
               name="email"
               v-model="form.email"
               placeholder="Enter your email"
+              @click="removeErrorMessage()"
             />
           </div>
           <div class="input-label">
@@ -30,6 +31,7 @@
               name="password"
               v-model="form.password"
               placeholder="Enter your password"
+              @click="removeErrorMessage()"
             />
           </div>
           <button type="submit">Login</button>
@@ -65,6 +67,9 @@ export default {
     ...mapActions(['Login']),
 
     async handleSubmit(){
+
+      this.removeErrorMessage()
+
       var data = {
         email: this.form.email,
         password: this.form.password
@@ -81,11 +86,21 @@ export default {
       await this.Login(data).then(() => {
         this.removeErrorMessage()
         this.$router.push('/user/profile')
+        location.reload(); 
       }).catch((error) => {
         console.error(error);
+
+        if(error.response && error.response.data && error.response.data.status == 401) {
+          this.errorMessage = "Wrong email or password"
+        }else if(error.response && error.response.data && error.response.data.status == 500){
+          this.errorMessage = error.response.data.message || "Internal Server Error"
+        }else{
+          this.errorMessage = error.message
+        }
+
+        this.showError = true
       });
 
-      
     },
 
     removeErrorMessage(){

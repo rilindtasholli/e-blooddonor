@@ -7,13 +7,6 @@ const schema = Joi.object({
         "string.max":"Title is too long",
         "string.empty": "Please enter a title"
     }),
-    
-    message: Joi.string()
-    .min(4).max(600).messages({
-        "string.min":"Message is too short",
-        "string.max":"Message is too long",
-        "string.empty":"Please enter a message"
-    }),
 
     email: Joi.string()
     .email({tlds: {allow:['com','net']}})
@@ -21,6 +14,15 @@ const schema = Joi.object({
         "string.email": "Email is invalid",
         "string.empty": "Please enter an email"
     }),
+    
+    message: Joi.string()
+    .min(4).max(600).messages({
+        "string.min":"Message is too short",
+        "string.max":"Message is too long",
+        "string.empty":"Please enter a message"
+    })
+
+    
 })
 
 export default schema

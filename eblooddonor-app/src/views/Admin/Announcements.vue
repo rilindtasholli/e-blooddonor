@@ -46,6 +46,7 @@
                           <v-text-field
                             v-model="editedItem.title"
                             label="Title"
+                            @click="removeErrorMessage()"
                           ></v-text-field>
                         </v-col>
 
@@ -53,6 +54,7 @@
                           <v-text-field
                             v-model="editedItem.description"
                             label="Description"
+                            
                           ></v-text-field>
                         </v-col>
                       </v-row>
@@ -63,6 +65,7 @@
                             :items="cities"
                             v-model="editedItem.location"
                             label="Location"
+                            
                           ></v-select>
                         </v-col>
                      
@@ -74,6 +77,7 @@
                             :items="bloodtypes"
                             v-model="editedItem.bloodtype"
                             label="Blood Type"
+                            
                           ></v-select>
                         </v-col>
                   </v-row>
@@ -317,8 +321,11 @@ export default {
 
             this.createAnnouncement(data).then(() => {
               this.updateAnnouncementList();
+              this.close();
             }).catch((error) => {
               console.log(error)
+              this.errorMessage = error.message
+              this.showError = true
             })
             
           }else{
@@ -331,13 +338,15 @@ export default {
 
             this.editAnnouncement(data).then(() => {
               this.updateAnnouncementList();
+              this.close();
             }).catch((error) => {
               console.log(error)
+              this.errorMessage = error.message
+              this.showError = true
             })
            
           }
-          
-          this.close();
+
         },
 
         removeErrorMessage(){
