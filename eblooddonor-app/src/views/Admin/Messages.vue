@@ -20,7 +20,51 @@
               <v-divider class="mx-4" inset vertical></v-divider>
               <v-spacer></v-spacer>
 
-             
+              <v-dialog v-model="dialog" max-width="500px">
+              <v-card>
+              <v-card-title>
+              <span class="text-h5">{{formTitle}}</span>
+              </v-card-title>
+
+              <v-card-text>
+               <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.title" 
+                       label ="title">
+                    </v-text-field>
+                  </v-col>
+
+                   <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.email" 
+                       label ="email">
+                    </v-text-field>
+                  </v-col> 
+
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field
+                       v-model="editedItem.message" 
+                       label ="message">
+                    </v-text-field>
+                  </v-col> 
+                </v-row>
+               </v-container>
+              </v-card-text>              
+
+              <v-card-actions>
+                <v-spancer></v-spancer>
+                <v-btn color="blue darken-1" text @click="close">
+                   Cancel
+                </v-btn>
+                <v-btn color="blue darken-1" text @click="save">
+                      Save
+                    </v-btn>
+              </v-card-actions>
+              </v-card>
+              </v-dialog>
+          
               <!-- Delete Modal -->
               <v-dialog v-model="dialogDelete" max-width="450px">
                 <v-card>
@@ -52,9 +96,11 @@
               ></v-text-field>
             </v-container>
           </template>
-          <template v-slot:item.actions="{ item }">
+
+         <template v-slot:item.actions="{ item }">
             <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
           </template>
+           
           <!-- <template v-slot:no-data>
                     <v-btn
                         color="primary"
@@ -70,7 +116,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -79,46 +125,34 @@ export default {
     dialogDelete: false,
     headers: [
         {
-        text: "ID",
+        text: "DateTime",
         align: "start",
         sortable: false,
-        value: "id",
+        value: "dateTime",
         },
-        { text: "Title", value: "title" },
-        { text: "Email", value: "email" },
-        { text: "Message", value: "message"},
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "title", value: "title" },
+        { text: "email", value: "email"},
+        { text: "message", value: "message" },
+        //{ text: "Actions", value: "actions", sortable: false },
     ],
 
     editedIndex: -1,
     editedItem: {
-        id: "",
+        dateTime: "",
         title: "",
         email: "",
-        message: ""
+        message: "",
     },
     defaultItem: {
-        id: "",
+        dateTime: "",
         title: "",
         email: "",
-        message: ""
+        message: "",
     },
-
-    messages: [
-        {
-            id: 'asd654asd4as4d6',
-            title: 'title1',
-            email: 'filan@gmail.com',
-            message: 'This is a test message'
-        }
-    ],
-
-    showError: false,
-        
-    }),
-
+    messages: null
+  }),
     computed: {
-        ...mapGetters(["cities", "bloodtypes"]),
+        ...mapGetters(["getMessages"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -133,45 +167,62 @@ export default {
         },
     },
 
+    created(){
+      this.updateMessagesList()
+    },
+
     methods: {
-        editItem(item) {
-            this.editedIndex = this.messages.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
-        },
+    ...mapActions(["getAllMessages", "deleteMessage"]),
 
-        deleteItem(item) {
-            this.editedIndex = this.messages.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialogDelete = true;
-        },
+    updateMessagesList(){
+      this.getAllMessages().then(()=>{
+        this.messages = this.getMessages
+      }).catch((error) => {
+        console.log(error)
+      })
+        
+    },
 
-        deleteItemConfirm() {
-            this.closeDelete();
-        },
+    deleteItem(item) {
+      this.editedIndex = this.messages.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
 
-        close() {
-            this.dialog = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-            this.removeErrorMessage();
-        },
+    deleteItemConfirm() {
+      this.deleteMessage(this.editedItem._id);
+      this.closeDelete();
+      setTimeout(() => {
 
-        closeDelete() {
-            this.dialogDelete = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-        },
+        this.getAllMessages();
+      }, 1000);
+    },
 
-        save() {
-            this.close();
-        }
-    }
-};
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    async save() {
+      this.close();
+      setTimeout(() => {
+        this.getMessages();
+      }, 1000);
+    },
+  },
+}
+
 </script>
 
 <style scoped>

@@ -1,4 +1,5 @@
 import UserService from '@/services/UserService';
+import LoggerService from '@/services/LoggerService';
 
 const state = {
     users: null,
@@ -38,12 +39,21 @@ const actions = {
     },
 
     async editUser({ commit }, user){
+        console.log(user);
         await UserService.EditUser(user).then(() => {
             commit('CLEAR_DATA');
         }).catch((error) => {
             throw error
         });
     },
+
+    //  async updateMe({ commit }, user){
+    //     await UserService.UpdateMe(user).then(() => {
+    //         commit('CLEAR_DATA');
+    //     }).catch((error) => {
+    //         throw error
+    //     });
+    // },
 
     async getAllAdmins({ commit }){
         await UserService.GetAdmins().then((response) => {
@@ -53,9 +63,17 @@ const actions = {
         });
     },
 
-    async setUserRole({ commit }, {id, role}){
-        await UserService.SetUserRole(id, role).then(() => {
+    async setUserRole({ commit }, {setRoleData, userData}){
+        await UserService.SetUserRole(setRoleData.id, setRoleData.role).then(() => {
             commit('CLEAR_DATA');
+
+            var logData ={
+                userId: userData.id,
+                user: userData.fullName,
+                action: `Edited user(${setRoleData.id}) role to: ${setRoleData.role}`
+            }
+
+            LoggerService.CreateLog(logData);
         }).catch((error) => {
             throw error
         });

@@ -1,5 +1,5 @@
 <template>
-  <v-app id="logger">
+  <v-app id="logs">
     <div class="main">
       <h1> <font-awesome-icon :icon="['fas', 'file-signature']" /> All Logs</h1>
 
@@ -10,7 +10,7 @@
           v-else
           :headers="headers"
           :items="logs"
-          :items-per-page="5"
+          :items-per-page="15"
           :search="search"
           class="elevation-1"
         >
@@ -22,7 +22,7 @@
 
 
               <!-- Delete Modal -->
-              <v-dialog v-model="dialogDelete" max-width="600px">
+              <v-dialog v-model="dialogDelete" max-width="450px">
                 <v-card>
                   <v-card-title class="text-h5"
                     >Are you sure you want to delete this information?</v-card-title
@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     data: () => ({
@@ -80,53 +80,31 @@ export default {
     dialog: false,
     dialogDelete: false,
     headers: [
-        {
-        text: "ID",
-        align: "start",
-        sortable: false,
-        value: "id",
-        },
         
-        { text: "DateTime", value: "datetime" },
+        { text: "DateTime", value: "dateTime" },
         { text: "User", value: "user" },
         { text: "Action", value: "action" },
+       
     ],
 
     editedIndex: -1,
     editedItem: {
-        id: "",
         datetime: "",
         user: "",
         action: "",
     },
     defaultItem: {
-        id: "",
         datetime: "",
         user: "",
         action: "",
     },
 
-    logs: [
-        {
-          id: 'asd654asd4as4d6',
-          datetime: "12-06-2022, 11:11:01",
-          user: 'Filan Fisteku',
-          action: 'Approved an appointment',
-        },
-        {
-          id: 'd4as4d6asd654as',
-          datetime: "12-06-2022, 10:20:55",
-          user: 'Filan Fisteku',
-          action: 'Created new announcement',
-        }
-    ],
-
-    showError: false,
+    logs: null
         
     }),
 
     computed: {
-        ...mapGetters(["cities", "bloodtypes"]),
+        ...mapGetters(["getLogs"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -141,45 +119,61 @@ export default {
         },
     },
 
-    methods: {
-        editItem(item) {
-            this.editedIndex = this.logs.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialog = true;
-        },
+     created(){
+      this.updateLoggersList()
+    },
+methods: {
+    ...mapActions(["getAllLogs", "deleteLog"]),
 
-        deleteItem(item) {
-            this.editedIndex = this.logs.indexOf(item);
-            this.editedItem = Object.assign({}, item);
-            this.dialogDelete = true;
-        },
+    updateLoggersList(){
+      
+      this.getAllLogs().then(()=>{
+        this.logs = this.getLogs
+      }).catch((error) => {
+        console.log(error)
+      })
+        
+    },
 
-        deleteItemConfirm() {
-            this.closeDelete();
-        },
+    deleteItem(item) {
+      this.editedIndex = this.loggers.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialogDelete = true;
+    },
 
-        close() {
-            this.dialog = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-            this.removeErrorMessage();
-        },
+    deleteItemConfirm() {
+      this.deleteLog(this.editedItem._id);
+      this.closeDelete();
+      setTimeout(() => {
 
-        closeDelete() {
-            this.dialogDelete = false;
-            this.$nextTick(() => {
-                this.editedItem = Object.assign({}, this.defaultItem);
-                this.editedIndex = -1;
-            });
-        },
+        this.getAllLogs();
+      }, 1000);
+    },
 
-        save() {
-            this.close();
-        }
-    }
-};
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    closeDelete() {
+      this.dialogDelete = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    async save() {
+      this.close();
+      setTimeout(() => {
+        this.getLoggers();
+      }, 1000);
+    },
+  },
+}
 </script>
 
 <style scoped>

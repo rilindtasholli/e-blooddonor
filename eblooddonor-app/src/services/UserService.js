@@ -16,13 +16,16 @@ export default {
     return apiClient.get("/api/User/" + id)
   },
   EditUser(user) {
-    console.log(user)
     return apiClient.put("/api/User?id=" + user.id, user)
   },
   DeleteUser(id) {
     return apiClient.delete("/api/User/" + id)
   },
   
+  UpdateMe(user){
+    return apiClient.put("/api/User?id=" + user.id, user)
+  },
+
   //Manage Admins (Roles)
   GetAdmins() {
     return apiClient.get("/api/User/role/getAllAdmins")

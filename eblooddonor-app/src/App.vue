@@ -46,8 +46,8 @@ main{
 
 
 @media only screen and (max-width: 600px) {
-  main{
-  margin: 105px 0;
-}
+  /* main{
+    margin: 105px 0;
+  } */
 }
 </style>

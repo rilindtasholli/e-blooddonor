@@ -19,6 +19,7 @@
               name="name"
               v-model="form.fname"
               placeholder="Enter your first name"
+              @click="removeErrorMessage()"
             />
           </div>
 
@@ -31,6 +32,7 @@
               name="name"
               v-model="form.lname"
               placeholder="Enter your last name"
+              @click="removeErrorMessage()"
             />
           </div>
           
@@ -44,6 +46,7 @@
               name="email"
               v-model="form.email"
               placeholder="Enter your email"
+              @click="removeErrorMessage()"
             />
           </div>
 
@@ -56,6 +59,7 @@
               name="bloodtype"
               class="select-blood"
               v-model="form.bloodtype"
+              @click="removeErrorMessage()"
             >
               <option disabled>Select blood type</option>
               <option v-for="bloodtype in bloodtypes" :key="bloodtype">{{ bloodtype }}</option>
@@ -66,7 +70,8 @@
             <label for="city"
               ><font-awesome-icon :icon="['fas', 'fa-home']" /> City</label
             >
-            <select v-model="form.city" class="select-city">
+            <select v-model="form.city" class="select-city"
+            @click="removeErrorMessage()">
               <option disabled>Select City</option>
               <option v-for="city in cities" :key="city">{{ city }}</option>
             </select>
@@ -81,6 +86,7 @@
               name="password"
               v-model="form.password"
               placeholder="Enter your password"
+              @click="removeErrorMessage()"
             />
           </div>
 
@@ -94,6 +100,7 @@
               name="passwordConfirm"
               v-model="form.passwordConfirm"
               placeholder="Confirm your password"
+              @click="removeErrorMessage()"
             />
           </div>
 
@@ -111,6 +118,7 @@
 <script>
 import BackButton from "../../components/BackButton.vue";
 import { mapActions, mapGetters } from "vuex";
+import schema from '@/data/registerSchema'
 
 export default {
   components: { BackButton },
@@ -138,6 +146,9 @@ export default {
     ...mapActions(['Register']),
 
     async handleSubmit(){
+
+      this.removeErrorMessage()
+
       var userData = {
         email: this.form.email,
         firstName: this.form.fname,
@@ -148,14 +159,35 @@ export default {
         confirmPassword: this.form.passwordConfirm
       }
 
-      console.log(userData)
+      //console.log(userData)
+
+      try{
+        await schema.validateAsync(userData)
+      }catch(error){
+        this.errorMessage = error.message
+        this.showError = true
+        return
+      }
 
       await this.Register(userData).then((response) => {
         console.log(response)
         this.$router.push('/user/login')
       }).catch((error) => {
-        console.error(error)
+        console.error(error);
+
+        if(error.response && error.response.status && error.response.status == 500){
+          this.errorMessage = (error.response.data && error.response.data.message) || "Internal Server Error"
+        }else{
+          this.errorMessage = error.message
+        }
+
+        this.showError = true
       })
+    },
+
+    removeErrorMessage(){
+      this.errorMessage = ""
+      this.showError = false
     }
   }
 };

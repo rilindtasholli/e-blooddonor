@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using aspnet_core_api.Models;
 using aspnet_core_api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace aspnet_core_api.Controllers
@@ -16,15 +17,16 @@ namespace aspnet_core_api.Controllers
             _appointmentRepository = appointmentRepository;
         }
 
-       
+
         // GET: api/Appointment
+        [Authorize]
         [HttpGet]
-       
         public async Task<IEnumerable<Object>> GetAppointments()
         {
             return await _appointmentRepository.GetAll();
         }
 
+        [Authorize]
         // GET: api/Appointment/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(Guid id)
@@ -44,8 +46,8 @@ namespace aspnet_core_api.Controllers
         }
 
         // PUT: api/Appointment/5
-       
-        //[HttpPut("{id}")]
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut]
         public async Task<IActionResult> PutAppointment(Guid id, [FromBody]Appointment appointment)
         {
@@ -79,7 +81,7 @@ namespace aspnet_core_api.Controllers
 
 
         // POST: api/Appointment
-
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Appointment>> CreateAppointment([FromBody] Appointment appointment)
         {
@@ -102,6 +104,7 @@ namespace aspnet_core_api.Controllers
             return CreatedAtAction(nameof(GetAppointments), new { id = appointment.Id }, newAppointment);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteAppointment(Guid id)
         {
@@ -125,6 +128,7 @@ namespace aspnet_core_api.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut("approve")]
         public async Task<IActionResult> ApproveAppointment(Guid id)
         {
@@ -165,6 +169,7 @@ namespace aspnet_core_api.Controllers
 
 
         // GET: api/Appointment
+        [Authorize]
         [HttpGet("getUserAppointments")]
         public async Task<IEnumerable<Object>> GetUserAppointments(string id)
         {

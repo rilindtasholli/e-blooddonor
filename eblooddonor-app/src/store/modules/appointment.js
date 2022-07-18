@@ -1,4 +1,5 @@
 import AppointmentService from "@/services/AppointmentService";
+import LoggerService from '@/services/LoggerService';
 
 const state = {
     appointments:null, 
@@ -47,10 +48,25 @@ const mutations = {
             throw error
           });
         },
+        async deleteAppointment({ commit }, id){
+            await AppointmentService.DeleteAppointment(id).then(() => {
+                commit('CLEAR_DATA');
+            }).catch((error) => {
+                throw error
+            });
+        },
 
-        async approveAppointment({commit}, id){
+        async approveAppointment({commit}, {id, userData}){
             await AppointmentService.ApproveAppointment(id).then(()=>{
                 commit('CLEAR_DATA');
+
+                var logData ={
+                    userId: userData.id,
+                    user: userData.fullName,
+                    action: `Approved appointment: id(${id})`
+                }
+        
+                LoggerService.CreateLog(logData);
             }).catch((error)=>{
                 throw error
             });

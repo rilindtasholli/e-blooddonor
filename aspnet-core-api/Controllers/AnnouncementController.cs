@@ -1,5 +1,6 @@
 ﻿using aspnet_core_api.Models;
 using aspnet_core_api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,7 @@ namespace aspnet_core_api.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<ActionResult<Announcement>> CreateAnnouncement([FromBody] Announcement announcement)
         {
@@ -64,6 +66,7 @@ namespace aspnet_core_api.Controllers
             return CreatedAtAction(nameof(GetAnnouncement), new { id = newAnnouncement.Id }, newAnnouncement);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPut]
         public async Task<ActionResult<Announcement>> UpdateAnnouncement(Guid id, [FromBody] Announcement announcement)
         {
@@ -96,6 +99,7 @@ namespace aspnet_core_api.Controllers
             });
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Announcement>> DeleteAnnouncement(Guid id)
         {

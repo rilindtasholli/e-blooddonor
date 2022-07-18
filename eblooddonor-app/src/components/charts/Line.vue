@@ -71,31 +71,33 @@ export default {
     plugins: {
       type: Array,
       default: () => []
+    },
+
+    labels: {
+      type: Array,
+      default: () => ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+    },
+    
+    datasets: {
+      type: Array,
+      default: () => [
+        {
+          label: 'Donations',
+          backgroundColor:  'rgba(58, 83, 222, 0.18)',
+          data: [40, 39, 10, 40, 39, 80, 40, 0, 100],
+          fill: true,
+          borderColor: '#7faef4',
+          pointBackgroundColor: 'rgba(230, 69, 69, 0.6)',
+          tension: 0.2
+        }
+      ]
     }
   },
   data() {
     return {
       chartData: {
-        labels: [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-          'July'
-        ],
-        datasets: [
-          {
-            label: 'Donations',
-            backgroundColor:  'rgba(58, 83, 222, 0.18)',
-            data: [40, 39, 10, 40, 39, 80, 40, 0, 100],
-            fill: true,
-            borderColor: '#7faef4',
-            pointBackgroundColor: 'rgba(230, 69, 69, 0.6)',
-            tension: 0.2
-          }
-        ]
+        labels: this.labels,
+        datasets: this.datasets,
       },
       chartOptions: {
         responsive: true,
@@ -104,5 +106,7 @@ export default {
       }
     }
   }
+
+  
 }
 </script>

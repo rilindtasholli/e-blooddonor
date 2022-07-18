@@ -46,6 +46,7 @@
                           <v-text-field
                             v-model="editedItem.title"
                             label="Title"
+                            @click="removeErrorMessage()"
                           ></v-text-field>
                         </v-col>
 
@@ -53,6 +54,7 @@
                           <v-text-field
                             v-model="editedItem.description"
                             label="Description"
+                            
                           ></v-text-field>
                         </v-col>
                       </v-row>
@@ -63,6 +65,7 @@
                             :items="cities"
                             v-model="editedItem.location"
                             label="Location"
+                            
                           ></v-select>
                         </v-col>
                      
@@ -74,6 +77,7 @@
                             :items="bloodtypes"
                             v-model="editedItem.bloodtype"
                             label="Blood Type"
+                            
                           ></v-select>
                         </v-col>
                   </v-row>
@@ -155,6 +159,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import schema from '@/data/announcementSchema'
 
 export default {
     data: () => ({
@@ -202,7 +207,8 @@ export default {
         }
     ],
 
-    showError: false,
+    errorMessage: "",
+    showError: false
         
     }),
 
@@ -212,7 +218,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters(["cities", "bloodtypes", "getAnnouncements", "getAnnouncements"]),
+        ...mapGetters(["cities", "bloodtypes", "getAnnouncements", "getAnnouncements", "userData"]),
         formTitle() {
             return this.editedIndex === -1 ? "New Item" : "Edit Item";
         },
@@ -266,7 +272,7 @@ export default {
                 this.editedItem = Object.assign({}, this.defaultItem);
                 this.editedIndex = -1;
             });
-            // this.removeErrorMessage();
+            this.removeErrorMessage();
         },
 
         closeDelete() {
@@ -277,34 +283,76 @@ export default {
             });
         },
 
-        save() {
-          if(this.editedIndex == -1){        
-            //Add new announcement
+        async save() {
 
-             var announcement = {
-              title: this.editedItem.title,
-              description: this.editedItem.description,
-              bloodtype: this.editedItem.bloodtype,
-              location: this.editedItem.location
-            }
-
-            this.createAnnouncement(announcement).then(() => {
-              this.updateAnnouncementList();
-            }).catch((error) => {
-              console.log(error)
-            })
-          }else{
-            //Edit announcement
-
-            this.editAnnouncement(this.editedItem).then(() => {
-              this.updateAnnouncementList();
-            }).catch((error) => {
-              console.log(error)
-            })
+          //validate
+          var validateData = {
+            title: this.editedItem.title,
+            description: this.editedItem.description,
+            location: this.editedItem.location,
+            bloodtype: this.editedItem.bloodtype
           }
           
-          this.close();
-        }
+          try{
+            await schema.validateAsync(validateData);
+          }
+          catch (error) {
+
+            this.errorMessage = error.message;
+            this.showError = true;
+            return;
+          }
+
+
+          var data;
+
+          if(this.editedIndex == -1){   
+            //Add new announcement
+          
+            data = {
+              announcement: {
+                title: this.editedItem.title,
+                description: this.editedItem.description,
+                bloodtype: this.editedItem.bloodtype,
+                location: this.editedItem.location
+              },
+              userData: this.userData
+            }
+
+            this.createAnnouncement(data).then(() => {
+              this.updateAnnouncementList();
+              this.close();
+            }).catch((error) => {
+              console.log(error)
+              this.errorMessage = error.message
+              this.showError = true
+            })
+            
+          }else{
+            //Edit announcement
+          
+            data = {
+              announcement: this.editedItem,
+              userData: this.userData
+            }
+
+            this.editAnnouncement(data).then(() => {
+              this.updateAnnouncementList();
+              this.close();
+            }).catch((error) => {
+              console.log(error)
+              this.errorMessage = error.message
+              this.showError = true
+            })
+           
+          }
+
+        },
+
+        removeErrorMessage(){
+          this.showError = false
+          this.errorMessage = ""
+        } 
     }
 };
 </script>

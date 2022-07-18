@@ -8,13 +8,13 @@
          
           <a class="card donations-card" href="#donation-stats">
             <h3>Donations <font-awesome-icon :icon="['fas', 'droplet']" /></h3>
-            <span>352</span>
+            <span>{{ this.getDonationsNumber }}</span>
           </a>
          
   
           <a class="card users-card" href="#user-stats">
             <h3>Users <font-awesome-icon :icon="['fas', 'user']" /></h3>
-            <span>97</span>
+            <span>{{ this.getUsersNumber}}</span>
           </a>
         </div>
       </section>
@@ -24,11 +24,11 @@
 
         <div class="section-body">
           <div class="chart">
-            <LineChart/>
+            <LineChart :datasets="this.getMonthlyDonationsDatasets()"/>
           </div>
   
           <div class="chart">
-            <Doughnut />
+            <Doughnut :datasets="this.getDonationsFromLocationsDatasets()"/>
           </div>
         </div>
         
@@ -39,7 +39,7 @@
 
         <div class="section-body">
           <div class="chart">
-            <Bar/>
+            <Bar :datasets="this.getUsersFromLocationsDatasets()"/>
           </div>
   
           <div class="chart">
@@ -47,72 +47,17 @@
             <div class="top-users">
               <table>
                 <tr>
-                  <th style="padding: 0 15px">#</th>
                   <th width="100%">Name</th>
                   <th>Location</th>
                   <th>Donations</th>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Filan Fisteku</td>
-                  <td>Prishtine</td>
-                  <td>35</td>
-                </tr>
 
-                <tr>
-                  <td>2</td>
-                  <td>Rinor Gashi</td>
-                  <td>Prishtine</td>
-                  <td>30</td>
-                </tr>
-
-                <tr>
-                  <td>3</td>
-                  <td>Admir Bytyqi</td>
-                  <td>Ferizaj</td>
-                  <td>28</td>
-                </tr>
-
-                <tr>
-                  <td>4</td>
-                  <td>Fjolla Krasniqi</td>
-                  <td>Gjilan</td>
-                  <td>22</td>
-                </tr>
-
-                <tr>
-                  <td>5</td>
-                  <td>Arber Hajdari</td>
-                  <td>Prizren</td>
-                  <td>20</td>
+                <tr v-for="user in this.getTopDonators" :key="user.user.id">
+                  <td>{{ user.user.name }}</td>
+                  <td>{{ user.user.location }}</td>
+                  <td>{{ user.donationsCount }}</td>
                 </tr>
               </table>
-              <!-- <ol>
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-
-                <li>
-                  <span class="name">Filan Fisteku</span>
-                  <span class="donations">12</span>
-                </li>
-              </ol> -->
             </div>
           </div>
         </div>
@@ -127,14 +72,69 @@
 import Doughnut from '@/components/charts/Doughnut.vue'
 import LineChart from '@/components/charts/Line.vue'
 import Bar from '@/components/charts/Bar.vue'
+import { mapActions, mapGetters } from 'vuex'
 // import Pie from '@/components/charts/Pie.vue'
 
 export default {
   components: {
     LineChart,
     Doughnut,
-    Bar
+    Bar,
     // Pie
+  },
+
+  created(){
+    this.getDonationsData()
+    this.getUsersData()
+  },
+
+  computed:{
+    ...mapGetters([
+      'getDonationsNumber',
+      'getDonationsFromLastMonths',
+      'getDonationsFromLocations',
+      'getUsersNumber',
+      'getUsersFromLocations',
+      'getTopDonators',
+    ])
+  },
+
+  methods:{
+    ...mapActions(['getDonationsData', 'getUsersData']),
+
+    getMonthlyDonationsDatasets(){
+      var datasets = [{
+          label: 'Donations',
+          backgroundColor:  'rgba(58, 83, 222, 0.18)',
+          data: this.getDonationsFromLastMonths,
+          fill: true,
+          borderColor: '#7faef4',
+          pointBackgroundColor: 'rgba(230, 69, 69, 0.6)',
+          tension: 0.2
+        }]
+
+        return datasets
+    },
+
+    getDonationsFromLocationsDatasets(){
+      var datasets = [{
+          backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+          data: this.getDonationsFromLocations
+        }]
+
+        return datasets
+    },
+
+    getUsersFromLocationsDatasets(){
+      var datasets = [
+        {
+            label: 'Users',
+            backgroundColor: ['#e64545', '#47d663', '#e08b4a', '#e0cf4a', '#36c7bb', '#3277a8', '#6e66fa'],
+            data: this.getUsersFromLocations
+        }
+      ]
+      return datasets
+    }
   }
 }
 </script>
@@ -304,10 +304,26 @@ tr:nth-child(even) {
   background-color: #eceef3;
 }
 
-@media only screen and (max-width: 800px) {
-  .main-content {
+@media only screen and (max-width: 1140px) {
+  #donation-stats .section-body,
+  #user-stats .section-body{
     flex-direction: column;
   }
 }
+
+/* @media only screen and (max-width: 800px) {
+  .main-content {
+    flex-direction: column;
+  }
+} */
+
+@media only screen and (max-width: 560px) {
+  .section-body{
+    flex-direction: column;
+  }
+}
+
+
+
 
 </style>

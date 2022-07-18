@@ -18,10 +18,10 @@
                     </div>
 
                     <div class="info">
-                        <span class="date">{{donation.date}}</span>
+                        <span class="date">{{convertToDate(donation.date)}}</span>
                         <span class="location">
                             <font-awesome-icon :icon="['fas', 'map-marker-alt']"></font-awesome-icon>
-                            Prishtine
+                            {{donation.location}}
                         </span>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="info">
-                        <span class="date">{{ accountCreated }}</span>
+                        <span class="date">{{convertToDate(accountCreated)}}</span>
                         <span class="account-created">
                             <font-awesome-icon :icon="['fas', 'user']"></font-awesome-icon>
                             Created account
@@ -71,6 +71,7 @@
 
 <script>
 import BackButton from '@/components/BackButton.vue'
+import { mapGetters } from 'vuex'
 
 export default {
     components: {
@@ -81,16 +82,44 @@ export default {
             donationHistory: [
                 {
                     id: '1',
-                    date: '15 April, 2021',
+                    date: '11 Oct, 2022',
+                    location: 'Ferizaj',
+                },
+                {
+                    id: '2',
+                    date: '7 July, 2022',
                     location: 'Prishtine',
                 },
                 {
                     id: '2',
-                    date: '02 July, 2021',
+                    date: '10 May, 2022',
+                    location: 'Prishtine',
+                },
+                {
+                    id: '2',
+                    date: '5 Jan, 2022',
                     location: 'Prishtine',
                 },
             ],
-            accountCreated: '03 April, 2021'
+            accountCreated: '10 Dec, 2021'
+        }
+    },
+
+    created(){
+        this.donationHistory = this.userDonations
+        this.accountCreated = this.userData.createdDate
+    },
+
+    computed: {
+        ...mapGetters(['userDonations', 'userData'])
+    },
+
+    methods: {
+      
+        convertToDate(isoStringDate){
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var date = new Date(isoStringDate)
+            return `${date.getDate()} ${months[date.getMonth()]}, ${date.getFullYear()}`
         }
     }
 }

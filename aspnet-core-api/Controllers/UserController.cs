@@ -1,5 +1,6 @@
 ﻿using aspnet_core_api.Models;
 using aspnet_core_api.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,7 @@ namespace aspnet_core_api.Controllers
             _appointmentRepository = appointmentRepository;
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpGet]
         public async Task<IEnumerable<User>> GetUsers()
         {
@@ -55,6 +57,7 @@ namespace aspnet_core_api.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         public async Task<ActionResult<User>> UpdateUser(string id, [FromBody] User user)
         {
@@ -85,6 +88,7 @@ namespace aspnet_core_api.Controllers
             });
         }
 
+        [Authorize(Roles = "SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<User>> DeleteUser(string id)
         {
@@ -106,13 +110,14 @@ namespace aspnet_core_api.Controllers
             });
         }
 
-
+        [Authorize]
         [HttpGet("role/getAllAdmins")]
         public async Task<IEnumerable<Object>> GetAllAdministrators()
         {
             return await _userRepository.GetAdmins(); ;
         }
 
+        [Authorize]
         [HttpPut]
         [Route("role/setUserRole")]
         public async Task<IActionResult> SetUserRole(string id, string role)

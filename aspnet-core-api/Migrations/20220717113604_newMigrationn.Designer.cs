@@ -12,8 +12,8 @@ using aspnet_core_api.Models;
 namespace aspnet_core_api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220709144908_AppointmentApproveDate")]
-    partial class AppointmentApproveDate
+    [Migration("20220717113604_newMigrationn")]
+    partial class newMigrationn
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -81,26 +81,6 @@ namespace aspnet_core_api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("aspnet_core_api.Models.Message", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Messages")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("aspnet_core_api.Models.User", b =>
@@ -217,22 +197,22 @@ namespace aspnet_core_api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "2b712f67-0cbc-4650-a013-61416c7d8007",
-                            ConcurrencyStamp = "c52aaee8-ce34-4879-b796-12ee736636c5",
+                            Id = "48bb6af2-1936-4100-b2e5-4ab8fb27e065",
+                            ConcurrencyStamp = "5e06db94-dc02-40df-a103-93699a27a6bc",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b4ea8206-4114-483f-a250-e84f5f739bdf",
-                            ConcurrencyStamp = "33cbc40a-b994-4d1e-a950-d77f37feb66c",
+                            Id = "98a99b40-c801-42f0-aec3-67920ba4587b",
+                            ConcurrencyStamp = "9b0b339a-f9bd-427f-ae19-b51c38712fe4",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "71e3b5d7-809a-4f40-a2bf-d6b7b1fcb574",
-                            ConcurrencyStamp = "2af5546d-7db5-4ce7-be79-5ac6991b460e",
+                            Id = "944d701d-5439-4b51-ae7c-d5cf0836a2f3",
+                            ConcurrencyStamp = "fa95f7f4-46e6-4e17-8052-9a2aea251a47",
                             Name = "SuperAdmin",
                             NormalizedName = "SUPERADMIN"
                         });
