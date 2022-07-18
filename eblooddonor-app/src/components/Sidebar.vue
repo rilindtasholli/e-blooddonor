@@ -3,29 +3,76 @@
     <span class="closeBtn" @click="toggleSideBar()">×</span>
     <div class="main-links">
       <ul>
-        <li>
-            <router-link to="/" exact>
-                <font-awesome-icon :icon="['fas', 'home']" />
-                Home
-            </router-link>
+        
+        <!-- <button @click="Test()">
+            <font-awesome-icon :icon="['fas', 'user']" />TEST
+        </button> -->
+
+        <li @click="toggleSideBar()">
+          <router-link to="/home">
+            <font-awesome-icon :icon="['fas', 'home']" />
+            Home
+          </router-link>
+        </li>
+        <li @click="toggleSideBar()">
+          <router-link to="/about">
+            <font-awesome-icon :icon="['fas', 'circle-info']" />
+            About
+          </router-link>
+        </li>
+        <li @click="toggleSideBar()">
+          <router-link to="/contact">
+            <font-awesome-icon :icon="['fas', 'address-book']" />
+            Contact
+          </router-link>
+        </li>
+        <li @click="toggleSideBar()">
+          <router-link to="/user">
+            <font-awesome-icon :icon="['fas', 'user']" />
+            Profile
+          </router-link>
+        </li>
+      </ul>
+    </div>
+
+     <div v-if="isAdmin || isSuperAdmin" class="admin-links">
+      <ul>
+        <h3 class="admin-panel-title">Admin Panel</h3>
+        <li v-if="isSuperAdmin">
+          <router-link to="/admin/dashboard">
+              <font-awesome-icon :icon="['fas', 'chart-pie']" />
+              Dashboard
+          </router-link>
+        </li>
+        <li v-if="isSuperAdmin">
+          <router-link to="/admin/users">
+              <font-awesome-icon :icon="['fas', 'users']" />
+              Users
+          </router-link>
         </li>
         <li>
-            <router-link to="/about">
-                <font-awesome-icon :icon="['fas', 'circle-info']" />
-                About
-            </router-link>
+          <router-link to="/admin/announcements">
+              <font-awesome-icon :icon="['fas', 'bullhorn']" />
+               Announcements
+          </router-link>
         </li>
         <li>
-            <router-link to="/contact">
-                <font-awesome-icon :icon="['fas', 'address-book']" />
-                Contact
-            </router-link>
+          <router-link to="/admin/appointments">
+              <font-awesome-icon :icon="['fas', 'calendar-check']" />
+              Appointments
+          </router-link>
         </li>
         <li>
-            <router-link to="/user">
-                <font-awesome-icon :icon="['fas', 'user']" />
-                Profile
-            </router-link>
+          <router-link to="/admin/messages">
+              <font-awesome-icon :icon="['fas', 'message']" />
+               Messages
+          </router-link>
+        </li>
+        <li v-if="isSuperAdmin">
+          <router-link to="/admin/logger">
+              <font-awesome-icon :icon="['fas', 'file-signature']" />
+               Logger
+          </router-link>
         </li>
       </ul>
     </div>
@@ -33,11 +80,14 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex"
+import { mapActions, mapGetters } from "vuex";
 
 export default {
-  computed: mapGetters(["sideBarOpen"]),
-  methods: mapActions(["toggleSideBar"]),
+  computed: mapGetters(["sideBarOpen", "isAuthenticated",  "isAdmin", "isSuperAdmin"]),
+  methods: {...mapActions(["toggleSideBar"]),
+  Test(){
+      this.$store.dispatch('Test')
+    }},
 };
 </script>
 
@@ -72,8 +122,8 @@ export default {
   justify-content: center;
   align-items: center;
   background: rgba(185, 35, 48, 0.932);
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   align-self: flex-end;
   margin: 15px;
@@ -83,6 +133,7 @@ export default {
 }
 .closeBtn:hover {
   background: rgba(148, 27, 37, 0.932);
+  transition: 0.4s;
 }
 
 .main-links,
@@ -90,6 +141,7 @@ export default {
   /* border: dashed 1px red; */
   margin: 10px 0;
   width: 100%;
+  font-size: 18px;
 }
 
 .admin-panel-title {
@@ -135,6 +187,12 @@ ul a:hover {
 .main-links .router-link-active,
 .main-links .router-link-active:hover {
   background-color: rgba(185, 35, 48, 0.932);
+  color: white;
+}
+
+.admin-links .router-link-active,
+.admin-links .router-link-active:hover {
+  background-color: rgba(35, 75, 185, 0.932);
   color: white;
 }
 </style>

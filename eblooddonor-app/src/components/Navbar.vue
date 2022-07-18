@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="nav">
-            <router-link to="/" exact><font-awesome-icon :icon="['fas', 'home']" /><span>Home</span></router-link>
+            <router-link to="/home"><font-awesome-icon :icon="['fas', 'home']" /><span>Home</span></router-link>
             <img src="../assets/logo.png" class="nav-logo">
             <router-link to="/user"><font-awesome-icon :icon="['fas', 'user']" /><span>Profile</span></router-link>
         </div>
