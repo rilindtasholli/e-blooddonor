@@ -52,7 +52,7 @@ The main objective of this project is to create a digitized system with a softwa
     - **ExpressJS** WebAPI
  - Database
     - **MSSQL** (for relational data)
-    - **ExpressJS** (for non-relational data)
+    - **MongoDB** (for non-relational data)
 
 ## Contributors
 
